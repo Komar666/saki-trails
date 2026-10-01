@@ -207,17 +207,20 @@ body{background:var(--paper);color:var(--ink);font:300 16px/1.55 var(--f-body);-
 @keyframes popup{from{opacity:1;transform:translate(-50%,-50%) scale(.8)}to{opacity:0;transform:translate(-50%,-160%) scale(1.15)}}
 .editout{display:none;margin-top:14px;width:100%;min-height:160px;font:12px/1.4 var(--f-mono);border-radius:12px;border:1px solid #cdbf9f;padding:10px;background:#fffdf7}
 .editing .editout{display:block}
-.bsec{position:relative;overflow:hidden;background:radial-gradient(70% 80% at 30% 70%,#3B5C44 0%,var(--forest) 45%,var(--forest-d) 100%);color:var(--paper);
+.bsec{position:relative;overflow:hidden;background:radial-gradient(70% 80% at 28% 55%,#324E37 0%,#324E37 32%,var(--forest) 58%,var(--forest-d) 100%);color:var(--paper);
   padding:clamp(72px,11vh,130px) var(--gut)}
 .bgrid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(24px,5vw,80px);align-items:center;max-width:1400px;margin:0 auto}
 .bsec .eyebrow{color:#F2C46E}
 .bsec p{margin:0 0 18px;font-size:18px;line-height:1.6;color:#E2E6D6;max-width:44ch}
 .yard{position:relative;height:min(68vh,580px);min-height:420px}
-.yard::after{content:"";position:absolute;left:14%;right:14%;bottom:6%;height:9%;border-radius:50%;background:radial-gradient(closest-side,rgba(10,20,12,.5),transparent);z-index:0}
-.bro{position:absolute;left:50%;bottom:7%;height:82%;z-index:2;transform-origin:50% 100%;translate:-50% 0;transition:rotate .5s var(--ease),opacity .5s,scale .5s var(--ease)}
+.yard::after{display:none;content:"";position:absolute;left:14%;right:14%;bottom:6%;height:9%;border-radius:50%;background:radial-gradient(closest-side,rgba(10,20,12,.5),transparent);z-index:0}
+.bro{position:absolute;left:50%;bottom:2%;height:96%;aspect-ratio:1;z-index:2;transform-origin:50% 100%;translate:-50% 0;transition:rotate .5s var(--ease),opacity .5s,scale .5s var(--ease)}
 .bro.away{opacity:0;scale:.85}
-.bro canvas,.bro img{height:100%;display:block;filter:drop-shadow(0 18px 24px rgba(0,0,0,.3))}
-.bro img.eat{position:absolute;left:50%;top:0;translate:-50% 0;opacity:0}
+.bro img{display:block;filter:drop-shadow(0 18px 24px rgba(0,0,0,.3))}
+.bro video{display:block;width:100%;height:100%;object-fit:cover;background:#324E37;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 11%,#000 89%,transparent),linear-gradient(180deg,transparent,#000 4%,#000 90%,transparent);
+  -webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent,#000 11%,#000 89%,transparent),linear-gradient(180deg,transparent,#000 4%,#000 90%,transparent);mask-composite:intersect}
+.bro img.eat{position:absolute;left:53%;bottom:9%;height:80%;translate:-50% 0;opacity:0}
 .bro.eating .wave{opacity:0}.bro.eating img.eat{opacity:1}
 .bro.eating{animation:chew .28s ease-in-out 4}
 @keyframes chew{50%{scale:1.03 .97}}
@@ -227,7 +230,7 @@ body{background:var(--paper);color:var(--ink);font:300 16px/1.55 var(--f-body);-
 .lf{transform:rotate(var(--r,0deg))}
 .lf.fly{transition:none;pointer-events:none}
 .lf.eaten{visibility:hidden}
-.say{position:absolute;z-index:4;left:56%;top:4%;width:min(300px,46%);background:var(--card);color:var(--ink);border-radius:18px 18px 18px 4px;padding:14px 16px;
+.say{position:absolute;z-index:4;left:60%;top:4%;width:min(300px,46%);background:var(--card);color:var(--ink);border-radius:18px 18px 18px 4px;padding:14px 16px;
   font-size:15px;line-height:1.45;box-shadow:0 20px 40px -18px rgba(0,0,0,.55);transition:opacity .35s,transform .35s var(--ease)}
 .say.hide{opacity:0;transform:translateY(8px)}
 .say b{display:block;font:800 18px/1 var(--f-display);text-transform:uppercase;color:var(--terra);margin-bottom:6px}
@@ -264,7 +267,8 @@ body{background:var(--paper);color:var(--ink);font:300 16px/1.55 var(--f-body);-
   .branch{width:78vw;right:-22%;top:-5%}
   .shade{background:linear-gradient(180deg,rgba(24,30,18,.42),rgba(24,30,18,0) 14%),linear-gradient(0deg,rgba(22,26,14,.82) 0%,rgba(22,26,14,.6) 28%,rgba(22,26,14,0) 52%)}
   .ui{grid-template-columns:1fr}.alt{text-align:left}
-  .say{left:auto;right:0;top:0;width:62%;font-size:14px}
+  .say{left:auto;right:0;top:0;width:56%;font-size:13.5px}
+  .bro{height:82%}
   .bsec p{font-size:16px}
 }
 @media (prefers-reduced-motion:reduce){
@@ -359,7 +363,7 @@ body{background:var(--paper);color:var(--ink);font:300 16px/1.55 var(--f-body);-
   <div class="bgrid">
     <div class="yard" id="yard">
       <div class="bro" id="bro">
-        <canvas class="wave" id="broc" width="481" height="640" role="img" aria-label="Бронтя машет лапой"></canvas>
+        <video class="wave" id="brov" src="assets/bronte.mp4" poster="assets/bronte-poster.webp" muted playsinline preload="auto" aria-label="Бронтя машет лапой"></video>
         <img class="eat" src="assets/bronte-eat.webp" alt="" aria-hidden="true">
       </div>
       <div class="say" id="say" aria-live="polite"><b>Я Бронтя!</b>Угостишь листиком платана? За каждый расскажу что-нибудь про парк.</div>
@@ -595,20 +599,8 @@ mb.addEventListener('pointerleave',()=>bub.classList.remove('on'));
 function dump(){const P=PARK.proj;$('editout').value=pts.map(p=>`${p.n}\t${(P.N-p.m[1]/P.KY).toFixed(6)}, ${(P.W+p.m[0]/P.KX).toFixed(6)}\t${p.t}`).join('\n')}
 if(EDIT)dump();
 const yard=$('yard'),bro=$('bro'),say=$('say'),meter=[...$('meter').children];
-const WAVE_N=87,IDLE=WAVE_N-1,broc=$('broc'),bx=broc.getContext('2d'),WF=[];
-const SEQ=[...Array(WAVE_N).keys()];
-for(let i=0;i<WAVE_N;i++){const im=new Image();im.src='assets/wave/'+String(i).padStart(2,'0')+'.webp?v=4';WF.push(im);if(i===IDLE)im.onload=()=>{if(!wPlaying)waveDraw(IDLE)}}
-let wShown=-1,wPlaying=false,wArmed=true;
-function waveDraw(k){const im=WF[k];if(!(im&&im.complete&&im.naturalWidth)||k===wShown)return;wShown=k;
-  bx.clearRect(0,0,broc.width,broc.height);bx.drawImage(im,0,0,broc.width,broc.height)}
-function wave(){
-  if(wPlaying||reduce)return;
-  if(!WF.every(im=>im.complete&&im.naturalWidth)){setTimeout(wave,150);return}
-  wPlaying=true;const t0=performance.now();
-  (function step(t){const i=Math.floor((t-t0)/1000*24);
-    if(i>=SEQ.length){waveDraw(IDLE);wPlaying=false;return}
-    waveDraw(SEQ[i]);requestAnimationFrame(step)})(t0);
-}
+const brov=$('brov');let wArmed=true;
+function wave(){if(reduce||!brov.paused&&!brov.ended)return;try{brov.currentTime=0}catch(e){}brov.play().catch(()=>{})}
 new IntersectionObserver(es=>{for(const e of es){
   if(e.intersectionRatio>=.55&&wArmed){wArmed=false;wave()}
   else if(e.intersectionRatio<.05)wArmed=true}},{threshold:[0,.05,.55]}).observe(bro);
@@ -631,7 +623,7 @@ function spawnLeaves(){
 function feed(b){
   if(b.classList.contains('fly'))return;
   const yr=yard.getBoundingClientRect(),lr=b.getBoundingClientRect(),br=bro.getBoundingClientRect();
-  const sx=lr.left-yr.left,sy=lr.top-yr.top,ex=br.left-yr.left+br.width*.42-lr.width/2,ey=br.top-yr.top+br.height*.3-lr.height/2;
+  const sx=lr.left-yr.left,sy=lr.top-yr.top,ex=br.left-yr.left+br.width*.42-lr.width/2,ey=br.top-yr.top+br.height*.33-lr.height/2;
   b.classList.add('fly');
   const done=()=>{b.classList.add('eaten');eat()};
   if(reduce||!b.animate){done();return}
