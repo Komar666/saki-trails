@@ -2,7 +2,7 @@
 <meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Тропы Саки</title>
-<meta name="description" content="Сакский курортный парк: 23 места на карте, маршруты тропы здоровья, старинные открытки и прогулка с Бронтей.">
+<meta name="description" content="Сакский курортный парк: 22 места на карте, маршруты тропы здоровья, старинные открытки и прогулка с Бронтей.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -149,6 +149,7 @@ body{background:var(--paper);color:var(--ink);font:300 16px/1.55 var(--f-body);-
 .legend{display:flex;flex-wrap:wrap;gap:4px 18px;margin:0 0 12px;font:19px/1.3 var(--f-hand);color:#6B4A2C}
 .legend span{display:flex;align-items:center;gap:8px}
 .legend i{flex:none;width:12px;height:12px;border-radius:50% 45% 55% 50%;box-shadow:inset 0 -2px 0 rgba(0,0,0,.12)}
+.legend i.hist{background:var(--leaf);box-shadow:0 0 0 2px var(--letter),0 0 0 3.5px #8A4E26}
 .legend i.rt{width:24px;height:6px;border-radius:4px 2px 5px 3px;background:#E2842F}
 .legend b{font-weight:400}
 .pointlist{margin:0;padding:0;list-style:none;
@@ -170,21 +171,37 @@ body{background:var(--paper);color:var(--ink);font:300 16px/1.55 var(--f-body);-
 .mapnote{position:absolute;left:16px;bottom:12px;font:400 11px/1.3 var(--f-mono);color:rgba(30,42,34,.55)}
 .compass{position:absolute;right:18px;top:16px;font:600 12px/1 var(--f-mono);color:var(--forest);text-align:center}
 .compass svg{display:block;margin:0 auto 4px}
-.card{position:absolute;z-index:8;width:min(340px,86%);background:var(--card);border-radius:18px;overflow:hidden;
+.card{position:absolute;z-index:8;width:min(370px,88%);background:var(--card);border-radius:18px;overflow:hidden;
   box-shadow:0 24px 60px -18px rgba(30,42,34,.55),0 0 0 1px rgba(30,42,34,.08);
   opacity:0;transform:translateY(10px) scale(.97);pointer-events:none;transition:opacity .25s ease,transform .35s var(--ease)}
 .card.on{opacity:1;transform:none;pointer-events:auto}
-.photo{position:relative;aspect-ratio:4/3;background:#DDD3BD;overflow:hidden}
-.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .45s ease}
-.photo img.then{opacity:0;filter:sepia(.25) contrast(1.02)}
-.card.old .photo img.then{opacity:1}
-.card.old .photo img.now{opacity:0}
-.num{position:absolute;left:12px;top:12px;font:600 12px/1 var(--f-mono);background:var(--ink);color:#FFE7B8;padding:7px 9px;border-radius:999px}
-.toggle{position:absolute;right:10px;bottom:10px;display:flex;background:rgba(30,42,34,.72);border-radius:999px;padding:3px;backdrop-filter:blur(4px)}
+.photo{position:relative;aspect-ratio:4/3;background:#2A2F25;overflow:hidden;touch-action:pan-y}
+.photo .bg{position:absolute;inset:-20px;background-size:cover;background-position:center;filter:blur(18px) brightness(.62) saturate(.9);transition:background-image .3s}
+.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transition:opacity .35s ease}
+.card.old .photo img{filter:sepia(.18) contrast(1.02)}
+.num{position:absolute;left:12px;top:12px;font:600 12px/1 var(--f-mono);background:var(--ink);color:#FFE7B8;padding:7px 9px;border-radius:999px;z-index:2}
+.nav2{position:absolute;top:50%;translate:0 -50%;z-index:2;width:34px;height:34px;border-radius:50%;border:0;background:rgba(22,27,31,.5);color:#fff;display:grid;place-items:center;cursor:pointer;backdrop-filter:blur(4px)}
+.nav2 svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.nav2.l{left:8px}.nav2.r{right:8px}
+.nav2[hidden]{display:none}
+.pdots{position:absolute;left:0;right:0;bottom:46px;display:flex;justify-content:center;gap:5px;z-index:2}
+.pdots i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.45)}
+.pdots i.on{background:#fff}
+.toggle{position:absolute;right:10px;bottom:10px;display:flex;background:rgba(30,42,34,.72);border-radius:999px;padding:3px;backdrop-filter:blur(4px);z-index:2}
 .toggle button{all:unset;cursor:pointer;font:600 12px/1 var(--f-body);color:var(--paper);padding:7px 11px;border-radius:999px;transition:background .25s,color .25s}
 .toggle button[aria-pressed="true"]{background:var(--leaf);color:var(--ink)}
 .toggle button:disabled{opacity:.35;cursor:default}
-.cbody{padding:14px 16px 16px}
+.pcap{margin:0;padding:10px 16px 0;font:italic 500 16px/1.35 var(--f-old);color:#5A4A38;min-height:28px}
+.pcap b{font-style:normal;font:600 11px/1 var(--f-mono);letter-spacing:.06em;color:#A2581D;background:#FBEBDD;padding:4px 7px;border-radius:999px;margin-right:7px;vertical-align:1px}
+.objs{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 2px}
+.objs button{all:unset;cursor:pointer;font:500 12.5px/1.2 var(--f-body);padding:7px 11px;border-radius:999px;background:#F2E8D3;color:#3F463C;transition:background .25s,color .25s}
+.objs button[aria-pressed="true"]{background:var(--forest);color:#FFF7E6}
+.objs button:focus-visible{outline:2px solid var(--terra);outline-offset:2px}
+.badge{display:inline-block;font:600 10.5px/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:#8A4E26;border:1px solid #D9B98E;border-radius:999px;padding:5px 8px;margin-bottom:8px}
+.badge.plain{color:#4F6B43;border-color:#B9C9A6}
+.otext{margin:8px 0 0;font-size:14px;line-height:1.5;color:#3F463C}
+.cbody .sub{display:block;font-size:13px;color:var(--muted);margin:-2px 0 2px}
+.cbody{padding:10px 16px 16px}
 .cbody h3{margin:0 0 8px;font:800 26px/.95 var(--f-display);text-transform:uppercase}
 .cbody ul{margin:0;padding:0 0 0 16px;font-size:14px;line-height:1.45;color:#4A4D42}
 .close{position:absolute;right:10px;top:10px;z-index:3;width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.55);background:rgba(22,27,31,.55);color:#fff;
@@ -259,8 +276,13 @@ body{background:var(--paper);color:var(--ink);font:300 16px/1.55 var(--f-body);-
 .foot .logo{font-size:20px;color:var(--paper);text-shadow:none}
 .foot p{margin:0;font-size:12.5px}
 @media (max-width:760px){.nav a:not(.btn){font-size:13px}}
+@media (max-width:440px){.nav{gap:14px}.nav a[href="#bronte"]{display:none}}
 @media (max-width:900px){
-  .mapgrid{grid-template-columns:1fr;grid-template-rows:none}
+  .mapgrid{grid-template-columns:minmax(0,1fr);grid-template-rows:none}
+  .intro,.letter{min-width:0}
+  .pointlist li{height:auto;min-height:32px}
+  .pointlist button{height:auto;min-height:32px;white-space:normal;line-height:1.25;padding:6px 4px}
+  .pointlist .t{overflow:visible}
   .intro,.mapcol,.letter{grid-column:1;grid-row:auto}
   .mapcol{margin-top:22px;order:1;position:relative;top:auto}.mapcol .mapbox{width:100%}
   .letter{order:2;margin:36px 8px 16px 0;padding:26px 18px 24px 40px}
@@ -270,10 +292,9 @@ body{background:var(--paper);color:var(--ink);font:300 16px/1.55 var(--f-body);-
   .letter::after{left:26px}
   .pointlist button{font-size:16.5px}
   .mapbox{border-radius:18px}
-  .card{position:fixed;left:12px!important;right:12px;bottom:max(12px,env(safe-area-inset-bottom));top:auto!important;width:auto;max-width:520px;margin:0 auto;display:grid;grid-template-columns:42% 1fr}
-  .photo{aspect-ratio:auto;min-height:150px}
+  .card{position:fixed;left:12px!important;right:12px;bottom:max(12px,env(safe-area-inset-bottom));top:auto!important;width:auto;max-width:520px;margin:0 auto;max-height:74vh;overflow:auto}
+  .photo{aspect-ratio:16/10}
   .cbody{padding:12px 40px 12px 14px}.cbody h3{font-size:21px}.cbody ul{font-size:13px}
-  .toggle{left:6px;right:6px;bottom:6px;justify-content:center}.toggle button{padding:6px 8px;font-size:11px}
   .bgrid{grid-template-columns:1fr}
   .yard{order:2;height:min(62vh,500px);min-height:380px}
 }
@@ -305,7 +326,7 @@ body{background:var(--paper);color:var(--ink);font:300 16px/1.55 var(--f-body);-
 <section class="hero" id="top" aria-label="Сакский курортный парк">
   <div class="stage" id="stage">
     <img class="ly" id="sky" src="assets/hero-sky.webp" alt="" aria-hidden="true">
-    <img class="ly" id="front" src="assets/hero-front.webp" alt="Лестница к белой ротонде «Красная горка» среди осенних деревьев Сакского парка" fetchpriority="high">
+    <img class="ly" id="front" src="assets/hero-front.webp" alt="Лестница к Греческой ротонде на «Красной горке» среди осенних деревьев Сакского парка" fetchpriority="high">
     <canvas id="wordc" aria-hidden="true"></canvas>
     <canvas id="leaves" aria-hidden="true"></canvas>
     <img class="branch" id="branch" src="assets/branch.webp" alt="" aria-hidden="true">
@@ -314,7 +335,7 @@ body{background:var(--paper);color:var(--ink);font:300 16px/1.55 var(--f-body);-
     <div class="ui" id="hcopy">
       <div class="fade d1">
         <div class="eyebrow">Саки · Сакский курортный парк</div>
-        <p>Тропа здоровья по курортному парку: 23 места с историей, старинные открытки и маршруты с плана парка. Ведёт Бронтя.</p>
+        <p>Тропа здоровья по курортному парку: 22 места, старинные открытки и маршруты с плана парка. Ведёт Бронтя.</p>
         <div class="ctas">
           <a class="btn solid cta" href="#map"><span>Открыть карту</span><i class="ico" aria-hidden="true"><svg viewBox="0 0 16 16"><g class="a"><path d="M8 2.5v7.5M4.8 6.8 8 10l3.2-3.2"/></g><path d="M3 13.5h10"/></svg></i></a>
           <a class="btn cta" href="#bronte"><span>Познакомиться с Бронтей</span><i class="ico" aria-hidden="true"><svg viewBox="0 0 16 16"><g class="a"><path d="M2.5 8h10.5M9 4l4 4-4 4"/></g></svg></i></a>
@@ -332,7 +353,7 @@ body{background:var(--paper);color:var(--ink);font:300 16px/1.55 var(--f-body);-
   <div class="mapgrid">
     <div class="intro">
       <div class="eyebrow">План парка</div>
-      <h2 id="map-h">23 места одной прогулки</h2>
+      <h2 id="map-h">22 места одной прогулки</h2>
       <p class="lead">Наведите на точку — откроется место и его история. На многих точках есть старинная открытка: переключите «Тогда», чтобы увидеть парк век назад.</p>
       <a class="trailcta" href="map.html">
         <span class="tc-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.2"/><circle cx="18" cy="6" r="2.2"/><path d="M8 17.2c5-1 2.5-5 5.5-6.2 2-.8 3-.5 3-2.6"/></svg></span>
@@ -353,7 +374,8 @@ body{background:var(--paper);color:var(--ink);font:300 16px/1.55 var(--f-body);-
       <h3 class="l-title" id="letter-h">Опись мест</h3>
       <p class="l-sub">для неспешной прогулки по парку</p>
       <div class="legend">
-        <span><i style="background:var(--leaf)"></i>место с историей</span>
+        <span><i class="hist"></i>место с историей</span>
+        <span><i style="background:#7E9A5F"></i>место маршрута</span>
         <span><i class="rt"></i>тропа здоровья, <b id="rlen">≈2,5 км</b></span>
         <span><i style="background:var(--lake)"></i>пруды</span>
       </div>
@@ -362,17 +384,21 @@ body{background:var(--paper);color:var(--ink);font:300 16px/1.55 var(--f-body);-
     </article>
     <div class="mapcol">
       <div class="mapbox" id="mapbox">
-        <canvas id="mapc" aria-label="Карта Сакского курортного парка с 23 точками и маршрутами тропы здоровья"></canvas>
+        <canvas id="mapc" aria-label="Карта Сакского курортного парка с 22 точками и маршрутами тропы здоровья"></canvas>
         <video class="bench" id="bench" src="assets/bench.mp4" poster="assets/bench-poster.webp" muted loop playsinline preload="metadata" aria-hidden="true"></video>
         <img class="mbronte" id="mbronte" src="assets/bronte-point.webp" alt="Бронтя показывает на пруд «Чёрное море»">
         <div class="bubble" id="bubble"><b>Привет, я Бронтя!</b>Вон мой пруд «Чёрное море» — точка 4. Наведи на любую точку, расскажу, где мы гуляем.</div>
         <div class="compass" aria-hidden="true"><svg width="18" height="22" viewBox="0 0 18 22"><path d="M9 0 L16 20 L9 15 L2 20 Z" fill="#2F4A37"/></svg>С</div>
         <div class="mapnote">© участники OpenStreetMap · маршруты и точки — план парка</div>
         <article class="card" id="card" aria-live="polite"><button type="button" class="close" id="c-close" aria-label="Закрыть"><svg viewBox="0 0 14 14"><path d="M2 2l10 10M12 2 2 12"/></svg></button>
-          <div class="photo"><img class="now" id="c-now" alt=""><img class="then" id="c-then" alt=""><span class="num" id="c-num"></span>
+          <div class="photo" id="c-photo"><div class="bg" id="c-bg"></div><img id="c-img" alt=""><span class="num" id="c-num"></span>
+            <button type="button" class="nav2 l" id="c-prev" aria-label="Предыдущее фото"><svg viewBox="0 0 14 14"><path d="M9 2 4 7l5 5"/></svg></button>
+            <button type="button" class="nav2 r" id="c-next" aria-label="Следующее фото"><svg viewBox="0 0 14 14"><path d="m5 2 5 5-5 5"/></svg></button>
+            <div class="pdots" id="c-dots"></div>
             <div class="toggle" role="group" aria-label="Фото места"><button type="button" id="b-now" aria-pressed="true">Сейчас</button><button type="button" id="b-then" aria-pressed="false">Тогда</button></div>
           </div>
-          <div class="cbody"><h3 id="c-title"></h3><ul id="c-cap"></ul></div>
+          <p class="pcap" id="c-pcap"></p>
+          <div class="cbody"><span class="badge" id="c-badge"></span><h3 id="c-title"></h3><span class="sub" id="c-sub"></span><div class="objs" id="c-objs" role="group" aria-label="Объекты точки"></div><p class="otext" id="c-text" hidden></p></div>
         </article>
       </div>
       <textarea class="editout" id="editout" readonly aria-label="Координаты точек после разметки"></textarea>
@@ -392,7 +418,7 @@ body{background:var(--paper);color:var(--ink);font:300 16px/1.55 var(--f-body);-
     <div>
       <div class="eyebrow">Маскот парка</div>
       <h2 id="b-h">Бронтя проголодался</h2>
-      <p>Бронтя живёт у пруда «Чёрное море» — там, где в парке стоит скульптура бронтозавра. Ест он только опавшие листья платана, а за угощение рассказывает о парке.</p>
+      <p>Бронтя живёт у пруда «Чёрное море» — там, где стоит скульптура «Борьба бронтозавра с цератозаврами». Ест он только опавшие листья платана, а за угощение рассказывает о парке.</p>
       <p>Нажмите на лист — Бронтя его поймает. Накормите его шестью листьями, и он позовёт играть в прятки: будет выглядывать с разных сторон экрана, а вы ловите.</p>
       <div class="meter" aria-label="Сколько листьев съел Бронтя"><span id="fedt">Съедено 0 из 6</span><ol id="meter"><li></li><li></li><li></li><li></li><li></li><li></li></ol></div>
       <div class="bctas">
@@ -570,30 +596,53 @@ function draw(){
   pts.forEach((p,i)=>{
     const[x,y]=T(p.m),act=i===hover||i===pinned,s=W<520?.72:1,r=(act?15:11)*s;
     cx.fillStyle='rgba(30,42,34,.28)';cx.beginPath();cx.arc(x+1.5,y+2.5,r,0,7);cx.fill();
-    cx.fillStyle=act?'#B85B34':'#D9982F';cx.beginPath();cx.arc(x,y,r,0,7);cx.fill();
+    cx.fillStyle=act?'#B85B34':p.hist?'#D9982F':'#7E9A5F';cx.beginPath();cx.arc(x,y,r,0,7);cx.fill();
     cx.strokeStyle='#FFF7E6';cx.lineWidth=2;cx.stroke();
+    if(p.hist){cx.strokeStyle=act?'#B85B34':'#8A4E26';cx.lineWidth=1.3;cx.beginPath();cx.arc(x,y,r+3.2,0,7);cx.stroke()}
     cx.fillStyle='#1E2A22';cx.font='600 '+Math.round((act?12:10)*s)+'px "JetBrains Mono", monospace';cx.textAlign='center';cx.textBaseline='middle';cx.fillText(p.n,x,y+.5);
   });
   const[bx,by]=T([528,318]);const b=$('mbronte');b.style.left=bx+'px';b.style.top=by+'px';
 }
 function pick(ex,ey){let best=-1,bd=24;pts.forEach((p,i)=>{const[x,y]=T(p.m),dd=Math.hypot(x-ex,y-ey);if(dd<bd){bd=dd;best=i}});return best}
+let cp=null,obj=0,old=false,pi=0;
+const gal=()=>old?cp.then:cp.objs[obj].ph;
+function setPhoto(k){
+  const g=gal();if(!g.length)return;pi=(k+g.length)%g.length;const f=g[pi],src='assets/photos/'+f.id+'.webp';
+  const im=$('c-img');im.style.opacity=0;const n=new Image();n.onload=()=>{im.src=src;im.style.opacity=1};n.src=src;
+  $('c-bg').style.backgroundImage=`url("${src}")`;im.alt=f.cap;
+  const m=f.cap.match(/,\s*(\d{4}(?:–\d{2,4})?)\s*(?:гг?\.)?\s*$/);
+  $('c-pcap').innerHTML=(m?`<b>${m[1]}</b>`+f.cap.slice(0,m.index):f.cap);
+  $('c-dots').innerHTML=g.length>1?g.map((_,j)=>`<i class="${j===pi?'on':''}"></i>`).join(''):'';
+  $('c-prev').hidden=$('c-next').hidden=g.length<2;
+}
+function setText(){const t=cp.objs[obj].text||'';$('c-text').textContent=t;$('c-text').hidden=!t}
+function setObj(k){obj=k;old=false;setText();$('c-objs').querySelectorAll('button').forEach((b,j)=>b.setAttribute('aria-pressed',j===k));setMode(false)}
+function setMode(v){
+  if(!cp)return;
+  if(!v&&!cp.objs[obj].ph.length&&cp.then.length)v=true;
+  old=v;card.classList.toggle('old',v);$('b-now').setAttribute('aria-pressed',!v);$('b-then').setAttribute('aria-pressed',v);setPhoto(0)}
 function show(i){
   if(i<0){card.classList.remove('on');document.querySelectorAll('.pointlist button').forEach(b=>b.classList.remove('on'));return}
   const p=pts[i],[x,y]=T(p.m);
-  $('c-num').textContent=String(p.n).padStart(2,'0');$('c-title').textContent=p.t;
-  $('c-now').src='assets/photos/'+p.now+'.webp';$('c-now').alt=p.t+' сегодня';
-  if(p.then){$('c-then').src='assets/photos/'+p.then+'.webp';$('c-then').alt=p.t+' на старинной открытке'}else{$('c-then').removeAttribute('src');$('c-then').alt=''}
-  $('b-then').disabled=!p.then;setOld(false);
-  $('c-cap').innerHTML=p.cap.map(c=>'<li>'+c+'</li>').join('');
-  const cw=card.offsetWidth||340,ch=card.offsetHeight||360;
+  if(cp!==p){cp=p;obj=0;
+    $('c-num').textContent=String(p.n).padStart(2,'0');$('c-title').textContent=p.t;$('c-sub').textContent=p.sub||'';
+    $('c-badge').textContent=p.hist?'место с историей':'место маршрута';$('c-badge').classList.toggle('plain',!p.hist);
+    $('b-then').disabled=!p.then.length;$('b-now').disabled=!p.objs.some(o=>o.ph.length);
+    $('b-then').textContent=p.then.length?'Тогда · '+p.then.length:'Тогда';
+    $('c-objs').innerHTML=p.objs.length>1?p.objs.map((o,j)=>`<button type="button" aria-pressed="${j===0}">${o.t}</button>`).join(''):'';
+    $('c-objs').querySelectorAll('button').forEach((b,j)=>b.onclick=()=>setObj(j));
+    setText();setMode(false)}
+  const cw=card.offsetWidth||370,ch=card.offsetHeight||420;
   let left=x+22,top=y-ch/2;if(left+cw>W-10)left=x-22-cw;top=Math.max(10,Math.min(H-ch-10,top));
   card.style.left=left+'px';card.style.top=top+'px';card.classList.add('on');
   document.querySelectorAll('.pointlist button').forEach((b,j)=>b.classList.toggle('on',j===i));
 }
+$('c-prev').onclick=e=>{e.stopPropagation();setPhoto(pi-1)};$('c-next').onclick=e=>{e.stopPropagation();setPhoto(pi+1)};
+let sx0=null;$('c-photo').addEventListener('pointerdown',e=>{sx0=e.clientX});
+$('c-photo').addEventListener('pointerup',e=>{if(sx0==null)return;const d=e.clientX-sx0;sx0=null;if(Math.abs(d)>36)setPhoto(pi+(d<0?1:-1))});
 function pin(i){pinned=i;card.classList.toggle('pin',i>=0);hover=i;draw();show(i)}
 $('c-close').onclick=()=>pin(-1);
-function setOld(v){card.classList.toggle('old',v);$('b-now').setAttribute('aria-pressed',!v);$('b-then').setAttribute('aria-pressed',v)}
-$('b-now').onclick=()=>setOld(false);$('b-then').onclick=()=>setOld(true);
+$('b-now').onclick=()=>setMode(false);$('b-then').onclick=()=>setMode(true);
 const local=e=>{const r=box.getBoundingClientRect();return[e.clientX-r.left,e.clientY-r.top]};
 cv.addEventListener('pointermove',e=>{
   const[x,y]=local(e);
@@ -627,12 +676,12 @@ new IntersectionObserver(es=>{for(const e of es){
   else if(e.intersectionRatio<.05)wArmed=true}},{threshold:[0,.05,.55]}).observe(bro);
 bro.addEventListener('pointerenter',wave);
 const FACTS=[
-  ['Вкуснотища!','Главная платановая аллея — это платаны кленолистные. С них и падают мои любимые листья.'],
-  ['Ням!','Рядом с ротондой «Красная горка» растёт дзельква граболистная. Найди её на карте — точка 2.'],
+  ['Вкуснотища!','На Главной аллее растут платаны кленолистные. С них и падают мои любимые листья.'],
+  ['Ням!','Рядом с Греческой ротондой растёт дзельква граболистная. Найди её на карте — точка 2.'],
   ['Хрум-хрум','Старые сосны пицундские в нашем парке занесены в Красную книгу России.'],
-  ['Мм, осенний!','У скульптуры «Олени» на старых открытках — оркестровая эстрада 1909–1917 годов.'],
-  ['Ещё хочу!','Над моим прудом «Чёрное море» есть мостик. Переключи «Тогда» — увидишь пруд на старинном снимке.'],
-  ['Сыт!','Спасибо! Бывшее здание земской грязелечебницы стоит у фонтана «Купальщица». А теперь — поиграем в прятки?']
+  ['Мм, осенний!','Там, где сейчас скульптура «Олени», в 1900–1917 годах играл оркестр — на старых открытках видна эстрада.'],
+  ['Ещё хочу!','Над моим прудом «Чёрное море» есть мостик. Нажми «Тогда» у точки 6 — увидишь пруд в 1892 году.'],
+  ['Сыт!','Спасибо! На Аллее надежд у бывшей водолечебницы стоит фонтан «Купальщица». А теперь — поиграем в прятки?']
 ];
 const SPOTS=[[8,70,-18],[20,86,12],[78,74,24],[88,88,-8],[4,90,30],[66,90,-26]];
 let fed=0,chew=0;

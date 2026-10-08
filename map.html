@@ -260,7 +260,8 @@ function drawRoute(){
     const st=walk&&walk.route===route.id?walk.marks[i]:null;
     const cls=st?(st.skip?'skip':'done'):(walk&&walk.route===route.id&&nextIdx()===i?'next':'');
     const m=L.marker(s.ll,{icon:L.divIcon({className:'',html:`<div class="mk ${cls}">${st&&!st.skip?'✓':i+1}</div>`,iconSize:[28,28],iconAnchor:[14,14]}),title:s.title,riseOnHover:true});
-    const ph=s.poi&&PHOTO[s.poi]?`<img src="assets/photos/${PHOTO[s.poi].now}.webp" alt="">`:'';
+    const P_=s.poi&&PHOTO[s.poi],f=P_&&((P_.objs.find(o=>o.ph.length)||{ph:[]}).ph[0]||P_.then[0]);
+    const ph=f?`<img src="assets/photos/${f.id}.webp" alt="${f.cap}">`:'';
     m.bindPopup(`<div class="pop">${ph}<div><b>${i+1}. ${s.title}</b><span>${s.from_start} м от старта${s.elev?' · '+s.elev+' м н.у.м.':''}${s.note?' · '+s.note:''}</span></div></div>`,{closeButton:false});
     m.addTo(map);markers.push(m);
   });
