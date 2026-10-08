@@ -1,0 +1,55 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>QR-коды точек Саки</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Extra+Condensed:wght@800;900&family=Geologica:wght@300;400;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root{--paper:#F3EAD8;--card:#FFFBF2;--ink:#1E2A22;--muted:#6B6656;--forest:#2F4A37;--leaf:#D9982F;--terra:#B85B34;
+  --f-display:"Sofia Sans Extra Condensed","Arial Narrow",sans-serif;--f-body:"Geologica","Segoe UI",system-ui,sans-serif;--f-mono:"JetBrains Mono",ui-monospace,Consolas,monospace;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:300 15px/1.5 var(--f-body)}
+.head{max-width:1100px;margin:0 auto;padding:28px 20px 10px;display:grid;gap:8px}
+.head h1{margin:0;font:900 44px/.9 var(--f-display);text-transform:uppercase}
+.head p{margin:0;max-width:70ch;color:#3F463C}
+.head code{font:600 13px var(--f-mono);background:#fff;padding:3px 7px;border-radius:6px}
+.grid{max-width:1100px;margin:0 auto;padding:16px 20px 40px;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.card{background:var(--card);border-radius:18px;padding:20px;display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:center;box-shadow:0 1px 0 #E3D7BE;break-inside:avoid}
+.qr{width:120px;height:120px}
+.qr svg{width:100%;height:100%;display:block}
+.num{font:600 12px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--terra)}
+.card b{display:block;font:800 23px/1 var(--f-display);text-transform:uppercase;margin:6px 0}
+.card span{font-size:13px;color:var(--muted);line-height:1.4}
+.card .r{font:600 11px/1.4 var(--f-mono);color:var(--forest);margin-top:6px}
+@media print{
+  @page{size:A4;margin:12mm}
+  body{background:#fff}.head{display:none}
+  .grid{grid-template-columns:1fr 1fr;gap:10mm;padding:0;max-width:none}
+  .card{border:1px solid #DCCFB3;box-shadow:none;border-radius:6mm;padding:7mm;grid-template-columns:42mm 1fr}
+  .qr{width:42mm;height:42mm}
+  .card:nth-child(6n){break-after:page}
+}
+</style>
+<div class="head">
+  <h1>QR-коды точек терренкуров</h1>
+  <p>Распечатайте и разместите на стендах у точек (Ctrl+P). Человек наводит камеру телефона — открывается карта, и точка отмечается сама, даже если GPS под деревьями неточный. Коды ведут на <code id="base"></code></p>
+</div>
+<div class="grid" id="grid"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script src="assets/routes.js"></script>
+<script>
+(()=>{
+const q=new URLSearchParams(location.search).get('base');
+const base=q||location.href.replace(/[?#].*$/,'').replace(/qr\.html$/,'map.html');
+document.getElementById('base').textContent=base;
+const seen=new Map();
+ROUTES.forEach(r=>r.stops.forEach((s,i)=>{const key=s.poi?String(s.poi):'pine';
+  if(!seen.has(key))seen.set(key,{s,routes:new Set()});seen.get(key).routes.add(r.id)}));
+const items=[...seen.entries()].sort((a,b)=>(+a[0]||99)-(+b[0]||99));
+document.getElementById('grid').innerHTML=items.map(([key,{s,routes}])=>{
+  const qr=qrcode(0,'M');qr.addData(base+'#cp-'+key);qr.make();
+  return `<div class="card"><div class="qr">${qr.createSvgTag({cellSize:4,margin:2,scalable:true})}</div>
+    <div><span class="num">Точка ${key==='pine'?'':'№ '+key}</span><b>${s.title}</b><span>Наведите камеру телефона — точка отметится на маршруте</span>
+    <div class="r">Терренкур ${[...routes].sort().join(', ')}</div></div></div>`}).join('');
+})();
+</script>

@@ -112,6 +112,21 @@ body{background:var(--paper);color:var(--ink);font:300 16px/1.55 var(--f-body);-
 .mapsec h2,.bsec h2{margin:14px 0 18px;font:900 clamp(56px,7vw,112px)/.86 var(--f-display);text-transform:uppercase;letter-spacing:.005em;text-wrap:balance}
 .mapsec .lead{margin:0 0 26px;font-size:18px;line-height:1.55;color:var(--ink-2);max-width:34ch}
 .mapsec .lead{margin-bottom:8px}
+.trailcta{display:grid;grid-template-columns:52px 1fr 40px;align-items:center;gap:14px;margin:22px 0 4px;max-width:420px;padding:12px 12px 12px 12px;border-radius:20px;text-decoration:none;
+  color:#FFF7E6;background:linear-gradient(150deg,#3B5C44,#2F4A37 55%,#22382A);box-shadow:0 18px 36px -18px rgba(34,56,42,.9),inset 0 0 0 1px rgba(255,247,230,.08);
+  transition:transform .4s var(--ease),box-shadow .4s}
+.tc-ico{width:52px;height:52px;border-radius:15px;display:grid;place-items:center;background:var(--buckthorn);color:var(--basalt)}
+.tc-ico svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round}
+.tc-t b{display:block;font:900 22px/1 var(--f-display);text-transform:uppercase;letter-spacing:.02em}
+.tc-t small{display:block;margin-top:5px;font-size:12.5px;line-height:1.35;color:#CFDCC9}
+.tc-go{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:rgba(255,247,230,.12);overflow:hidden;transition:background .35s}
+.tc-go svg{width:16px;height:16px;fill:none;stroke:#FFF7E6;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;overflow:visible}
+@media (hover:hover){
+  .trailcta:hover{transform:translateY(-3px);box-shadow:0 24px 44px -18px rgba(34,56,42,.95),0 0 0 4px rgba(242,160,31,.18)}
+  .trailcta:hover .tc-go{background:var(--buckthorn)}
+  .trailcta:hover .tc-go svg{stroke:var(--basalt)}
+  .trailcta:hover .tc-go .a{animation:cta-run .7s cubic-bezier(.5,0,.2,1)}
+}
 .letter{position:relative;isolation:isolate;margin:34px 10px 10px 0;padding:34px 30px 26px 50px;color:var(--sepia);
   background:
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .24 0 0 0 0 .1 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E"),
@@ -283,6 +298,7 @@ body{background:var(--paper);color:var(--ink);font:300 16px/1.55 var(--f-body);-
   <nav class="nav" aria-label="Разделы">
     <a href="#map">Карта</a>
     <a href="#bronte">Бронтя</a>
+    <a href="map.html">Терренкуры</a>
   </nav>
 </header>
 
@@ -318,6 +334,11 @@ body{background:var(--paper);color:var(--ink);font:300 16px/1.55 var(--f-body);-
       <div class="eyebrow">План парка</div>
       <h2 id="map-h">23 места одной прогулки</h2>
       <p class="lead">Наведите на точку — откроется место и его история. На многих точках есть старинная открытка: переключите «Тогда», чтобы увидеть парк век назад.</p>
+      <a class="trailcta" href="map.html">
+        <span class="tc-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.2"/><circle cx="18" cy="6" r="2.2"/><path d="M8 17.2c5-1 2.5-5 5.5-6.2 2-.8 3-.5 3-2.6"/></svg></span>
+        <span class="tc-t"><b>Пройти терренкур с GPS</b><small>3 маршрута · 1,3–2,5 км · время и скорость на каждом отрезке</small></span>
+        <span class="tc-go" aria-hidden="true"><svg viewBox="0 0 16 16"><path class="a" d="M2.5 8h10.5M9 4l4 4-4 4"/></svg></span>
+      </a>
     </div>
     <article class="letter" aria-labelledby="letter-h">
       <div class="stamp" aria-hidden="true"><img src="assets/photos/1.3.webp" alt=""><span>САКИ · 5 коп.</span></div>
