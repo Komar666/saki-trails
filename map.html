@@ -125,7 +125,19 @@ table.rep{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:10px}
 .pop div{padding:10px 14px 12px}
 .pop b{display:block;font:800 19px/1 var(--f-display);text-transform:uppercase}
 .pop span{font-size:12.5px;color:var(--muted)}
-@media (prefers-reduced-motion:reduce){.sheet,.btn,.bar i,.toast{transition:none}.mk.next{animation:none}}
+.pop a{display:inline-block;margin-top:8px;font:600 13px/1.2 var(--f-body);color:var(--forest);text-decoration:none;border-bottom:1.5px solid var(--leaf)}
+.qrc{position:fixed;left:50%;top:calc(126px + env(safe-area-inset-top,0px));z-index:1050;width:min(430px,calc(100vw - 24px));display:grid;grid-template-columns:104px minmax(0,1fr);
+  background:var(--card);border-radius:20px;overflow:hidden;box-shadow:0 24px 60px -20px rgba(30,42,34,.55),0 0 0 1px rgba(30,42,34,.08);
+  translate:-50% -14px;opacity:0;pointer-events:none;transition:opacity .4s ease,translate .5s var(--ease)}
+.qrc.on{opacity:1;translate:-50% 0;pointer-events:auto}
+.qrc img{width:104px;height:100%;min-height:124px;object-fit:cover;display:block;background:var(--paper-2)}
+.qrc .b{padding:13px 44px 14px 15px;display:grid;gap:6px;align-content:center}
+.qrc small{font:600 10.5px/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--terra)}
+.qrc b{font:800 21px/1 var(--f-display);text-transform:uppercase;color:var(--ink)}
+.qrc a{justify-self:start;display:inline-flex;align-items:center;gap:8px;margin-top:4px;padding:11px 15px;border-radius:999px;background:var(--forest);color:#FFF7E6;text-decoration:none;font:600 13.5px/1 var(--f-body)}
+.qrc a svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.qrc .x{position:absolute;right:6px;top:6px;width:34px;height:34px;border-radius:50%;border:0;background:transparent;color:var(--muted);font-size:22px;line-height:1}
+@media (prefers-reduced-motion:reduce){.sheet,.btn,.bar i,.toast,.qrc{transition:none}.mk.next{animation:none}}
 </style>
 
 <header class="top">
@@ -134,6 +146,8 @@ table.rep{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:10px}
 </header>
 <div id="map" role="application" aria-label="Карта Сакского парка с маршрутами терренкуров"></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
+<aside class="qrc" id="qrc" aria-label="Место у стенда"><img id="qrc-img" alt=""><div class="b"><small id="qrc-k"></small><b id="qrc-t"></b>
+  <a id="qrc-a" href="index.html">Читать о месте<svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></div><button class="x" id="qrc-x" type="button" aria-label="Скрыть">×</button></aside>
 
 <section class="sheet" id="sheet" aria-label="Терренкур">
   <button class="grab" id="grab" type="button" aria-label="Свернуть или развернуть панель"></button>
@@ -234,6 +248,8 @@ const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v)
 const toast=(t,ms=2600)=>{const e=$('toast');e.textContent=t;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('on'),ms)};
 const buzz=p=>{try{navigator.vibrate&&navigator.vibrate(p)}catch(e){}};
 const PHOTO={};POINTS.forEach(p=>PHOTO[p.n]=p);
+const readHref=s=>'index.html?from=map#place-'+(s.poi?s.poi:'4-3');
+const firstPhoto=s=>{const P_=s.poi?PHOTO[s.poi]:PHOTO[4];if(!P_)return null;const o=s.poi?P_.objs.find(o=>o.ph.length):P_.objs.find(o=>/Сосна/.test(o.t));return(o&&o.ph[0])||P_.then[0]||null};
 const parkLL=PARK.park.map(LL);
 const PC=(()=>{const c=L.latLngBounds(parkLL).getCenter();return [c.lat,c.lng]})();
 const map=L.map('map',{zoomControl:false,attributionControl:true,preferCanvas:true}).fitBounds(L.latLngBounds(parkLL).pad(.08));
@@ -261,9 +277,9 @@ function drawRoute(){
     const st=walk&&walk.route===route.id?walk.marks[i]:null;
     const cls=st?(st.skip?'skip':'done'):(walk&&walk.route===route.id&&nextIdx()===i?'next':'');
     const m=L.marker(s.ll,{icon:L.divIcon({className:'',html:`<div class="mk ${cls}">${st&&!st.skip?'✓':i+1}</div>`,iconSize:[28,28],iconAnchor:[14,14]}),title:s.title,riseOnHover:true});
-    const P_=s.poi&&PHOTO[s.poi],f=P_&&((P_.objs.find(o=>o.ph.length)||{ph:[]}).ph[0]||P_.then[0]);
+    const f=firstPhoto(s);
     const ph=f?`<img src="assets/photos/${f.id}.webp" alt="${f.cap}">`:'';
-    m.bindPopup(`<div class="pop">${ph}<div><b>${i+1}. ${s.title}</b><span>${s.from_start} м от старта${s.elev?' · '+s.elev+' м н.у.м.':''}${s.note?' · '+s.note:''}</span></div></div>`,{closeButton:false});
+    m.bindPopup(`<div class="pop">${ph}<div><b>${i+1}. ${s.title}</b><span>${s.from_start} м от старта${s.elev?' · '+s.elev+' м н.у.м.':''}${s.note?' · '+s.note:''}</span><br><a href="${readHref(s)}">Читать о месте →</a></div></div>`,{closeButton:false});
     m.addTo(map);markers.push(m);
   });
 }
@@ -364,17 +380,25 @@ function runDemo(){
     if(d<L0||nextIdx()>=0)demo=requestAnimationFrame(step)};
   demo=requestAnimationFrame(step);
 }
+function placeCard(s,label){
+  const f=firstPhoto(s),im=$('qrc-img');
+  if(f){im.src='assets/photos/'+f.id+'.webp';im.alt=f.cap;im.hidden=false}else im.hidden=true;
+  $('qrc-k').textContent=label;$('qrc-t').textContent=s.title;$('qrc-a').href=readHref(s);$('qrc').classList.add('on');
+}
+$('qrc-x').onclick=()=>$('qrc').classList.remove('on');
 function fromQR(){
   const m=location.hash.match(/^#cp-([\w-]+)/);if(!m)return;
-  const key=m[1],poi=key==='pine'?null:+key;
+  const key=m[1],poi=key==='pine'?null:+key,is=s=>(poi&&s.poi===poi)||(!poi&&!s.poi);
   try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}
   if(walk){
     const n=nextIdx();
-    for(let i=Math.max(n,1);i<route.stops.length;i++){const s=route.stops[i];if((poi&&s.poi===poi)||(!poi&&!s.poi)){mark(i,'QR');return}}
-    toast('Эта точка не входит в ваш маршрут');return;
+    for(let i=Math.max(n,1);i<route.stops.length;i++){const s=route.stops[i];if(is(s)){mark(i,'QR');placeCard(s,'Отмечено по QR-коду');return}}
   }
-  const s=ROUTES.flatMap(r=>r.stops).find(s=>(poi&&s.poi===poi)||(!poi&&!s.poi));
-  if(s){map.setView(s.ll,18);toast((s.title)+' — выберите маршрут и начните прогулку у главного входа',4200)}
+  const s=ROUTES.flatMap(r=>r.stops).find(is)||(poi&&PHOTO[poi]?{poi,title:PHOTO[poi].t}:null);
+  if(!s)return;
+  if(s.ll)map.setView(s.ll,18);
+  placeCard(s,walk?'Этой точки нет в вашем маршруте':'Вы у точки');
+  if(!walk)toast('Чтобы засечь время и скорость — выберите маршрут ниже',4200);
 }
 addEventListener('hashchange',fromQR);
 function finish(){
