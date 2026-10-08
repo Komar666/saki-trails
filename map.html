@@ -298,7 +298,7 @@ function renderWalk(){
   $('wName').textContent=route.name;$('demoTag').hidden=!walk.demo;
   const n=nextIdx(),s=route.stops[n]||route.stops[route.stops.length-1],lm=lastMark();
   $('wIdx').textContent=(n+1)+' из '+route.stops.length;$('wNext').textContent=s.title;
-  const left=lastFix?hav([lastFix.lat,lastFix.lon],s.ll):null;
+  const left=lastFix&&lastFix.acc<=1000?hav([lastFix.lat,lastFix.lon],s.ll):null;
   $('wDist').innerHTML=(left==null?'—':(left>999?fmt1(left/1000):Math.round(left)))+`<small>${left>999?'км':'м'} до точки</small>`;
   const done=route.stops[lm].from_start;
   $('kDone').innerHTML=done+'<small>м</small>';
@@ -332,12 +332,12 @@ function gpsOff(){if(watch!=null)navigator.geolocation.clearWatch(watch);watch=n
 function onFix(p){
   const f={lat:p.coords.latitude,lon:p.coords.longitude,acc:p.coords.accuracy||99,t:Date.now()};lastFix=f;
   const ll=[f.lat,f.lon];meMk.setLatLng(ll).addTo(map);accC.setLatLng(ll).setRadius(f.acc).addTo(map);
-  gpsState(f.acc<=25?'ok':'weak','GPS ±'+Math.round(f.acc)+' м');
+  gpsState(f.acc<=25?'ok':f.acc>1000?'off':'weak',f.acc>1000?'место примерное':'GPS ±'+(f.acc>999?fmt1(f.acc/1000)+' км':Math.round(f.acc)+' м'));
   const farPark=hav(ll,PC);
   if(!walk){return}
   walk.track.push([+f.lat.toFixed(6),+f.lon.toFixed(6),f.t]);if(walk.track.length%5===0)store.set('saki.walk',walk);
   track.setLatLngs(walk.track.map(t=>[t[0],t[1]]));
-  $('wHint').textContent=farPark>600?'Вы далеко от парка — карта показывает маршрут, отметки сработают, когда придёте.':(f.acc>40?'GPS неточный (±'+Math.round(f.acc)+' м) — если точка не отметилась сама, нажмите «Я на точке».':'');
+  $('wHint').textContent=f.acc>1000?'Это устройство определяет место по интернету, а не по GPS — точно не видно, где вы. На телефоне в парке включите геолокацию, или отмечайтесь кнопкой «Я на точке» и QR-кодами.':farPark>600?'Вы далеко от парка — карта показывает маршрут, отметки сработают, когда придёте.':(f.acc>40?'GPS неточный (±'+Math.round(f.acc)+' м) — если точка не отметилась сама, нажмите «Я на точке».':'');
   const n=nextIdx();if(n<0)return;
   if(f.acc<=40){
     const pr=along(ll,route.stops[lastMark()].from_start-30,route.stops[Math.min(n+2,route.stops.length-1)].from_start+30);
