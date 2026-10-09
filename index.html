@@ -275,6 +275,7 @@ body{background:var(--paper);color:var(--ink);font:300 16px/1.55 var(--f-body);-
 .g-back{position:absolute;right:72px;top:20px;z-index:5;display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 15px 0 11px;border-radius:999px;
   background:var(--forest);color:#FFF7E6;font:600 13px/1 var(--f-body);text-decoration:none;box-shadow:0 8px 20px -10px rgba(30,42,34,.6)}
 .g-back svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.g-back[hidden]{display:none}
 .g-close svg{width:15px;height:15px;stroke:currentColor;stroke-width:2;stroke-linecap:round}
 .g-chips{position:sticky;top:0;z-index:3;display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;margin:18px calc(-1 * clamp(26px,3.6vw,56px)) 0;padding:12px clamp(26px,3.6vw,56px);
   background:linear-gradient(180deg,rgba(247,236,214,.97) 70%,rgba(247,236,214,0));}
@@ -326,12 +327,16 @@ body{background:var(--paper);color:var(--ink);font:300 16px/1.55 var(--f-body);-
 .guide.open .g-rise{opacity:1;transform:none;transition-delay:var(--d,0s)}
 .g-text.swap .g-in{animation:g-swap .6s var(--ease)}
 @keyframes g-swap{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-.g-leaves{position:absolute;inset:0;grid-area:1/1/2/2;pointer-events:none;overflow:hidden;z-index:4}
-.g-leaves img{position:absolute;top:-12%;left:var(--x);width:var(--w);opacity:0;filter:drop-shadow(0 8px 10px rgba(0,0,0,.3))}
-.guide.open .g-leaves img{animation:g-leaf var(--t) var(--dl) cubic-bezier(.35,.1,.55,1) both}
-@keyframes g-leaf{0%{opacity:0;transform:translate(0,0) rotate(var(--r0))}8%{opacity:.95}
-  50%{transform:translate(calc(var(--dx) * .45),55vh) rotate(calc(var(--r0) + 160deg))}
-  85%{opacity:.85}100%{opacity:0;transform:translate(var(--dx),118vh) rotate(calc(var(--r0) + 330deg))}}
+.g-leaves{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:6}
+.g-leaves i{position:absolute;left:0;top:0;width:var(--w);transform:translate(var(--x0),var(--y0));will-change:transform}
+.g-leaves img{display:block;width:100%;filter:drop-shadow(0 10px 12px rgba(0,0,0,.28))}
+.guide.open .g-leaves i{animation:g-gust var(--t) var(--dl) cubic-bezier(.32,.08,.68,.92) both}
+.guide.open .g-leaves img{animation:g-flut var(--f) var(--dl) ease-in-out infinite alternate}
+@keyframes g-gust{
+  0%{transform:translate(var(--x0),var(--y0)) rotate(var(--r0))}
+  50%{transform:translate(calc((var(--x0) + var(--x1)) / 2),calc((var(--y0) + var(--y1)) / 2 + var(--lift))) rotate(calc(var(--r0) + var(--rr) / 2))}
+  100%{transform:translate(var(--x1),var(--y1)) rotate(calc(var(--r0) + var(--rr)))}}
+@keyframes g-flut{from{transform:rotate3d(1,.35,0,-25deg)}to{transform:rotate3d(1,.35,0,55deg)}}
 .l-hist{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:baseline;width:100%;min-height:32px;padding:0 4px;
   font:italic 600 18px/32px var(--f-old);color:#8A4E26;background:repeating-linear-gradient(180deg,transparent 0 31px,rgba(70,96,120,.2) 31px 32px)}
 .l-hist .dots{flex:1;min-width:14px;margin:0 8px;border-bottom:1.5px dotted rgba(90,60,30,.35);translate:0 -8px}
@@ -361,7 +366,7 @@ body{background:var(--paper);color:var(--ink);font:300 16px/1.55 var(--f-body);-
 }
 @media (prefers-reduced-motion:reduce){
   .g-sheet,.guide.open .g-sheet{transition:none;clip-path:none}
-  .guide.open .g-photo .kb,.guide.open .g-photo::after,.guide.open .g-leaves img,.g-text.swap .g-in{animation:none}
+  .guide.open .g-photo .kb,.guide.open .g-photo::after,.guide.open .g-leaves i,.guide.open .g-leaves img,.g-text.swap .g-in{animation:none}
   .g-leaves{display:none}.g-text{scroll-behavior:auto}
 }
 .bench{position:absolute;right:0;bottom:0;z-index:3;width:54%;pointer-events:none;mix-blend-mode:multiply;
@@ -582,8 +587,8 @@ body{background:var(--paper);color:var(--ink);font:300 16px/1.55 var(--f-body);-
     <div class="g-text" id="g-text"><div class="g-in" id="g-in"></div></div>
     <a class="g-back" id="g-back" href="map.html" aria-label="Вернуться к прогулке" hidden><svg viewBox="0 0 16 16"><path d="M10 3 5 8l5 5"/></svg>К прогулке</a>
     <button type="button" class="g-close" id="g-close" aria-label="Закрыть"><svg viewBox="0 0 14 14"><path d="M2 2l10 10M12 2 2 12"/></svg></button>
-    <div class="g-leaves" id="g-leaves" aria-hidden="true"></div>
   </article>
+  <div class="g-leaves" id="g-leaves" aria-hidden="true"></div>
 </div>
 
 <section class="bsec" id="bronte" aria-labelledby="b-h">
@@ -927,9 +932,14 @@ function gSet(k){
   c.querySelectorAll('button').forEach((b,j)=>{b.setAttribute('aria-current',j===k);if(j===k)c.scrollTo({left:b.offsetLeft-c.clientWidth/2+b.offsetWidth/2,behavior:'smooth'})});
   gPhoto(0);
 }
+/* порыв ветра: угол выбирается случайно — слева сверху вправо вниз или справа сверху влево вниз */
 function gLeaves(){
-  const n=innerWidth<700?3:6;
-  $('g-leaves').innerHTML=Array.from({length:n},(_,i)=>`<img src="assets/leaf${1+(i*5)%6}.webp" alt="" style="--x:${(4+Math.random()*88).toFixed(1)}%;--w:${(24+Math.random()*30).toFixed(0)}px;--dx:${((Math.random()*2-1)*190).toFixed(0)}px;--r0:${(Math.random()*360).toFixed(0)}deg;--t:${(2.8+Math.random()*1.4).toFixed(2)}s;--dl:${(.3+i*.18+Math.random()*.25).toFixed(2)}s">`).join('');
+  const W=innerWidth,H=innerHeight,n=W<700?4:6,d=Math.random()<.5?1:-1,R=(a,b)=>a+Math.random()*(b-a);
+  $('g-leaves').innerHTML=Array.from({length:n},(_,i)=>{
+    const w=R(26,W<700?40:54),o=w+40,x0=d>0?-o:W+o-w,x1=d>0?W+o:-o-w,y0=R(-.06,.28)*H,y1=R(.62,1.02)*H;
+    return `<i style="--w:${w|0}px;--x0:${x0|0}px;--x1:${x1|0}px;--y0:${y0|0}px;--y1:${y1|0}px;--lift:${-(R(.08,.18)*H)|0}px;`+
+      `--r0:${R(0,360)|0}deg;--rr:${d*R(140,280)|0}deg;--t:${R(3.8,5).toFixed(2)}s;--dl:${(.2+i*.17+R(0,.22)).toFixed(2)}s;--f:${R(.9,1.5).toFixed(2)}s">`+
+      `<img src="assets/leaf${1+(i*5)%6}.webp" alt=""></i>`}).join('');
 }
 let gBack=null,gHide=0;
 function openGuide(p,ex,ey,k){
