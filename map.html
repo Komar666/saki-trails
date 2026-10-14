@@ -4,11 +4,6 @@
 <title>Терренкуры Саки</title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<script>
-(()=>{const m=location.hash.match(/^#cp-([\w-]+)/);if(!m)return;
-  let w=null;try{w=JSON.parse(localStorage.getItem('saki.walk'))}catch(e){}
-  if(!w||!w.route||w.t1)location.replace('index.html?from=map#place-'+(m[1]==='pine'?'4-3':m[1]))})();
-</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Extra+Condensed:wght@800;900&family=Geologica:wght@300;400;600&family=JetBrains+Mono:wght@400;600&display=swap">
@@ -106,7 +101,7 @@ h2{font-size:28px}
 .demo{display:inline-block;font:600 11px/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;background:#FBEBDD;color:#A2581D;padding:6px 9px;border-radius:999px;margin-left:8px;vertical-align:middle}
 table.rep{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:10px}
 .rep th,.rep td{padding:8px 6px;border-bottom:1px solid #EDE2CB;text-align:left;vertical-align:top}
-.rep th{font:600 10.5px/1.2 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.rep th{white-space:nowrap;font:600 10.5px/1.2 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .rep td.r{text-align:right;font-family:var(--f-mono);white-space:nowrap}
 .rep tr.sk td{color:#A2581D}
 .rep tfoot td{font-weight:600;border-bottom:0}
@@ -131,18 +126,52 @@ table.rep{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:10px}
 .pop b{display:block;font:800 19px/1 var(--f-display);text-transform:uppercase}
 .pop span{font-size:12.5px;color:var(--muted)}
 .pop a{display:inline-block;margin-top:8px;font:600 13px/1.2 var(--f-body);color:var(--forest);text-decoration:none;border-bottom:1.5px solid var(--leaf)}
-.qrc{position:fixed;left:50%;top:calc(126px + env(safe-area-inset-top,0px));z-index:1050;width:min(430px,calc(100vw - 24px));display:grid;grid-template-columns:104px minmax(0,1fr);
-  background:var(--card);border-radius:20px;overflow:hidden;box-shadow:0 24px 60px -20px rgba(30,42,34,.55),0 0 0 1px rgba(30,42,34,.08);
-  translate:-50% -14px;opacity:0;pointer-events:none;transition:opacity .4s ease,translate .5s var(--ease)}
-.qrc.on{opacity:1;translate:-50% 0;pointer-events:auto}
-.qrc img{width:104px;height:100%;min-height:124px;object-fit:cover;display:block;background:var(--paper-2)}
-.qrc .b{padding:13px 44px 14px 15px;display:grid;gap:6px;align-content:center}
-.qrc small{font:600 10.5px/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--terra)}
-.qrc b{font:800 21px/1 var(--f-display);text-transform:uppercase;color:var(--ink)}
-.qrc a{justify-self:start;display:inline-flex;align-items:center;gap:8px;margin-top:4px;padding:11px 15px;border-radius:999px;background:var(--forest);color:#FFF7E6;text-decoration:none;font:600 13.5px/1 var(--f-body)}
-.qrc a svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.qrc .x{position:absolute;right:6px;top:6px;width:34px;height:34px;border-radius:50%;border:0;background:transparent;color:var(--muted);font-size:22px;line-height:1}
-@media (prefers-reduced-motion:reduce){.sheet,.btn,.bar i,.toast,.qrc{transition:none}.mk.next{animation:none}}
+.cpv{position:fixed;inset:0;z-index:1040;background:rgba(22,27,31,.38);opacity:0;transition:opacity .35s ease}
+.cpv.on{opacity:1}
+.cp{position:fixed;left:50%;top:calc(66px + env(safe-area-inset-top,0px));z-index:1050;width:min(440px,calc(100vw - 24px));max-height:calc(100dvh - 78px - env(safe-area-inset-top,0px));
+  overflow:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;background:var(--card);border-radius:22px;
+  box-shadow:0 30px 70px -24px rgba(22,27,31,.7),0 0 0 1px rgba(30,42,34,.08);translate:-50% -16px;opacity:0;transition:opacity .4s ease,translate .55s var(--ease)}
+.cp.on{opacity:1;translate:-50% 0}
+.cp-ph{position:relative;height:150px;background:var(--paper-2)}
+.cp-ph img{width:100%;height:100%;object-fit:cover;display:block}
+.cp-ph::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(22,27,31,.05) 40%,rgba(22,27,31,.55))}
+.cp.nophoto .cp-ph{height:58px;background:linear-gradient(120deg,var(--forest),#486B4F)}
+.cp.nophoto .cp-ph::after{display:none}
+.cp-tag{position:absolute;left:14px;bottom:12px;z-index:1;display:inline-flex;align-items:center;gap:7px;padding:7px 11px 7px 8px;border-radius:999px;
+  background:rgba(255,251,242,.94);color:var(--forest);font:600 11px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase}
+.cp-tag i{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;background:var(--ok);color:#fff;font:700 11px/1 var(--f-body);font-style:normal}
+.cp.warn .cp-tag i{background:var(--terra)}
+.cp .x{position:absolute;right:10px;top:10px;z-index:1;width:38px;height:38px;border-radius:50%;border:0;background:rgba(22,27,31,.45);color:#fff;font-size:22px;line-height:1;
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.cp-b{padding:14px 18px 18px}
+.cp h2{margin:6px 0 0;font-size:30px}
+.cp-routes{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0}
+.cp-routes small{flex-basis:100%;font-size:12.5px;color:var(--muted)}
+.cp-routes button{border:1.5px solid #E3D7BE;background:#F7F0E1;border-radius:999px;padding:7px 12px;font:600 12.5px/1 var(--f-body);color:var(--ink-2)}
+.cp-routes button[aria-pressed="true"]{background:var(--leaf);border-color:var(--leaf);color:var(--ink)}
+.cp .kpis{margin:14px 0 12px}
+.cp .kpis dd{font-size:26px}
+.cp .kpis dd.go{color:var(--forest)}
+.cp-pulse{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;background:#FBEFE6;border:1.5px solid #F1D8C6}
+.cp-pulse svg{width:28px;height:28px;fill:var(--terra);animation:beat 1.3s ease-in-out infinite}
+@keyframes beat{0%,100%{transform:scale(1)}12%{transform:scale(1.14)}24%{transform:scale(1)}36%{transform:scale(1.08)}}
+.cp-pulse b{display:block;font:600 14px/1.25 var(--f-body);color:var(--ink)}
+.cp-pulse small{display:block;font-size:12px;line-height:1.35;color:var(--muted)}
+.cp-pulse input{width:86px;font:800 30px/1 var(--f-display);text-align:center;padding:8px 6px;border-radius:12px;border:1.5px solid #E7CDB9;background:#fff;color:var(--ink);font-variant-numeric:tabular-nums}
+.cp-pulse input:focus{outline:none;border-color:var(--terra);box-shadow:0 0 0 4px rgba(184,91,52,.15)}
+.cp-pulse.saved input{border-color:var(--ok)}
+.cp-saved{display:none;grid-column:1/-1;margin-top:-2px;font:600 11px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ok)}
+.cp-pulse.saved .cp-saved{display:block}
+.cp-next{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center;margin:12px 0 0;padding:12px 14px;border-radius:16px;background:#F7F0E1}
+.cp-next .n{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--leaf);color:var(--ink);font:600 13px/1 var(--f-mono)}
+.cp-next span{font-size:13px;color:var(--muted);line-height:1.35}
+.cp-next b{display:block;font:800 18px/1.05 var(--f-display);text-transform:uppercase;color:var(--ink)}
+.cp-note{margin:12px 0 0;font-size:13.5px;line-height:1.45;color:var(--ink-2)}
+.cp .btns{margin-top:16px}
+.cp .btn.dark svg{width:16px;height:16px}
+.stops li small b{font-weight:600;color:var(--terra)}
+.stops li.pre{opacity:.45}
+@media (prefers-reduced-motion:reduce){.sheet,.btn,.bar i,.toast,.cp,.cpv{transition:none}.mk.next,.cp-pulse svg{animation:none}}
 </style>
 
 <header class="top">
@@ -151,8 +180,27 @@ table.rep{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:10px}
 </header>
 <div id="map" role="application" aria-label="Карта Сакского парка с маршрутами терренкуров"></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
-<aside class="qrc" id="qrc" aria-label="Место у стенда"><img id="qrc-img" alt=""><div class="b"><small id="qrc-k"></small><b id="qrc-t"></b>
-  <a id="qrc-a" href="index.html">Читать о месте<svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></div><button class="x" id="qrc-x" type="button" aria-label="Скрыть">×</button></aside>
+<div class="cpv" id="cpv" hidden></div>
+<aside class="cp" id="cp" role="dialog" aria-modal="true" aria-labelledby="cp-t" hidden>
+  <div class="cp-ph"><img id="cp-img" alt=""><span class="cp-tag"><i id="cp-i">✓</i><span id="cp-k"></span></span>
+    <button class="x" id="cp-x" type="button" aria-label="Закрыть">×</button></div>
+  <div class="cp-b">
+    <div class="eyebrow" id="cp-r"></div>
+    <h2 id="cp-t"></h2>
+    <div class="cp-routes" id="cp-routes" hidden></div>
+    <dl class="kpis" id="cp-kpis"></dl>
+    <label class="cp-pulse" id="cp-pl"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.3C.9 8.4 3 4.5 6.7 4.5c2.1 0 3.6 1.2 4.3 2.6.7-1.4 2.2-2.6 4.3-2.6 3.7 0 5.8 3.9 4.3 7.2C19.5 16.4 12 21 12 21z"/></svg>
+      <span><b>Пульс сейчас</b><small>Посчитайте удары за 15 секунд и умножьте на 4</small></span>
+      <input id="cp-p" inputmode="numeric" pattern="[0-9]*" maxlength="3" placeholder="—" aria-label="Пульс, ударов в минуту" autocomplete="off">
+      <span class="cp-saved">✓ Сохранено в отчёт</span></label>
+    <div class="cp-next" id="cp-next"></div>
+    <p class="cp-note" id="cp-note" hidden></p>
+    <div class="btns">
+      <a class="btn dark wide" id="cp-a" href="index.html">Читать о месте<svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+      <button class="btn solid" id="cp-ok" type="button">Дальше</button>
+    </div>
+  </div>
+</aside>
 
 <section class="sheet" id="sheet" aria-label="Терренкур">
   <button class="grab" id="grab" type="button" aria-label="Свернуть или развернуть панель"></button>
@@ -292,46 +340,68 @@ function renderChoose(){
   $('routes').innerHTML=ROUTES.map(r=>`<button class="rc ${r.id===route.id?'on':''}" type="button" data-id="${r.id}" aria-pressed="${r.id===route.id}">
     <span class="n">${r.id}</span><span><b>${r.name}</b><span class="s">${r.sub} · ${r.stops.length} точек</span></span>
     <span class="len">${fmt1(r.length/1000)} км<small>≈ ${Math.round(r.length/WALK)} мин</small></span></button>`).join('');
-  $('routes').querySelectorAll('.rc').forEach(b=>b.onclick=()=>{route=ROUTES.find(r=>r.id===+b.dataset.id);renderChoose();drawRoute();map.fitBounds(routeLine.getBounds().pad(.15))});
+  $('routes').querySelectorAll('.rc').forEach(b=>b.onclick=()=>{route=ROUTES.find(r=>r.id===+b.dataset.id);store.set('saki.route',route.id);renderChoose();drawRoute();map.fitBounds(routeLine.getBounds().pad(.15))});
   $('info').innerHTML=`<div><dt>Для кого</dt><dd>${route.for}</dd></div><div><dt>Нагрузка</dt><dd>${route.load}</dd></div>`;
   $('stops').innerHTML=route.stops.map((s,i)=>`<li><i>${String(i+1).padStart(2,'0')}</i><span>${s.title}${s.note?`<small>${s.note}</small>`:''}</span><em>${s.from_start} м</em></li>`).join('');
 }
-const nextIdx=()=>walk?walk.marks.findIndex(m=>!m):-1;
+const F=()=>walk&&walk.from||0;
+const nextIdx=()=>walk?walk.marks.findIndex((m,k)=>k>F()&&!m):-1;
+const keyOf=s=>s.poi?String(s.poi):'pine';
+const idxIn=(r,key)=>r.stops.findIndex(s=>keyOf(s)===key);
 function startWalk(isDemo){
-  walk={route:route.id,t0:Date.now(),marks:route.stops.map(()=>null),pulse0:$('pulse0').value.trim(),bp0:$('bp0').value.trim(),demo:!!isDemo,track:[]};
-  walk.marks[0]={t:walk.t0,how:'старт'};
+  walk={route:route.id,from:0,t0:Date.now(),marks:route.stops.map(()=>null),pulse0:$('pulse0').value.trim(),bp0:$('bp0').value.trim(),demo:!!isDemo,track:[]};
+  walk.marks[0]={t:walk.t0,how:'старт',pulse:walk.pulse0};
   store.set('saki.walk',walk);show('vWalk');renderWalk();drawRoute();
   if(isDemo)runDemo();else{gpsOn();wake()}
   toast('Старт: '+route.stops[0].title);
 }
+function startAt(r,i){
+  route=r;
+  walk={route:r.id,from:i,t0:Date.now(),marks:r.stops.map(()=>null),pulse0:'',bp0:'',demo:false,track:[]};
+  walk.marks[i]={t:walk.t0,how:'QR'};
+  store.set('saki.walk',walk);doneLine.setLatLngs([]);track.setLatLngs([]);
+  show('vWalk');renderWalk();drawRoute();gpsOn();wake();
+}
+function stale(){
+  if(!walk||walk.t1)return;
+  const last=Math.max(walk.t0,...walk.marks.filter(m=>m&&m.t).map(m=>m.t));
+  if(Date.now()-last>3*3600e3){walk.t1=last;store.set('saki.walk',walk)}
+}
 function mark(i,how){
   if(!walk||walk.marks[i])return;
   const now=Date.now();
-  for(let k=1;k<i;k++)if(!walk.marks[k])walk.marks[k]={skip:1};
+  for(let k=F()+1;k<i;k++)if(!walk.marks[k])walk.marks[k]={skip:1};
   walk.marks[i]={t:now,how};store.set('saki.walk',walk);buzz([40,60,40]);
-  const s=route.stops[i];toast((i===route.stops.length-1?'Финиш! ':'Отмечено: ')+s.title);
+  const s=route.stops[i];if(how!=='QR'&&how!=='кнопка')toast((i===route.stops.length-1?'Финиш! ':'Отмечено: ')+s.title);
   renderWalk();drawRoute();
   if(i===route.stops.length-1)finish();
 }
-function lastMark(){for(let k=walk.marks.length-1;k>=0;k--)if(walk.marks[k]&&!walk.marks[k].skip)return k;return 0}
+function lastMark(){for(let k=walk.marks.length-1;k>=0;k--)if(walk.marks[k]&&!walk.marks[k].skip)return k;return F()}
+function prevMark(i){for(let k=i-1;k>=F();k--)if(walk.marks[k]&&!walk.marks[k].skip)return k;return -1}
+function segment(i){
+  const p=prevMark(i),m=walk.marks[i];if(p<0||!m||m.skip)return null;
+  const len=route.stops[i].from_start-route.stops[p].from_start,sec=(m.t-walk.marks[p].t)/1000;
+  return {p,len,sec,v:sec>=10?kmh(len,sec):null};
+}
 let lastFix=null;
 function renderWalk(){
   if(!walk)return;
   route=ROUTES.find(r=>r.id===walk.route);
   $('wName').textContent=route.name;$('demoTag').hidden=!walk.demo;
-  const n=nextIdx(),s=route.stops[n]||route.stops[route.stops.length-1],lm=lastMark();
+  const n=nextIdx(),s=route.stops[n]||route.stops[route.stops.length-1],lm=lastMark(),s0=route.stops[F()].from_start;
   $('wIdx').textContent=(n+1)+' из '+route.stops.length;$('wNext').textContent=s.title;
   const left=lastFix&&lastFix.acc<=1000?hav([lastFix.lat,lastFix.lon],s.ll):null;
   $('wDist').innerHTML=(left==null?'—':(left>999?fmt1(left/1000):Math.round(left)))+`<small>${left>999?'км':'м'} до точки</small>`;
-  const done=route.stops[lm].from_start;
+  const done=route.stops[lm].from_start-s0;
   $('kDone').innerHTML=done+'<small>м</small>';
-  $('wBar').style.width=(done/route.length*100).toFixed(1)+'%';
-  let pk=-1;for(let k=lm-1;k>=0;k--)if(walk.marks[k]&&!walk.marks[k].skip){pk=k;break}
-  $('kSpeed').innerHTML=pk>=0?fmt1(kmh(route.stops[lm].from_start-route.stops[pk].from_start,(walk.marks[lm].t-walk.marks[pk].t)/1000))+'<small>км/ч</small>':'—<small>км/ч</small>';
-  doneLine.setLatLngs(cutLine(done));
-  $('wStops').innerHTML=route.stops.map((x,i)=>{const m=walk.marks[i];let t='';
-    if(m&&!m.skip&&i){let p=i-1;while(p>0&&(!walk.marks[p]||walk.marks[p].skip))p--;const sec=(m.t-walk.marks[p].t)/1000;t=fmtT(sec)}
-    return `<li class="${m&&!m.skip?'done':''} ${i===n?'next':''}"><i>${m?(m.skip?'—':'✓'):String(i+1).padStart(2,'0')}</i><span>${x.title}</span><em>${t||x.from_start+' м'}</em></li>`}).join('');
+  $('wBar').style.width=(done/(route.length-s0)*100).toFixed(1)+'%';
+  const sg=segment(lm);
+  $('kSpeed').innerHTML=(sg&&sg.v!=null?fmt1(sg.v):'—')+'<small>км/ч</small>';
+  doneLine.setLatLngs(cutLine(route.stops[lm].from_start,s0));
+  $('wStops').innerHTML=route.stops.map((x,i)=>{const m=walk.marks[i],pre=i<F();let t='',sub=[];
+    if(m&&!m.skip){const g=segment(i);if(g){t=fmtT(g.sec);if(g.v!=null)sub.push(fmt1(g.v)+' км/ч')}if(m.pulse)sub.unshift('<b>♥ '+m.pulse+'</b>')}
+    if(i===F()&&walk.from)sub.push('старт по QR');
+    return `<li class="${m&&!m.skip?'done':''} ${i===n?'next':''} ${pre?'pre':''}"><i>${m?(m.skip?'—':'✓'):pre?'·':String(i+1).padStart(2,'0')}</i><span>${x.title}${sub.length?`<small>${sub.join(' · ')}</small>`:''}</span><em>${t||x.from_start+' м'}</em></li>`}).join('');
 }
 function along(ll,s0,s1){
   const x=(ll[1]-PR.W)*PR.KX,y=(PR.N-ll[0])*PR.KY,r=route,c=LINE_M[ROUTES.indexOf(r)],P=r.linem;let best=null;
@@ -340,7 +410,9 @@ function along(ll,s0,s1){
     const off=Math.hypot(x-ax-t*dx,y-ay-t*dy);if(!best||off<best.off)best={off,s:c[i-1]+Math.sqrt(l)*t}}
   return best}
 const LINE_M=ROUTES.map(r=>{const c=[0];for(let i=1;i<r.linem.length;i++)c.push(c[i-1]+Math.hypot(r.linem[i][0]-r.linem[i-1][0],r.linem[i][1]-r.linem[i-1][1]));return c});
-function cutLine(d){d=Math.max(0,d);const r=route,c=LINE_M[ROUTES.indexOf(r)],out=[];for(let i=0;i<r.line.length;i++){if(c[i]<=d)out.push(r.line[i]);else{const f=(d-c[i-1])/(c[i]-c[i-1]);out.push([r.line[i-1][0]+(r.line[i][0]-r.line[i-1][0])*f,r.line[i-1][1]+(r.line[i][1]-r.line[i-1][1])*f]);break}}return out}
+function cutLine(d,a=0){d=Math.max(0,d);const r=route,c=LINE_M[ROUTES.indexOf(r)],out=[];
+  const at=s=>{let i=c.findIndex(v=>v>=s);i=i<0?c.length-1:Math.max(1,i);const f=Math.min(1,Math.max(0,(s-c[i-1])/((c[i]-c[i-1])||1)));return [r.line[i-1][0]+(r.line[i][0]-r.line[i-1][0])*f,r.line[i-1][1]+(r.line[i][1]-r.line[i-1][1])*f]};
+  if(d<=a)return [at(a)];out.push(at(a));for(let i=0;i<r.line.length;i++)if(c[i]>a&&c[i]<d)out.push(r.line[i]);out.push(at(d));return out}
 setInterval(()=>{if(walk&&!$('vWalk').hidden)$('kTime').textContent=fmtT((Date.now()-walk.t0)/1000)},500);
 let watch=null,near={i:-1,c:0};
 function gpsState(cls,t){const g=$('gps');g.className='gps '+cls;$('gpst').textContent=t}
@@ -351,7 +423,7 @@ function gpsOn(){
     $('wHint').textContent=e.code===1?'Разрешите доступ к геопозиции в настройках браузера — или отмечайтесь кнопкой «Я на точке» и QR-кодами.':'Сигнал GPS пропал — точки можно отмечать кнопкой или QR-кодом.'},
     {enableHighAccuracy:true,maximumAge:2000,timeout:20000});
 }
-function gpsOff(){if(watch!=null)navigator.geolocation.clearWatch(watch);watch=null}
+function gpsOff(){if(watch!=null)navigator.geolocation.clearWatch(watch);watch=null;gpsState('','GPS выключен')}
 function onFix(p){
   const f={lat:p.coords.latitude,lon:p.coords.longitude,acc:p.coords.accuracy||99,t:Date.now()};lastFix=f;
   const ll=[f.lat,f.lon];meMk.setLatLng(ll).addTo(map);accC.setLatLng(ll).setRadius(f.acc).addTo(map);
@@ -385,23 +457,90 @@ function runDemo(){
     if(d<L0||nextIdx()>=0)demo=requestAnimationFrame(step)};
   demo=requestAnimationFrame(step);
 }
-function placeCard(s,label){
-  const f=firstPhoto(s),im=$('qrc-img');
-  if(f){im.src='assets/photos/'+f.id+'.webp';im.alt=f.cap;im.hidden=false}else im.hidden=true;
-  $('qrc-k').textContent=label;$('qrc-t').textContent=s.title;$('qrc-a').href=readHref(s);$('qrc').classList.add('on');
+const hhmm=t=>new Date(t).toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});
+const mOrKm=m=>m>999?fmt1(m/1000)+'<small>км</small>':Math.round(m)+'<small>м</small>';
+let cpI=-1,cpKind='';
+function openCard(i,kind,opt={}){
+  cpI=i;cpKind=kind;
+  const live=kind==='start'||kind==='mark'||kind==='again'||kind==='finish';
+  const s=opt.s||route.stops[i],N=route.stops.length,f=firstPhoto(s),im=$('cp-img'),cp=$('cp');
+  if(f){im.src='assets/photos/'+f.id+'.webp';im.alt=f.cap}
+  cp.classList.toggle('nophoto',!f);cp.classList.toggle('warn',!live);
+  $('cp-i').textContent=live?'✓':'!';
+  $('cp-k').textContent={start:'Старт прогулки · точка '+(i+1)+' из '+N,mark:'Отмечено · точка '+(i+1)+' из '+N,again:'Уже отмечено · точка '+(i+1)+' из '+N,
+    finish:'Финиш маршрута',behind:'Точка уже позади',other:'Не на вашем маршруте'}[kind];
+  $('cp-r').textContent=route.name;
+  $('cp-t').textContent=s.title;
+  const rs=opt.routes||[];$('cp-routes').hidden=!(kind==='start'&&rs.length>1);
+  if(kind==='start'&&rs.length>1)$('cp-routes').innerHTML='<small>Эта точка есть на нескольких маршрутах — по какому идёте?</small>'+
+    rs.map(r=>`<button type="button" data-r="${r.id}" aria-pressed="${r.id===route.id}">${r.name}</button>`).join('');
+  let k=[];
+  if(kind==='start'){const left=route.length-s.from_start;
+    k=[['Старт',hhmm(walk.marks[i].t)],['Впереди',mOrKm(left)],[i+2===N?'До финиша':'До точки '+(i+2),i<N-1?mOrKm(route.stops[i+1].from_start-s.from_start):'—']]}
+  else if(kind==='finish'){const s0=route.stops[F()].from_start,len=s.from_start-s0,sec=(walk.marks[i].t-walk.t0)/1000;
+    k=[['Путь',mOrKm(len)],['Время',fmtT(sec)],['Средняя',fmt1(kmh(len,sec))+'<small>км/ч</small>']]}
+  else if(kind==='mark'||kind==='again'){const g=segment(i);
+    k=[['Скорость',(g&&g.v!=null?fmt1(g.v):'—')+'<small>км/ч</small>'],['Отрезок',g?fmtT(g.sec):'—'],[i+2===N?'До финиша':'До точки '+(i+2),i<N-1?mOrKm(route.stops[i+1].from_start-s.from_start):'—']]}
+  $('cp-kpis').hidden=!k.length;
+  $('cp-kpis').innerHTML=k.map(([t,v],j)=>`<div><dt>${t}</dt><dd class="${j===2&&kind!=='finish'?'go':''}">${v}</dd></div>`).join('');
+  $('cp-pl').hidden=!live;
+  const pv=live?(walk.marks[i].pulse||(kind==='finish'?walk.pulse1:'')||''):'';
+  $('cp-p').value=pv;$('cp-pl').classList.toggle('saved',/^\d{2,3}$/.test(pv));
+  const nx=live&&i<N-1?route.stops[i+1]:null;$('cp-next').hidden=!nx;
+  if(nx){const d=nx.from_start-s.from_start;
+    $('cp-next').innerHTML=`<span class="n">${i+2===N&&nx.poi===route.stops[0].poi?'⚑':i+2}</span><span>${i+2===N?'Финиш':'Дальше'} · ${Math.round(d)} м · ≈ ${Math.max(1,Math.round(d/WALK))} мин<b>${nx.title}</b></span>`}
+  const nn=nextIdx(),nextS=nn>=0?route.stops[nn]:null;
+  $('cp-note').hidden=live&&kind!=='start';
+  $('cp-note').textContent=kind==='start'?'Время пошло. Следующие точки отметятся сами по GPS — или наведите камеру на QR-код у стенда.'
+    :kind==='behind'?`Эта точка на маршруте уже позади.${nextS?' Следующая — «'+nextS.title+'».':''}`
+    :kind==='other'?`Этой точки нет в маршруте «${route.name}», но о месте можно прочитать.`:'';
+  $('cp-a').href=readHref(s);
+  $('cp-ok').textContent=kind==='finish'?'Отчёт':live?'Дальше':'Понятно';
+  if(s.ll)map.panTo(s.ll);
+  $('cpv').hidden=false;cp.hidden=false;cp.scrollTop=0;
+  requestAnimationFrame(()=>{$('cpv').classList.add('on');cp.classList.add('on')});
+  $('cp-ok').focus({preventScroll:true});
 }
-$('qrc-x').onclick=()=>$('qrc').classList.remove('on');
+function closeCard(){
+  const cp=$('cp');if(cp.hidden)return;cp.classList.remove('on');$('cpv').classList.remove('on');
+  setTimeout(()=>{if(!cp.classList.contains('on')){cp.hidden=true;$('cpv').hidden=true}},reduce?0:420);
+}
+$('cp-x').onclick=$('cp-ok').onclick=$('cpv').onclick=closeCard;
+addEventListener('keydown',e=>{if(e.key==='Escape')closeCard()});
+$('cp-p').addEventListener('input',e=>{
+  const v=e.target.value.replace(/\D/g,'').slice(0,3);e.target.value=v;
+  if(!walk||cpI<0||!walk.marks[cpI])return;
+  walk.marks[cpI].pulse=v;if(cpI===F())walk.pulse0=v;if(cpKind==='finish'){walk.pulse1=v;$('pulse1').value=v}
+  store.set('saki.walk',walk);$('cp-pl').classList.toggle('saved',/^\d{2,3}$/.test(v));
+  if(cpKind==='finish')renderDone();else renderWalk();
+});
+$('cp-routes').addEventListener('click',e=>{const b=e.target.closest('[data-r]');if(!b||!walk||cpKind!=='start')return;
+  const r=ROUTES.find(r=>r.id===+b.dataset.r),key=keyOf(route.stops[cpI]),rs=ROUTES.filter(r=>idxIn(r,key)>=0);
+  store.set('saki.route',r.id);startAt(r,idxIn(r,key));map.fitBounds(routeLine.getBounds().pad(.15));openCard(walk.from,'start',{routes:rs})});
 function fromQR(){
   const m=location.hash.match(/^#cp-([\w-]+)/);if(!m)return;
-  const key=m[1],poi=key==='pine'?null:+key,is=s=>(poi&&s.poi===poi)||(!poi&&!s.poi);
-  if(!walk||walk.t1){location.replace(readHref({poi}));return}
+  const key=m[1];
   try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}
-  const n=nextIdx();
-  for(let i=Math.max(n,1);i<route.stops.length;i++){const s=route.stops[i];if(is(s)){mark(i,'QR');placeCard(s,'Отмечено по QR-коду');return}}
-  const s=ROUTES.flatMap(r=>r.stops).find(is)||(poi&&PHOTO[poi]?{poi,title:PHOTO[poi].t}:null);
-  if(!s)return;
-  if(s.ll)map.setView(s.ll,18);
-  placeCard(s,'Этой точки нет в вашем маршруте');
+  stale();
+  if(walk&&walk.demo){walk.t1=Date.now();if(demo){cancelAnimationFrame(demo);demo=null}}
+  if(!walk||walk.t1){
+    const rs=ROUTES.filter(r=>idxIn(r,key)>=0);
+    if(!rs.length){const poi=+key;if(PHOTO[poi])openCard(-1,'other',{s:{poi,title:PHOTO[poi].t}});return}
+    const r=rs.find(r=>r.id===store.get('saki.route',route.id))||rs[0];
+    startAt(r,idxIn(r,key));buzz([40,60,40]);
+    openCard(walk.from,'start',{routes:rs});return;
+  }
+  const lm=lastMark();
+  if(keyOf(route.stops[lm])===key){openCard(lm,lm===F()?'start':lm===route.stops.length-1?'finish':'again',{routes:ROUTES.filter(r=>idxIn(r,key)>=0)});return}
+  const n=nextIdx(),N=route.stops.length;
+  for(let i=Math.max(n,1);i<N;i++)if(keyOf(route.stops[i])===key){
+    if(i===N-1&&idxIn(route,key)<F()){const lmk=lastMark(),d=route.stops[i].from_start-route.stops[lmk].from_start,sec=(Date.now()-walk.marks[lmk].t)/1000;
+      if(kmh(d,sec)>8){openCard(idxIn(route,key),'behind');return}}
+    mark(i,'QR');openCard(i,i===N-1?'finish':'mark');return}
+  const i=idxIn(route,key);
+  if(i>=0&&walk.marks[i]&&!walk.marks[i].skip){openCard(i,'again');return}
+  if(i>=0){openCard(i,'behind');return}
+  const s=ROUTES.flatMap(r=>r.stops).find(s=>keyOf(s)===key);if(s)openCard(-1,'other',{s});
 }
 addEventListener('hashchange',fromQR);
 function finish(){
@@ -411,42 +550,46 @@ function finish(){
   show('vDone');renderDone();
 }
 function rows(){
-  const out=[];let p=0;
-  route.stops.forEach((s,i)=>{if(!i)return;const m=walk.marks[i];
+  const out=[];let p=F();
+  route.stops.forEach((s,i)=>{if(i<=F())return;const m=walk.marks[i];
     if(!m||m.skip){out.push({from:route.stops[p].title,to:s.title,m:null,skip:1});return}
     const len=s.from_start-route.stops[p].from_start,sec=(m.t-walk.marks[p].t)/1000;
-    out.push({from:route.stops[p].title,to:s.title,m:len,sec,v:kmh(len,sec),how:m.how});p=i});
+    out.push({from:route.stops[p].title,to:s.title,m:len,sec,v:kmh(len,sec),how:m.how,pulse:m.pulse||''});p=i});
   return out;
 }
+function totals(){const lm=lastMark(),len=route.stops[lm].from_start-route.stops[F()].from_start,sec=((walk.marks[lm]?.t||walk.t1)-walk.t0)/1000;return {lm,len,sec}}
 function renderDone(){
   route=ROUTES.find(r=>r.id===walk.route);$('dName').textContent=route.name+(walk.demo?' · демонстрация':'');
-  const lm=lastMark(),len=route.stops[lm].from_start,sec=((walk.marks[lm]?.t||walk.t1)-walk.t0)/1000;
+  const {lm,len,sec}=totals();
   $('dLen').innerHTML=(len>999?fmt1(len/1000)+'<small>км</small>':len+'<small>м</small>');
   $('dTime').textContent=fmtT(sec);$('dSpeed').innerHTML=fmt1(kmh(len,sec))+'<small>км/ч</small>';
   const rs=rows();
-  $('rep').innerHTML='<thead><tr><th>Отрезок</th><th>М</th><th>Время</th><th>км/ч</th></tr></thead><tbody>'+
-    rs.map((r,i)=>`<tr class="${r.skip?'sk':''}"><td>${i+1}. ${r.to}</td><td class="r">${r.m??'—'}</td><td class="r">${r.skip?'пропуск':fmtT(r.sec)}</td><td class="r">${r.skip?'':fmt1(r.v)}</td></tr>`).join('')+
-    `</tbody><tfoot><tr><td>Итого</td><td class="r">${len}</td><td class="r">${fmtT(sec)}</td><td class="r">${fmt1(kmh(len,sec))}</td></tr></tfoot>`;
+  const p0=walk.marks[F()].pulse||walk.pulse0||'';
+  $('rep').innerHTML='<thead><tr><th>Отрезок</th><th>М</th><th>Время</th><th>км/ч</th><th>Пульс</th></tr></thead><tbody>'+
+    `<tr><td>Старт: ${route.stops[F()].title}</td><td class="r"></td><td class="r">${hhmm(walk.t0)}</td><td class="r"></td><td class="r">${p0||'—'}</td></tr>`+
+    rs.map(r=>`<tr class="${r.skip?'sk':''}"><td>→ ${r.to}</td><td class="r">${r.m??'—'}</td><td class="r">${r.skip?'пропуск':fmtT(r.sec)}</td><td class="r">${r.skip?'':fmt1(r.v)}</td><td class="r">${r.skip?'':r.pulse||'—'}</td></tr>`).join('')+
+    `</tbody><tfoot><tr><td>Итого</td><td class="r">${len}</td><td class="r">${fmtT(sec)}</td><td class="r">${fmt1(kmh(len,sec))}</td><td></td></tr></tfoot>`;
   $('pulse1').value=walk.pulse1||'';$('bp1').value=walk.bp1||'';
   const hist=store.get('saki.history',[]);if(!walk.saved){walk.saved=1;hist.unshift({route:route.id,t0:walk.t0,len,sec,demo:walk.demo});store.set('saki.history',hist.slice(0,30));store.set('saki.walk',walk)}
   $('dHint').textContent='Отчёт сохранён на этом телефоне. Отправьте его врачу или инструктору.';
-  drawRoute();doneLine.setLatLngs(cutLine(len));
+  drawRoute();doneLine.setLatLngs(cutLine(route.stops[lm].from_start,route.stops[F()].from_start));
 }
 ['pulse1','bp1'].forEach(id=>$(id).addEventListener('input',()=>{walk[id]=$(id).value.trim();store.set('saki.walk',walk)}));
 function reportText(){
-  const rs=rows(),lm=lastMark(),len=route.stops[lm].from_start,sec=((walk.marks[lm]?.t||walk.t1)-walk.t0)/1000;
+  const rs=rows(),{len,sec}=totals(),p0=walk.marks[F()].pulse||walk.pulse0||'—';
   const d=new Date(walk.t0).toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
   return [`Тропы · Саки — ${route.name}${walk.demo?' (демонстрация)':''}`,`Дата: ${d}`,
+    `Старт: ${route.stops[F()].title}${F()?' (по QR-коду)':''}, пульс ${p0}`,
     `Путь: ${len} м · время ${fmtT(sec)} · средняя скорость ${fmt1(kmh(len,sec))} км/ч`,
-    `Пульс до/после: ${walk.pulse0||'—'} / ${walk.pulse1||'—'} · давление до/после: ${walk.bp0||'—'} / ${walk.bp1||'—'}`,'',
-    ...rs.map((r,i)=>`${i+1}. ${r.from} → ${r.to}: `+(r.skip?'пропущено':`${r.m} м, ${fmtT(r.sec)}, ${fmt1(r.v)} км/ч`))].join('\n');
+    `Пульс до/после: ${p0} / ${walk.pulse1||'—'} · давление до/после: ${walk.bp0||'—'} / ${walk.bp1||'—'}`,'',
+    ...rs.map((r,i)=>`${i+1}. ${r.from} → ${r.to}: `+(r.skip?'пропущено':`${r.m} м, ${fmtT(r.sec)}, ${fmt1(r.v)} км/ч${r.pulse?', пульс '+r.pulse:''}`))].join('\n');
 }
 $('bShare').onclick=async()=>{const t=reportText();
   try{if(navigator.share){await navigator.share({title:'Отчёт о терренкуре',text:t});return}}catch(e){if(e&&e.name==='AbortError')return}
   try{await navigator.clipboard.writeText(t);toast('Отчёт скопирован — вставьте его в сообщение')}catch(e){toast('Не удалось скопировать — выделите таблицу вручную')}};
 $('bCsv').onclick=()=>{
   const rs=rows(),q=v=>'"'+String(v).replace(/"/g,'""')+'"';
-  const csv='﻿'+['№;Откуда;Куда;Метров;Секунд;км/ч;Отметка',...rs.map((r,i)=>[i+1,q(r.from),q(r.to),r.m??'',r.skip?'':Math.round(r.sec),r.skip?'':fmt1(r.v),r.skip?'пропуск':r.how].join(';'))].join('\r\n');
+  const csv='﻿'+['№;Откуда;Куда;Метров;Секунд;км/ч;Пульс;Отметка',...rs.map((r,i)=>[i+1,q(r.from),q(r.to),r.m??'',r.skip?'':Math.round(r.sec),r.skip?'':fmt1(r.v),r.skip?'':r.pulse,r.skip?'пропуск':r.how].join(';'))].join('\r\n');
   const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
   a.download='терренкур-'+route.id+'-'+new Date(walk.t0).toISOString().slice(0,10)+'.csv';document.body.appendChild(a);a.click();a.remove()};
 $('bAgain').onclick=()=>{walk=null;store.set('saki.walk',null);doneLine.setLatLngs([]);track.setLatLngs([]);show('vChoose');renderChoose();drawRoute()};
@@ -456,10 +599,11 @@ $('bStart').onclick=()=>{$('bName').textContent=route.name;
 $('bBack0').onclick=()=>show('vChoose');
 $('bGo').onclick=()=>startWalk(false);
 $('bDemo').onclick=()=>startWalk(true);
-$('bHere').onclick=()=>{const n=nextIdx();if(n>=0)mark(n,'кнопка')};
+$('bHere').onclick=()=>{const n=nextIdx();if(n>=0){mark(n,'кнопка');openCard(n,n===route.stops.length-1?'finish':'mark')}};
 $('bStop').onclick=()=>{if(walk){walk.t1=Date.now();finish()}};
 $('grab').onclick=()=>$('sheet').classList.toggle('min');
 /* ---------- старт страницы ---------- */
+stale();
 if(walk&&walk.route){route=ROUTES.find(r=>r.id===walk.route)||ROUTES[0];
   if(walk.t1){show('vDone');renderDone()}else{show('vWalk');renderWalk();if(walk.demo){walk.demo=false;$('demoTag').hidden=true}gpsOn();wake()}}
 else{show('vChoose');renderChoose()}
