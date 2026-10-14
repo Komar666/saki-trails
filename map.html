@@ -4,6 +4,11 @@
 <title>Терренкуры Саки</title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
+<script>
+(()=>{const m=location.hash.match(/^#cp-([\w-]+)/);if(!m)return;
+  let w=null;try{w=JSON.parse(localStorage.getItem('saki.walk'))}catch(e){}
+  if(!w||!w.route||w.t1)location.replace('index.html?from=map#place-'+(m[1]==='pine'?'4-3':m[1]))})();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Extra+Condensed:wght@800;900&family=Geologica:wght@300;400;600&family=JetBrains+Mono:wght@400;600&display=swap">
@@ -389,16 +394,14 @@ $('qrc-x').onclick=()=>$('qrc').classList.remove('on');
 function fromQR(){
   const m=location.hash.match(/^#cp-([\w-]+)/);if(!m)return;
   const key=m[1],poi=key==='pine'?null:+key,is=s=>(poi&&s.poi===poi)||(!poi&&!s.poi);
+  if(!walk||walk.t1){location.replace(readHref({poi}));return}
   try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}
-  if(walk){
-    const n=nextIdx();
-    for(let i=Math.max(n,1);i<route.stops.length;i++){const s=route.stops[i];if(is(s)){mark(i,'QR');placeCard(s,'Отмечено по QR-коду');return}}
-  }
+  const n=nextIdx();
+  for(let i=Math.max(n,1);i<route.stops.length;i++){const s=route.stops[i];if(is(s)){mark(i,'QR');placeCard(s,'Отмечено по QR-коду');return}}
   const s=ROUTES.flatMap(r=>r.stops).find(is)||(poi&&PHOTO[poi]?{poi,title:PHOTO[poi].t}:null);
   if(!s)return;
   if(s.ll)map.setView(s.ll,18);
-  placeCard(s,walk?'Этой точки нет в вашем маршруте':'Вы у точки');
-  if(!walk)toast('Чтобы засечь время и скорость — выберите маршрут ниже',4200);
+  placeCard(s,'Этой точки нет в вашем маршруте');
 }
 addEventListener('hashchange',fromQR);
 function finish(){
