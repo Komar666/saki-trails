@@ -44,13 +44,27 @@ button{font:inherit;color:inherit;cursor:pointer}
 .gps.off i{background:var(--terra)}
 .sheet{position:fixed;left:0;right:0;bottom:0;z-index:1000;max-height:min(74vh,720px);display:flex;flex-direction:column;
   background:var(--card);border-radius:22px 22px 0 0;box-shadow:0 -18px 50px -20px rgba(30,42,34,.45);transition:transform .45s var(--ease)}
-.sheet.min{transform:translateY(calc(100% - 132px))}
-.grab{all:unset;display:block;align-self:center;width:100%;padding:10px 0 4px;cursor:pointer}
+.grab{all:unset;display:block;align-self:center;width:100%;padding:12px 0 6px;cursor:pointer;touch-action:none}
 .grab::before{content:"";display:block;margin:0 auto;width:44px;height:5px;border-radius:3px;background:#D9CCB2}
 .sbody{overflow:auto;padding:4px 18px calc(18px + env(safe-area-inset-bottom,0px));-webkit-overflow-scrolling:touch}
+.fold{position:absolute;right:12px;top:10px;z-index:2;width:38px;height:38px;border-radius:50%;border:0;background:#F1E8D4;color:var(--ink-2);display:grid;place-items:center}
+.fold svg,.mini svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.mini{all:unset;box-sizing:border-box;display:none;grid-template-columns:40px minmax(0,1fr) auto 22px;gap:12px;align-items:center;width:100%;cursor:pointer;
+  padding:0 18px calc(14px + env(safe-area-inset-bottom,0px));touch-action:none}
+.mini .n{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--terra);color:#fff;font:600 14px/1 var(--f-mono);box-shadow:0 0 0 5px rgba(184,91,52,.14)}
+.mini .n.idle{background:var(--leaf);color:var(--ink);box-shadow:none}
+.mini .n.ok{background:var(--ok)}
+.mini small{display:block;font:600 10.5px/1.2 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--terra);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mini b{display:block;margin-top:3px;font:800 20px/1 var(--f-display);text-transform:uppercase;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mini .d{font:600 14px/1.2 var(--f-mono);color:var(--ink-2);text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.mini .d small{color:var(--muted);letter-spacing:.04em;text-transform:none;font-weight:400}
+.mini>svg{color:var(--muted)}
+.sheet.min .sbody,.sheet.min .fold{display:none}
+.sheet.min .mini{display:grid;animation:miniIn .35s var(--ease)}
+@keyframes miniIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @media (min-width:900px){
   .sheet{left:20px;right:auto;bottom:20px;width:440px;border-radius:22px;max-height:calc(100vh - 110px)}
-  .sheet.min{transform:translateY(calc(100% - 132px + 20px))}
+  .mini{padding-bottom:16px}
 }
 .eyebrow{font:600 11px/1 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--terra)}
 h1,h2{margin:0;font-family:var(--f-display);font-weight:900;text-transform:uppercase;line-height:.92;letter-spacing:.01em}
@@ -171,7 +185,7 @@ table.rep{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:10px}
 .cp .btn.dark svg{width:16px;height:16px}
 .stops li small b{font-weight:600;color:var(--terra)}
 .stops li.pre{opacity:.45}
-@media (prefers-reduced-motion:reduce){.sheet,.btn,.bar i,.toast,.cp,.cpv{transition:none}.mk.next,.cp-pulse svg{animation:none}}
+@media (prefers-reduced-motion:reduce){.sheet,.btn,.bar i,.toast,.cp,.cpv{transition:none}.mk.next,.cp-pulse svg,.sheet.min .mini{animation:none}}
 </style>
 
 <header class="top">
@@ -203,7 +217,10 @@ table.rep{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:10px}
 </aside>
 
 <section class="sheet" id="sheet" aria-label="Терренкур">
-  <button class="grab" id="grab" type="button" aria-label="Свернуть или развернуть панель"></button>
+  <button class="grab" id="grab" type="button" aria-label="Свернуть или развернуть панель" aria-expanded="true"></button>
+  <button class="fold" id="fold" type="button" aria-label="Свернуть панель и показать карту"><svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+  <button class="mini" id="mini" type="button" aria-label="Развернуть панель"><span class="n" id="miN"></span><span><small id="miK"></small><b id="miT"></b></span>
+    <span class="d" id="miD"></span><svg viewBox="0 0 24 24"><path d="m6 15 6-6 6 6"/></svg></button>
   <div class="sbody">
 
         <div id="vChoose">
@@ -320,7 +337,7 @@ let markers=[];
 const meMk=L.marker([0,0],{icon:L.divIcon({className:'',html:'<div class="me"></div>',iconSize:[20,20],iconAnchor:[10,10]}),interactive:false,keyboard:false});
 const accC=L.circle([0,0],{radius:10,color:'#2F7DD8',weight:1,fillOpacity:.08,interactive:false});
 let route=ROUTES[0],walk=store.get('saki.walk',null),demo=null;
-function show(v){for(const id of ['vChoose','vBefore','vWalk','vDone'])$(id).hidden=id!==v;$('sheet').classList.remove('min')}
+function show(v){for(const id of ['vChoose','vBefore','vWalk','vDone'])$(id).hidden=id!==v;setMin(false)}
 function drawRoute(){
   const line=route.line;
   caseLine.setLatLngs(line);routeLine.setLatLngs(line);
@@ -398,6 +415,7 @@ function renderWalk(){
   const sg=segment(lm);
   $('kSpeed').innerHTML=(sg&&sg.v!=null?fmt1(sg.v):'—')+'<small>км/ч</small>';
   doneLine.setLatLngs(cutLine(route.stops[lm].from_start,s0));
+  renderMini();
   $('wStops').innerHTML=route.stops.map((x,i)=>{const m=walk.marks[i],pre=i<F();let t='',sub=[];
     if(m&&!m.skip){const g=segment(i);if(g){t=fmtT(g.sec);if(g.v!=null)sub.push(fmt1(g.v)+' км/ч')}if(m.pulse)sub.unshift('<b>♥ '+m.pulse+'</b>')}
     if(i===F()&&walk.from)sub.push('старт по QR');
@@ -413,7 +431,51 @@ const LINE_M=ROUTES.map(r=>{const c=[0];for(let i=1;i<r.linem.length;i++)c.push(
 function cutLine(d,a=0){d=Math.max(0,d);const r=route,c=LINE_M[ROUTES.indexOf(r)],out=[];
   const at=s=>{let i=c.findIndex(v=>v>=s);i=i<0?c.length-1:Math.max(1,i);const f=Math.min(1,Math.max(0,(s-c[i-1])/((c[i]-c[i-1])||1)));return [r.line[i-1][0]+(r.line[i][0]-r.line[i-1][0])*f,r.line[i-1][1]+(r.line[i][1]-r.line[i-1][1])*f]};
   if(d<=a)return [at(a)];out.push(at(a));for(let i=0;i<r.line.length;i++)if(c[i]>a&&c[i]<d)out.push(r.line[i]);out.push(at(d));return out}
-setInterval(()=>{if(walk&&!$('vWalk').hidden)$('kTime').textContent=fmtT((Date.now()-walk.t0)/1000)},500);
+setInterval(()=>{if(walk&&!$('vWalk').hidden){const t=fmtT((Date.now()-walk.t0)/1000);$('kTime').textContent=t;if(isMin())$('miD').innerHTML=miDist+`<small>${t} в пути</small>`}},500);
+const isMin=()=>$('sheet').classList.contains('min');
+let miDist='';
+function renderMini(){
+  if(!isMin())return;
+  const n=$('miN');n.className='n';
+  if(!$('vWalk').hidden&&walk){
+    const i=nextIdx(),N=route.stops.length,s=route.stops[i]||route.stops[N-1];
+    const left=lastFix&&lastFix.acc<=1000?hav([lastFix.lat,lastFix.lon],s.ll):s.from_start-route.stops[lastMark()].from_start;
+    n.textContent=i===N-1&&s.poi===route.stops[0].poi?'⚑':i+1;
+    $('miK').textContent=i===N-1?'Финиш':'Следующая точка';$('miT').textContent=s.title;
+    miDist=(left>999?fmt1(left/1000)+' км':Math.round(left)+' м')+'<br>';
+    $('miD').innerHTML=miDist+`<small>${fmtT((Date.now()-walk.t0)/1000)} в пути</small>`;
+  }else if(!$('vDone').hidden&&walk){
+    const {len,sec}=totals();n.classList.add('ok');n.textContent='✓';
+    $('miK').textContent='Маршрут пройден';$('miT').textContent=route.name;
+    $('miD').innerHTML=(len>999?fmt1(len/1000)+' км':len+' м')+`<br><small>${fmtT(sec)}</small>`;
+  }else{
+    n.classList.add('idle');n.textContent=route.id;
+    $('miK').textContent=route.sub;$('miT').textContent=route.name;
+    $('miD').innerHTML=fmt1(route.length/1000)+' км'+`<br><small>≈ ${Math.round(route.length/WALK)} мин</small>`;
+  }
+}
+function focusMap(){
+  const pad={paddingTopLeft:[24,84],paddingBottomRight:[24,($('sheet').offsetHeight||90)+24],maxZoom:18};
+  if(walk&&!walk.t1&&!$('vWalk').hidden){
+    const i=nextIdx(),s=route.stops[i];if(!s)return;
+    const from=lastFix&&lastFix.acc<=60?[lastFix.lat,lastFix.lon]:route.stops[lastMark()].ll;
+    map.fitBounds(L.latLngBounds([from,s.ll]),pad);
+  }else map.fitBounds(routeLine.getBounds(),{...pad,maxZoom:17});
+}
+function setMin(on){
+  const sh=$('sheet'),was=isMin();sh.classList.toggle('min',on);$('grab').setAttribute('aria-expanded',String(!on));
+  if(on){renderMini();if(!was)requestAnimationFrame(focusMap)}
+}
+let swY=null,swMoved=false;
+['grab','mini'].forEach(id=>{const el=$(id);
+  el.addEventListener('pointerdown',e=>{swY=e.clientY;swMoved=false;try{el.setPointerCapture(e.pointerId)}catch(_){}});
+  el.addEventListener('pointercancel',()=>{swY=null});
+  el.addEventListener('pointermove',e=>{if(swY!=null&&Math.abs(e.clientY-swY)>8)swMoved=true});
+  el.addEventListener('pointerup',e=>{if(swY==null)return;const dy=e.clientY-swY;swY=null;
+    if(dy>30)setMin(true);else if(dy<-30)setMin(false)});
+  el.addEventListener('click',e=>{if(swMoved){swMoved=false;return}setMin(id==='grab'?!isMin():false)});
+});
+$('fold').onclick=()=>setMin(true);
 let watch=null,near={i:-1,c:0};
 function gpsState(cls,t){const g=$('gps');g.className='gps '+cls;$('gpst').textContent=t}
 function gpsOn(){
@@ -505,7 +567,8 @@ function closeCard(){
   const cp=$('cp');if(cp.hidden)return;cp.classList.remove('on');$('cpv').classList.remove('on');
   setTimeout(()=>{if(!cp.classList.contains('on')){cp.hidden=true;$('cpv').hidden=true}},reduce?0:420);
 }
-$('cp-x').onclick=$('cp-ok').onclick=$('cpv').onclick=closeCard;
+$('cp-x').onclick=$('cpv').onclick=closeCard;
+$('cp-ok').onclick=()=>{closeCard();if(cpKind!=='finish'&&walk&&!walk.t1&&!$('vWalk').hidden)setMin(true)};
 addEventListener('keydown',e=>{if(e.key==='Escape')closeCard()});
 $('cp-p').addEventListener('input',e=>{
   const v=e.target.value.replace(/\D/g,'').slice(0,3);e.target.value=v;
@@ -601,7 +664,6 @@ $('bGo').onclick=()=>startWalk(false);
 $('bDemo').onclick=()=>startWalk(true);
 $('bHere').onclick=()=>{const n=nextIdx();if(n>=0){mark(n,'кнопка');openCard(n,n===route.stops.length-1?'finish':'mark')}};
 $('bStop').onclick=()=>{if(walk){walk.t1=Date.now();finish()}};
-$('grab').onclick=()=>$('sheet').classList.toggle('min');
 /* ---------- старт страницы ---------- */
 stale();
 if(walk&&walk.route){route=ROUTES.find(r=>r.id===walk.route)||ROUTES[0];
