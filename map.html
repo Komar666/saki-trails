@@ -67,6 +67,7 @@ button{font:inherit;color:inherit;cursor:pointer}
   .mini{padding-bottom:16px}
 }
 .eyebrow{font:600 11px/1 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--terra)}
+.sbody>div>.eyebrow:first-child{padding-right:46px;line-height:1.35}
 h1,h2{margin:0;font-family:var(--f-display);font-weight:900;text-transform:uppercase;line-height:.92;letter-spacing:.01em}
 h1{font-size:34px}
 h2{font-size:28px}
@@ -174,6 +175,8 @@ table.rep{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:10px}
 .cp-pulse input{width:86px;font:800 30px/1 var(--f-display);text-align:center;padding:8px 6px;border-radius:12px;border:1.5px solid #E7CDB9;background:#fff;color:var(--ink);font-variant-numeric:tabular-nums}
 .cp-pulse input:focus{outline:none;border-color:var(--terra);box-shadow:0 0 0 4px rgba(184,91,52,.15)}
 .cp-pulse.saved input{border-color:var(--ok)}
+.cp-pulse.bad input{border-color:#E0A33A;color:#82540E}
+.cp-pulse.bad .cp-saved{color:#82540E}
 .cp-saved{display:none;grid-column:1/-1;margin-top:-2px;font:600 11px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ok)}
 .cp-pulse.saved .cp-saved{display:block}
 .cp-next{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center;margin:12px 0 0;padding:12px 14px;border-radius:16px;background:#F7F0E1}
@@ -185,7 +188,68 @@ table.rep{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:10px}
 .cp .btn.dark svg{width:16px;height:16px}
 .stops li small b{font-weight:600;color:var(--terra)}
 .stops li.pre{opacity:.45}
-@media (prefers-reduced-motion:reduce){.sheet,.btn,.bar i,.toast,.cp,.cpv{transition:none}.mk.next,.cp-pulse svg,.sheet.min .mini{animation:none}}
+.vhead{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding-right:46px}
+.hpill{display:inline-flex;align-items:center;gap:8px;flex:none;margin-top:2px;border:1.5px solid #E3D7BE;background:var(--card);border-radius:999px;padding:6px 6px 6px 12px;font:600 13px/1 var(--f-body);color:var(--ink-2)}
+.hpill b{min-width:22px;height:22px;border-radius:11px;display:grid;place-items:center;padding:0 6px;background:var(--forest);color:#fff;font:600 11px/1 var(--f-mono)}
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin:14px 0 2px;padding:4px;border-radius:18px;background:#F1E8D4}
+.modes button{all:unset;box-sizing:border-box;cursor:pointer;display:grid;gap:4px;padding:10px 12px;border-radius:14px;transition:background .3s,box-shadow .3s}
+.modes b{font:800 19px/1 var(--f-display);text-transform:uppercase;letter-spacing:.02em;color:var(--ink-2)}
+.modes span{font-size:12px;line-height:1.3;color:var(--muted)}
+.modes button[aria-pressed="true"]{background:var(--card);box-shadow:0 8px 18px -12px rgba(30,42,34,.55),inset 0 0 0 1.5px var(--leaf)}
+.modes button[aria-pressed="true"] b{color:var(--ink)}
+.modes button[data-m="med"][aria-pressed="true"]{box-shadow:0 8px 18px -12px rgba(30,42,34,.55),inset 0 0 0 1.5px var(--terra)}
+.modes button[data-m="med"][aria-pressed="true"] b{color:var(--terra)}
+.rc.free .n{background:#DCEBE8;color:var(--lake);font-size:30px}
+.rc.free.on{border-color:var(--lake);background:#EEF6F4}
+.rc.free.on .n{background:var(--lake);color:#fff}
+.lst-h{margin:18px 0 0;font:600 11px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.places{list-style:none;margin:6px 0 0;padding:0;display:grid}
+.places li{display:grid;grid-template-columns:26px 1fr auto;gap:10px;align-items:baseline;padding:9px 0;border-bottom:1px dashed #E6DAC0;font-size:14.5px}
+.places li i{font:600 12px/1 var(--f-mono);font-style:normal;color:var(--ok)}
+.places li em{font:600 12.5px/1 var(--f-mono);font-style:normal;color:var(--muted);white-space:nowrap}
+.places li small{display:block;color:var(--muted);font-size:12px}
+.places a{color:inherit;text-decoration:none;border-bottom:1.5px solid #E8D9BB}
+.places .none{display:block;color:var(--muted);font-size:13.5px;border:0;padding:6px 0}
+.mk.sm{width:22px;height:22px;font-size:10px;background:#FFF7E6;color:var(--forest);border:1.5px solid var(--forest);box-shadow:0 2px 5px rgba(30,42,34,.25)}
+.mk.sm.done{background:var(--ok);color:#fff;border-color:#FFF7E6}
+.wait{all:unset;box-sizing:border-box;cursor:pointer;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;width:100%;margin:6px 0 4px;padding:12px 14px;border-radius:16px;background:#FBEFE6;border:1.5px solid #F1D8C6;animation:waitIn .45s var(--ease)}
+.wait i{font-style:normal;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--terra);color:#fff;font-size:17px;animation:pulse 1.6s ease-in-out infinite}
+.wait span{font-size:12.5px;line-height:1.3;color:#8C5235}
+.wait b{display:block;margin-top:2px;font:800 20px/1.02 var(--f-display);text-transform:uppercase;color:var(--ink)}
+.wait em{font:600 18px/1 var(--f-mono);font-style:normal;color:var(--terra)}
+@keyframes waitIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.cp-med{display:grid;gap:8px;margin:10px 0 0}
+.cp-lim{font:600 11px/1.4 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.cp-lim b{font-size:13px;color:var(--ink);letter-spacing:0}
+.ver{padding:12px 14px;border-radius:14px;background:#F7F0E1;color:var(--ink-2);font-size:14px;line-height:1.45}
+.ver.tmr{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center}
+.ver .tm{font:900 42px/.9 var(--f-display);font-variant-numeric:tabular-nums}
+.ver.ok{background:#E6F0E7;color:#2F6A3E;font-weight:600}
+.ver.high{background:#FFF1D6;color:#82540E}
+.ver.danger{background:#FBE0D6;color:#963B1B}
+.btn:disabled{opacity:.5;cursor:not-allowed;box-shadow:none;transform:none}
+.btn.warnb{background:transparent;color:#963B1B;box-shadow:inset 0 0 0 1.5px #E9B9A6}
+.stops li small b.ok{color:var(--ok)}
+.stops li small b.high{color:#B9741A}
+.stops li small b.danger{color:#B23A16}
+.rep td .v{font-weight:600}.rep td .v.high{color:#B9741A}.rep td .v.danger{color:#B23A16}.rep td .v.ok{color:var(--ok)}
+.rep td small{display:block;color:var(--muted);font-size:11px;white-space:nowrap}
+.hlist{display:grid;gap:10px;margin:12px 0 4px}
+.hi{all:unset;box-sizing:border-box;cursor:pointer;display:grid;grid-template-columns:48px minmax(0,1fr) auto;gap:12px;align-items:center;padding:11px 12px;border-radius:16px;background:#F7F0E1;border:1.5px solid transparent;transition:border-color .25s,transform .25s var(--ease)}
+.hi:hover{border-color:#E3D7BE}
+.hi:active{transform:scale(.985)}
+.hi .d{width:48px;height:52px;border-radius:12px;background:var(--card);display:grid;place-content:center;text-align:center;font:600 9.5px/1.2 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);box-shadow:inset 0 0 0 1px #E8DCC2}
+.hi .d b{display:block;font:900 24px/1 var(--f-display);color:var(--ink);letter-spacing:0}
+.hi .t{display:block;font:800 19px/1.05 var(--f-display);text-transform:uppercase;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hi .s{display:block;margin-top:3px;font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hi .v{text-align:right;font:600 14px/1.3 var(--f-mono);color:var(--ink);white-space:nowrap}
+.hi .v small{display:block;font-size:11.5px;font-weight:400;color:var(--muted)}
+.hi.old{cursor:default;opacity:.7}
+.tag{display:inline-block;margin-right:6px;padding:3px 7px;border-radius:999px;font:600 9.5px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;vertical-align:1px;background:#FBE3DA;color:var(--terra)}
+.tag.free{background:#DCEBE8;color:var(--lake)}
+.tag.demo{background:#F1E8D4;color:var(--muted)}
+.empty{padding:22px 16px;border-radius:16px;background:#F7F0E1;color:var(--muted);font-size:14px;text-align:center}
+@media (prefers-reduced-motion:reduce){.sheet,.btn,.bar i,.toast,.cp,.cpv,.hi{transition:none}.mk.next,.cp-pulse svg,.sheet.min .mini,.wait,.wait i{animation:none}}
 </style>
 
 <header class="top">
@@ -207,11 +271,13 @@ table.rep{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:10px}
       <span><b>Пульс сейчас</b><small>Посчитайте удары за 15 секунд и умножьте на 4</small></span>
       <input id="cp-p" inputmode="numeric" pattern="[0-9]*" maxlength="3" placeholder="—" aria-label="Пульс, ударов в минуту" autocomplete="off">
       <span class="cp-saved">✓ Сохранено в отчёт</span></label>
+    <div class="cp-med" id="cp-med" hidden><div class="cp-lim" id="cp-lim"></div><div class="ver" id="cp-ver"></div></div>
     <div class="cp-next" id="cp-next"></div>
     <p class="cp-note" id="cp-note" hidden></p>
     <div class="btns">
       <a class="btn dark wide" id="cp-a" href="index.html">Читать о месте<svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
       <button class="btn solid" id="cp-ok" type="button">Дальше</button>
+      <button class="btn warnb wide" id="cp-end" type="button" hidden>Завершить прогулку</button>
     </div>
   </div>
 </aside>
@@ -224,9 +290,13 @@ table.rep{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:10px}
   <div class="sbody">
 
         <div id="vChoose">
-      <div class="eyebrow">Сакский курортный парк</div>
-      <h1>Терренкуры</h1>
-      <p class="p" style="margin-top:6px">Выберите маршрут. Во время прогулки телефон сам отмечает каждую точку по GPS и считает время и скорость на отрезках.</p>
+      <div class="vhead"><div><div class="eyebrow">Сакский курортный парк</div><h1>Терренкуры</h1></div>
+        <button class="hpill" id="bHist" type="button" hidden>История<b id="hCount">0</b></button></div>
+      <div class="modes" id="modes" role="group" aria-label="Режим прохождения">
+        <button type="button" data-m="walk" aria-pressed="true"><b>Прогулка</b><span>Точки, время и скорость</span></button>
+        <button type="button" data-m="med" aria-pressed="false"><b>Медицинский</b><span>Пульс на каждой точке</span></button>
+      </div>
+      <p class="p" id="chP" style="margin-top:10px"></p>
       <div class="routes" id="routes"></div>
       <dl class="info" id="info"></dl>
       <ol class="stops" id="stops"></ol>
@@ -244,7 +314,9 @@ table.rep{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:10px}
       <div class="vitals">
         <label>Пульс, уд/мин<input id="pulse0" inputmode="numeric" placeholder="72"></label>
         <label>Давление<input id="bp0" inputmode="numeric" placeholder="120/80"></label>
+        <label id="ageL" hidden>Возраст, лет<input id="age" inputmode="numeric" maxlength="3" placeholder="60"></label>
       </div>
+      <div class="note" id="limPrev" hidden></div>
       <div class="note" id="safety"></div>
       <div class="btns">
         <button class="btn solid wide" id="bGo" type="button">Старт</button>
@@ -254,6 +326,7 @@ table.rep{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:10px}
 
         <div id="vWalk" hidden>
       <div class="eyebrow"><span id="wName">Терренкур</span><span class="demo" id="demoTag" hidden>демонстрация</span></div>
+      <button class="wait" id="wWait" type="button" hidden></button>
       <div class="now">
         <span class="small">Следующая точка · <span id="wIdx"></span></span>
         <h2 id="wNext">—</h2>
@@ -273,9 +346,31 @@ table.rep{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:10px}
       <ol class="stops" id="wStops"></ol>
     </div>
 
+        <div id="vFree" hidden>
+      <div class="eyebrow">Свободная прогулка<span class="demo" id="fDemo" hidden>демонстрация</span></div>
+      <div class="now"><span class="small">Пройдено по GPS</span><div class="dist" id="fDist">0<small>м</small></div></div>
+      <dl class="kpis">
+        <div><dt>В пути</dt><dd id="fTime">0:00</dd></div>
+        <div><dt>Сейчас</dt><dd id="fNow">—<small>км/ч</small></dd></div>
+        <div><dt>Средняя</dt><dd id="fAvg">—<small>км/ч</small></dd></div>
+      </dl>
+      <div class="btns"><button class="btn ghost wide" id="fStop" type="button">Завершить прогулку</button></div>
+      <p class="hintline" id="fHint"></p>
+      <div class="lst-h">Места парка на вашем пути</div>
+      <ol class="places" id="fPlaces"></ol>
+    </div>
+
+        <div id="vHist" hidden>
+      <div class="eyebrow">Хранится только на этом телефоне</div>
+      <h2>История прогулок</h2>
+      <dl class="kpis" id="hK"></dl>
+      <div class="hlist" id="hList"></div>
+      <div class="btns"><button class="btn ghost" id="hBack" type="button">Назад</button></div>
+    </div>
+
         <div id="vDone" hidden>
       <div class="eyebrow" id="dName">Терренкур</div>
-      <h2>Маршрут пройден</h2>
+      <h2 id="dTitle">Маршрут пройден</h2>
       <dl class="kpis">
         <div><dt>Путь</dt><dd id="dLen">—</dd></div>
         <div><dt>Время</dt><dd id="dTime">—</dd></div>
@@ -285,11 +380,17 @@ table.rep{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:10px}
         <label>Пульс после, уд/мин<input id="pulse1" inputmode="numeric" placeholder="88"></label>
         <label>Давление после<input id="bp1" inputmode="numeric" placeholder="125/82"></label>
       </div>
+      <div class="note" id="dMed" hidden></div>
       <table class="rep" id="rep"></table>
+      <div class="lst-h" id="dPlH" hidden>Места на пути</div>
+      <ol class="places" id="dPlaces" hidden></ol>
       <div class="btns">
         <button class="btn solid" id="bShare" type="button">Отправить отчёт</button>
         <button class="btn ghost" id="bCsv" type="button">Скачать таблицу</button>
-        <button class="btn ghost" id="bAgain" type="button">Новый маршрут</button>
+        <button class="btn ghost" id="bAgain" type="button">Новая прогулка</button>
+        <button class="btn ghost" id="bHistAll" type="button">Все прогулки</button>
+        <button class="btn ghost" id="bBackHist" type="button" hidden>← К истории</button>
+        <button class="btn warnb" id="bDel" type="button" hidden>Удалить</button>
       </div>
       <p class="hintline" id="dHint"></p>
     </div>
@@ -336,17 +437,42 @@ const track=L.polyline([],{color:'#2F7DD8',weight:3,opacity:.6,dashArray:'2 6',i
 let markers=[];
 const meMk=L.marker([0,0],{icon:L.divIcon({className:'',html:'<div class="me"></div>',iconSize:[20,20],iconAnchor:[10,10]}),interactive:false,keyboard:false});
 const accC=L.circle([0,0],{radius:10,color:'#2F7DD8',weight:1,fillOpacity:.08,interactive:false});
-let route=ROUTES[0],walk=store.get('saki.walk',null),demo=null;
-function show(v){for(const id of ['vChoose','vBefore','vWalk','vDone'])$(id).hidden=id!==v;setMin(false)}
-function drawRoute(){
-  const line=route.line;
-  caseLine.setLatLngs(line);routeLine.setLatLngs(line);
+let route=ROUTES.find(r=>r.id===store.get('saki.route',1))||ROUTES[0],walk=store.get('saki.walk',null),demo=null,demoT=null;
+let sel=store.get('saki.sel','route');
+let mode=store.get('saki.mode','walk');
+let viewW=null,viewHist=false;
+const VIEWS=['vChoose','vBefore','vWalk','vFree','vDone','vHist'];
+function show(v){for(const id of VIEWS)$(id).hidden=id!==v;setMin(false);document.querySelector('.sbody').scrollTop=0}
+const PLL=POINTS.map(p=>({n:p.n,t:p.t,ll:LL(p.p)}));
+const icon=(html,s)=>L.divIcon({className:'',html,iconSize:[s,s],iconAnchor:[s/2,s/2]});
+const dmy=t=>new Date(t).toLocaleDateString('ru-RU',{day:'numeric',month:'short'}).replace('.','');
+const HR={1:{k:.4,cap:115,rest:2},2:{k:.3,cap:105,rest:3},3:{k:.55,cap:130,rest:2}};
+const okP=v=>/^\d{2,3}$/.test(String(v))&&+v>=40&&+v<=220;
+function hrLimit(w=walk){
+  const h=HR[w.route]||HR[1],m0=w.marks&&w.marks[F(w)],p0=+((m0&&m0.pulse)||w.pulse0)||0,a=+w.age||0;
+  return a>=10&&a<=100&&p0>=40&&p0<=120?Math.min(h.cap,Math.round(p0+h.k*(220-a-p0))):h.cap;
+}
+const verdict=(p,w=walk)=>{const L_=hrLimit(w);return p<=L_?'ok':p<=L_+15?'high':'danger'};
+function drawRoute(w=walk){
   markers.forEach(m=>m.remove());markers=[];
+  const free=w?!!w.free:sel==='free';
+  if(free){
+    caseLine.setLatLngs([]);routeLine.setLatLngs([]);doneLine.setLatLngs([]);
+    track.setStyle({opacity:.85,dashArray:null,weight:4});track.setLatLngs(w?w.pts.map(p=>[p[0],p[1]]):[]);
+    PLL.forEach(p=>{const v=w&&w.visits.some(x=>x.n===p.n),f=firstPhoto({poi:p.n});
+      const m=L.marker(p.ll,{icon:icon(`<div class="mk sm ${v?'done':''}">${v?'✓':p.n}</div>`,22),title:p.t,riseOnHover:true});
+      m.bindPopup(`<div class="pop">${f?`<img src="assets/photos/${f.id}.webp" alt="${f.cap}">`:''}<div><b>${p.n}. ${p.t}</b>${v?'<span>Вы здесь были</span><br>':''}<a href="${readHref({poi:p.n})}">Читать о месте →</a></div></div>`,{closeButton:false});
+      m.addTo(map);markers.push(m)});
+    return;
+  }
+  track.setStyle({opacity:.6,dashArray:'2 6',weight:3});
+  const line=route.line;caseLine.setLatLngs(line);routeLine.setLatLngs(line);
+  const own=w&&w.route===route.id,cur=w===walk&&!!walk,wi=cur?waitIdx():-1;
   route.stops.forEach((s,i)=>{
     if(i===route.stops.length-1&&s.poi===route.stops[0].poi)return;
-    const st=walk&&walk.route===route.id?walk.marks[i]:null;
-    const cls=st?(st.skip?'skip':'done'):(walk&&walk.route===route.id&&nextIdx()===i?'next':'');
-    const m=L.marker(s.ll,{icon:L.divIcon({className:'',html:`<div class="mk ${cls}">${st&&!st.skip?'✓':i+1}</div>`,iconSize:[28,28],iconAnchor:[14,14]}),title:s.title,riseOnHover:true});
+    const st=own?w.marks[i]:null;
+    const cls=st?(st.skip?'skip':i===wi?'next':'done'):(cur&&own&&wi<0&&nextIdx()===i?'next':'');
+    const m=L.marker(s.ll,{icon:icon(`<div class="mk ${cls}">${st&&!st.skip&&i!==wi?'✓':i+1}</div>`,28),title:s.title,riseOnHover:true});
     const f=firstPhoto(s);
     const ph=f?`<img src="assets/photos/${f.id}.webp" alt="${f.cap}">`:'';
     m.bindPopup(`<div class="pop">${ph}<div><b>${i+1}. ${s.title}</b><span>${s.from_start} м от старта${s.elev?' · '+s.elev+' м н.у.м.':''}${s.note?' · '+s.note:''}</span><br><a href="${readHref(s)}">Читать о месте →</a></div></div>`,{closeButton:false});
@@ -354,58 +480,90 @@ function drawRoute(){
   });
 }
 function renderChoose(){
-  $('routes').innerHTML=ROUTES.map(r=>`<button class="rc ${r.id===route.id?'on':''}" type="button" data-id="${r.id}" aria-pressed="${r.id===route.id}">
+  const n=store.get('saki.walks',[]).length;$('bHist').hidden=!n;$('hCount').textContent=n;
+  const free=sel==='free';
+  $('modes').hidden=free;
+  $('modes').querySelectorAll('[data-m]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.m===mode)));
+  $('chP').textContent=free?'Гуляйте как хотите: телефон запишет путь по GPS, время и скорость и отметит места парка, мимо которых вы прошли.'
+    :mode==='med'?'На каждой точке — пульс. Следующий отрезок открывается, когда пульс в норме; если выше — приложение попросит отдохнуть.'
+    :'Выберите маршрут. Во время прогулки телефон сам отмечает каждую точку по GPS и считает время и скорость на отрезках.';
+  $('routes').innerHTML=ROUTES.map(r=>{const on=!free&&r.id===route.id;return `<button class="rc ${on?'on':''}" type="button" data-id="${r.id}" aria-pressed="${on}">
     <span class="n">${r.id}</span><span><b>${r.name}</b><span class="s">${r.sub} · ${r.stops.length} точек</span></span>
-    <span class="len">${fmt1(r.length/1000)} км<small>≈ ${Math.round(r.length/WALK)} мин</small></span></button>`).join('');
-  $('routes').querySelectorAll('.rc').forEach(b=>b.onclick=()=>{route=ROUTES.find(r=>r.id===+b.dataset.id);store.set('saki.route',route.id);renderChoose();drawRoute();map.fitBounds(routeLine.getBounds().pad(.15))});
-  $('info').innerHTML=`<div><dt>Для кого</dt><dd>${route.for}</dd></div><div><dt>Нагрузка</dt><dd>${route.load}</dd></div>`;
-  $('stops').innerHTML=route.stops.map((s,i)=>`<li><i>${String(i+1).padStart(2,'0')}</i><span>${s.title}${s.note?`<small>${s.note}</small>`:''}</span><em>${s.from_start} м</em></li>`).join('');
+    <span class="len">${fmt1(r.length/1000)} км<small>≈ ${Math.round(r.length/WALK)} мин</small></span></button>`}).join('')+
+    `<button class="rc free ${free?'on':''}" type="button" data-free aria-pressed="${free}"><span class="n">∞</span><span><b>Свободная прогулка</b><span class="s">Без маршрута · путь и места рядом</span></span>
+    <span class="len">по парку<small>сколько хотите</small></span></button>`;
+  $('routes').querySelectorAll('.rc').forEach(b=>b.onclick=()=>{
+    if(b.hasAttribute('data-free'))sel='free';else{sel='route';route=ROUTES.find(r=>r.id===+b.dataset.id);store.set('saki.route',route.id)}
+    store.set('saki.sel',sel);renderChoose();drawRoute(null);fitPark()});
+  $('info').innerHTML=free?`<div><dt>Что считаем</dt><dd>Путь по GPS, время, скорость сейчас и среднюю, места парка в 25 м от вас</dd></div><div><dt>Отметки</dt><dd>Места отмечаются сами; можно и QR-кодом на стенде</dd></div>`
+    :`<div><dt>Для кого</dt><dd>${route.for}</dd></div><div><dt>Нагрузка</dt><dd>${route.load}</dd></div>`;
+  $('stops').hidden=free;
+  if(!free)$('stops').innerHTML=route.stops.map((s,i)=>`<li><i>${String(i+1).padStart(2,'0')}</i><span>${s.title}${s.note?`<small>${s.note}</small>`:''}</span><em>${s.from_start} м</em></li>`).join('');
+  $('bStart').innerHTML=`<svg viewBox="0 0 24 24"><path d="M7 4v16l13-8z"/></svg>${free?'Начать свободную прогулку':mode==='med'?'Начать медицинский терренкур':'Начать прогулку'}`;
 }
-const F=()=>walk&&walk.from||0;
-const nextIdx=()=>walk?walk.marks.findIndex((m,k)=>k>F()&&!m):-1;
+$('modes').addEventListener('click',e=>{const b=e.target.closest('[data-m]');if(!b)return;mode=b.dataset.m;store.set('saki.mode',mode);renderChoose()});
+function fitPark(){
+  const h=isMin()?110:Math.min($('sheet').offsetHeight||0,innerHeight*.62),pad={paddingTopLeft:[20,76],paddingBottomRight:[20,h+12],maxZoom:17};
+  map.fitBounds(sel==='free'&&!walk||!routeLine.getLatLngs().length?L.latLngBounds(parkLL):routeLine.getBounds(),pad);
+}
+const rOf=w=>ROUTES.find(r=>r.id===w.route)||ROUTES[0];
+const F=(w=walk)=>w&&w.from||0;
+const nextIdx=()=>walk&&!walk.free?walk.marks.findIndex((m,k)=>k>F()&&!m):-1;
 const keyOf=s=>s.poi?String(s.poi):'pine';
 const idxIn=(r,key)=>r.stops.findIndex(s=>keyOf(s)===key);
+const isMed=(w=walk)=>!!w&&w.mode==='med';
+const dep=m=>m.go||m.t;
+function waitIdx(){if(!walk||walk.free||walk.t1||!isMed())return -1;const lm=lastMark();return lm<walk.marks.length-1&&walk.marks[lm]&&!walk.marks[lm].go?lm:-1}
 function startWalk(isDemo){
-  walk={route:route.id,from:0,t0:Date.now(),marks:route.stops.map(()=>null),pulse0:$('pulse0').value.trim(),bp0:$('bp0').value.trim(),demo:!!isDemo,track:[]};
-  walk.marks[0]={t:walk.t0,how:'старт',pulse:walk.pulse0};
-  store.set('saki.walk',walk);show('vWalk');renderWalk();drawRoute();
+  const p0=$('pulse0').value.trim();
+  walk={route:route.id,mode,from:0,t0:Date.now(),marks:route.stops.map(()=>null),pulse0:p0,bp0:$('bp0').value.trim(),age:mode==='med'?$('age').value.trim():'',demo:!!isDemo,track:[]};
+  walk.marks[0]={t:walk.t0,how:'старт',pulse:p0,go:walk.t0};
+  store.set('saki.walk',walk);doneLine.setLatLngs([]);track.setLatLngs([]);show('vWalk');renderWalk();drawRoute();
   if(isDemo)runDemo();else{gpsOn();wake()}
   toast('Старт: '+route.stops[0].title);
 }
 function startAt(r,i){
   route=r;
-  walk={route:r.id,from:i,t0:Date.now(),marks:r.stops.map(()=>null),pulse0:'',bp0:'',demo:false,track:[]};
-  walk.marks[i]={t:walk.t0,how:'QR'};
+  walk={route:r.id,mode,from:i,t0:Date.now(),marks:r.stops.map(()=>null),pulse0:'',bp0:'',age:store.get('saki.age',''),demo:false,track:[]};
+  walk.marks[i]={t:walk.t0,how:'QR',go:walk.t0};
   store.set('saki.walk',walk);doneLine.setLatLngs([]);track.setLatLngs([]);
   show('vWalk');renderWalk();drawRoute();gpsOn();wake();
 }
 function stale(){
   if(!walk||walk.t1)return;
-  const last=Math.max(walk.t0,...walk.marks.filter(m=>m&&m.t).map(m=>m.t));
-  if(Date.now()-last>3*3600e3){walk.t1=last;store.set('saki.walk',walk)}
+  const ts=walk.free?[walk.t0,...walk.pts.map(p=>p[2]),...walk.visits.map(v=>v.t)]:[walk.t0,...walk.marks.filter(m=>m&&m.t).map(m=>dep(m))];
+  const last=Math.max(...ts);
+  if(Date.now()-last>3*3600e3){walk.t1=last;store.set('saki.walk',walk);saveRecord(walk)}
 }
 function mark(i,how){
-  if(!walk||walk.marks[i])return;
-  const now=Date.now();
+  if(!walk||walk.free||walk.marks[i])return;
+  const now=Date.now(),last=i===route.stops.length-1;
   for(let k=F()+1;k<i;k++)if(!walk.marks[k])walk.marks[k]={skip:1};
   walk.marks[i]={t:now,how};store.set('saki.walk',walk);buzz([40,60,40]);
-  const s=route.stops[i];if(how!=='QR'&&how!=='кнопка')toast((i===route.stops.length-1?'Финиш! ':'Отмечено: ')+s.title);
+  const s=route.stops[i];
+  if(isMed()&&!last){if(how==='GPS')openCard(i,'mark')}
+  else if(how!=='QR'&&how!=='кнопка')toast((last?'Финиш! ':'Отмечено: ')+s.title);
   renderWalk();drawRoute();
-  if(i===route.stops.length-1)finish();
+  if(last)finish();
 }
-function lastMark(){for(let k=walk.marks.length-1;k>=0;k--)if(walk.marks[k]&&!walk.marks[k].skip)return k;return F()}
-function prevMark(i){for(let k=i-1;k>=F();k--)if(walk.marks[k]&&!walk.marks[k].skip)return k;return -1}
-function segment(i){
-  const p=prevMark(i),m=walk.marks[i];if(p<0||!m||m.skip)return null;
-  const len=route.stops[i].from_start-route.stops[p].from_start,sec=(m.t-walk.marks[p].t)/1000;
+function lastMark(w=walk){for(let k=w.marks.length-1;k>=0;k--)if(w.marks[k]&&!w.marks[k].skip)return k;return F(w)}
+function prevMark(i,w=walk){for(let k=i-1;k>=F(w);k--)if(w.marks[k]&&!w.marks[k].skip)return k;return -1}
+function segment(i,w=walk){
+  const r=rOf(w),p=prevMark(i,w),m=w.marks[i];if(p<0||!m||m.skip)return null;
+  const len=r.stops[i].from_start-r.stops[p].from_start,sec=(m.t-dep(w.marks[p]))/1000;
   return {p,len,sec,v:sec>=10?kmh(len,sec):null};
 }
+const restAt=m=>m&&m.go&&m.go>m.t?(m.go-m.t)/1000:0;
+const stayTxt=m=>{const s=restAt(m);return m&&m.restUntil&&s>=1?'отдых '+fmtT(s):s>=90?'на точке '+fmtT(s):''};
 let lastFix=null;
 function renderWalk(){
-  if(!walk)return;
-  route=ROUTES.find(r=>r.id===walk.route);
-  $('wName').textContent=route.name;$('demoTag').hidden=!walk.demo;
-  const n=nextIdx(),s=route.stops[n]||route.stops[route.stops.length-1],lm=lastMark(),s0=route.stops[F()].from_start;
+  if(!walk||walk.free)return;
+  route=rOf(walk);
+  $('wName').textContent=route.name+(isMed()?' · медицинский':'');$('demoTag').hidden=!walk.demo;
+  const n=nextIdx(),s=route.stops[n]||route.stops[route.stops.length-1],lm=lastMark(),s0=route.stops[F()].from_start,wi=waitIdx();
+  $('wWait').hidden=wi<0;
+  if(wi>=0){const m=walk.marks[wi],rest=m.restUntil&&Date.now()<m.restUntil;
+    $('wWait').innerHTML=`<i>♥</i><span>${rest?'Отдых · ещё '+fmtT((m.restUntil-Date.now())/1000):m.restUntil&&!m.re?'Отдых закончен — измерьте пульс ещё раз':'Проверьте пульс, чтобы идти дальше'}<b>${route.stops[wi].title}</b></span><em>→</em>`}
   $('wIdx').textContent=(n+1)+' из '+route.stops.length;$('wNext').textContent=s.title;
   const left=lastFix&&lastFix.acc<=1000?hav([lastFix.lat,lastFix.lon],s.ll):null;
   $('wDist').innerHTML=(left==null?'—':(left>999?fmt1(left/1000):Math.round(left)))+`<small>${left>999?'км':'м'} до точки</small>`;
@@ -417,10 +575,57 @@ function renderWalk(){
   doneLine.setLatLngs(cutLine(route.stops[lm].from_start,s0));
   renderMini();
   $('wStops').innerHTML=route.stops.map((x,i)=>{const m=walk.marks[i],pre=i<F();let t='',sub=[];
-    if(m&&!m.skip){const g=segment(i);if(g){t=fmtT(g.sec);if(g.v!=null)sub.push(fmt1(g.v)+' км/ч')}if(m.pulse)sub.unshift('<b>♥ '+m.pulse+'</b>')}
+    if(m&&!m.skip){const g=segment(i);if(g){t=fmtT(g.sec);if(g.v!=null)sub.push(fmt1(g.v)+' км/ч')}
+      if(m.pulse)sub.unshift(`<b class="${isMed()&&okP(m.pulse)?verdict(+m.pulse):''}">♥ ${m.pulse}</b>`);
+      const st=stayTxt(m);if(st)sub.push(st)}
     if(i===F()&&walk.from)sub.push('старт по QR');
-    return `<li class="${m&&!m.skip?'done':''} ${i===n?'next':''} ${pre?'pre':''}"><i>${m?(m.skip?'—':'✓'):pre?'·':String(i+1).padStart(2,'0')}</i><span>${x.title}${sub.length?`<small>${sub.join(' · ')}</small>`:''}</span><em>${t||x.from_start+' м'}</em></li>`}).join('');
+    if(i===wi)sub.push('<b class="high">ждёт проверки пульса</b>');
+    return `<li class="${m&&!m.skip?'done':''} ${i===n||i===wi?'next':''} ${pre?'pre':''}"><i>${m?(m.skip?'—':i===wi?'♥':'✓'):pre?'·':String(i+1).padStart(2,'0')}</i><span>${x.title}${sub.length?`<small>${sub.join(' · ')}</small>`:''}</span><em>${t||x.from_start+' м'}</em></li>`}).join('');
 }
+$('wWait').onclick=()=>{const wi=waitIdx();if(wi>=0)openCard(wi,'mark')};
+function startFree(isDemo){
+  walk={free:true,t0:Date.now(),pulse0:$('pulse0').value.trim(),bp0:$('bp0').value.trim(),pts:[],dist:0,visits:[],demo:!!isDemo};
+  store.set('saki.walk',walk);doneLine.setLatLngs([]);show('vFree');renderFree();drawRoute();
+  if(isDemo)runDemo();else{gpsOn();wake()}
+  toast('Свободная прогулка: время пошло');
+}
+function freeFix(f){
+  const ll=[f.lat,f.lon];
+  if(f.acc<=30){
+    const last=walk.pts[walk.pts.length-1],pt=[+f.lat.toFixed(6),+f.lon.toFixed(6),f.t];
+    if(!last)walk.pts.push(pt);
+    else{const d=hav([last[0],last[1]],ll),dt=(f.t-last[2])/1000;
+      if(d>=4&&(dt<=0||d/dt<=4)){walk.dist+=d;walk.pts.push(pt)}}
+    for(const p of PLL){if(walk.visits.some(v=>v.n===p.n))continue;
+      if(hav(p.ll,ll)<=25){walk.visits.push({n:p.n,title:p.t,t:f.t,how:'GPS'});buzz([40,60,40]);toast('Рядом: '+p.t);drawRoute()}}
+    if(walk.pts.length%5===0)store.set('saki.walk',walk);
+  }
+  $('fHint').textContent=f.acc>1000?'Это устройство определяет место по интернету, а не по GPS — путь не записывается. На телефоне в парке включите геолокацию.'
+    :f.acc>30?'GPS неточный (±'+Math.round(f.acc)+' м) — путь запишется, когда сигнал станет лучше.':'';
+  renderFree();
+}
+function freeSpeedNow(){
+  const now=Date.now(),p=walk.pts.filter(x=>now-x[2]<=30000);if(p.length<2)return null;
+  let d=0;for(let i=1;i<p.length;i++)d+=hav([p[i-1][0],p[i-1][1]],[p[i][0],p[i][1]]);
+  return kmh(d,(p[p.length-1][2]-p[0][2])/1000||1);
+}
+function placesHtml(w){
+  if(!w.visits.length)return '<li><span class="none">Подходите ближе к местам парка — они отметятся сами, или наведите камеру на QR-код у стенда.</span></li>';
+  return w.visits.map((v,j)=>`<li><i>✓</i><span><a href="${readHref({poi:v.n})}">${v.title}</a><small>${v.how==='QR'?'по QR-коду':'рядом по GPS'}</small></span><em>${hhmm(v.t)}</em></li>`).join('');
+}
+function renderFree(){
+  if(!walk||!walk.free)return;
+  const sec=((walk.t1||Date.now())-walk.t0)/1000,v=freeSpeedNow();
+  $('fDemo').hidden=!walk.demo;
+  $('fDist').innerHTML=(walk.dist>999?fmt1(walk.dist/1000)+'<small>км</small>':Math.round(walk.dist)+'<small>м</small>');
+  $('fTime').textContent=fmtT(sec);
+  $('fNow').innerHTML=(v==null?'—':fmt1(v))+'<small>км/ч</small>';
+  $('fAvg').innerHTML=(sec>30&&walk.dist>20?fmt1(kmh(walk.dist,sec)):'—')+'<small>км/ч</small>';
+  $('fPlaces').innerHTML=placesHtml(walk);
+  track.setLatLngs(walk.pts.map(p=>[p[0],p[1]]));
+  renderMini();
+}
+$('fStop').onclick=()=>{if(walk){walk.t1=Date.now();finish()}};
 function along(ll,s0,s1){
   const x=(ll[1]-PR.W)*PR.KX,y=(PR.N-ll[0])*PR.KY,r=route,c=LINE_M[ROUTES.indexOf(r)],P=r.linem;let best=null;
   for(let i=1;i<P.length;i++){if(c[i]<s0||c[i-1]>s1)continue;
@@ -428,26 +633,40 @@ function along(ll,s0,s1){
     const off=Math.hypot(x-ax-t*dx,y-ay-t*dy);if(!best||off<best.off)best={off,s:c[i-1]+Math.sqrt(l)*t}}
   return best}
 const LINE_M=ROUTES.map(r=>{const c=[0];for(let i=1;i<r.linem.length;i++)c.push(c[i-1]+Math.hypot(r.linem[i][0]-r.linem[i-1][0],r.linem[i][1]-r.linem[i-1][1]));return c});
-function cutLine(d,a=0){d=Math.max(0,d);const r=route,c=LINE_M[ROUTES.indexOf(r)],out=[];
+function cutLine(d,a=0,r=route){d=Math.max(0,d);const c=LINE_M[ROUTES.indexOf(r)],out=[];
   const at=s=>{let i=c.findIndex(v=>v>=s);i=i<0?c.length-1:Math.max(1,i);const f=Math.min(1,Math.max(0,(s-c[i-1])/((c[i]-c[i-1])||1)));return [r.line[i-1][0]+(r.line[i][0]-r.line[i-1][0])*f,r.line[i-1][1]+(r.line[i][1]-r.line[i-1][1])*f]};
   if(d<=a)return [at(a)];out.push(at(a));for(let i=0;i<r.line.length;i++)if(c[i]>a&&c[i]<d)out.push(r.line[i]);out.push(at(d));return out}
-setInterval(()=>{if(walk&&!$('vWalk').hidden){const t=fmtT((Date.now()-walk.t0)/1000);$('kTime').textContent=t;if(isMin())$('miD').innerHTML=miDist+`<small>${t} в пути</small>`}},500);
+setInterval(()=>{
+  if(!walk||walk.t1)return;
+  const t=fmtT((Date.now()-walk.t0)/1000);
+  if(!$('vWalk').hidden){$('kTime').textContent=t;if(waitIdx()>=0)renderWalk();if(isMin())$('miD').innerHTML=miDist+`<small>${t} в пути</small>`}
+  if(!$('vFree').hidden)renderFree();
+  if(!$('cp').hidden&&cpMed())renderMed();
+},500);
 const isMin=()=>$('sheet').classList.contains('min');
 let miDist='';
 function renderMini(){
   if(!isMin())return;
   const n=$('miN');n.className='n';
   if(!$('vWalk').hidden&&walk){
-    const i=nextIdx(),N=route.stops.length,s=route.stops[i]||route.stops[N-1];
-    const left=lastFix&&lastFix.acc<=1000?hav([lastFix.lat,lastFix.lon],s.ll):s.from_start-route.stops[lastMark()].from_start;
-    n.textContent=i===N-1&&s.poi===route.stops[0].poi?'⚑':i+1;
-    $('miK').textContent=i===N-1?'Финиш':'Следующая точка';$('miT').textContent=s.title;
-    miDist=(left>999?fmt1(left/1000)+' км':Math.round(left)+' м')+'<br>';
+    const wi=waitIdx(),i=wi>=0?wi:nextIdx(),N=route.stops.length,s=route.stops[i]||route.stops[N-1];
+    if(wi>=0){n.textContent='♥';$('miK').textContent='Проверка пульса';$('miT').textContent=s.title;miDist='на точке<br>'}
+    else{const left=lastFix&&lastFix.acc<=1000?hav([lastFix.lat,lastFix.lon],s.ll):s.from_start-route.stops[lastMark()].from_start;
+      n.textContent=i===N-1&&s.poi===route.stops[0].poi?'⚑':i+1;
+      $('miK').textContent=i===N-1?'Финиш':'Следующая точка';$('miT').textContent=s.title;
+      miDist=(left>999?fmt1(left/1000)+' км':Math.round(left)+' м')+'<br>'}
     $('miD').innerHTML=miDist+`<small>${fmtT((Date.now()-walk.t0)/1000)} в пути</small>`;
-  }else if(!$('vDone').hidden&&walk){
-    const {len,sec}=totals();n.classList.add('ok');n.textContent='✓';
-    $('miK').textContent='Маршрут пройден';$('miT').textContent=route.name;
+  }else if(!$('vFree').hidden&&walk){
+    n.classList.add('ok');n.textContent='∞';
+    const v=walk.visits[walk.visits.length-1];
+    $('miK').textContent='Свободная прогулка';$('miT').textContent=v?v.title:'Путь пишется';
+    $('miD').innerHTML=(walk.dist>999?fmt1(walk.dist/1000)+' км':Math.round(walk.dist)+' м')+`<br><small>${fmtT((Date.now()-walk.t0)/1000)} в пути</small>`;
+  }else if(!$('vDone').hidden&&viewW){
+    const {len,sec}=totals(viewW);n.classList.add('ok');n.textContent='✓';
+    $('miK').textContent=viewHist?'Из истории':'Прогулка завершена';$('miT').textContent=viewW.free?'Свободная прогулка':rOf(viewW).name;
     $('miD').innerHTML=(len>999?fmt1(len/1000)+' км':len+' м')+`<br><small>${fmtT(sec)}</small>`;
+  }else if(sel==='free'){
+    n.classList.add('idle');n.textContent='∞';$('miK').textContent='Без маршрута';$('miT').textContent='Свободная прогулка';$('miD').innerHTML='по парку<br><small>сколько хотите</small>';
   }else{
     n.classList.add('idle');n.textContent=route.id;
     $('miK').textContent=route.sub;$('miT').textContent=route.name;
@@ -456,11 +675,16 @@ function renderMini(){
 }
 function focusMap(){
   const pad={paddingTopLeft:[24,84],paddingBottomRight:[24,($('sheet').offsetHeight||90)+24],maxZoom:18};
-  if(walk&&!walk.t1&&!$('vWalk').hidden){
-    const i=nextIdx(),s=route.stops[i];if(!s)return;
+  if(walk&&!walk.t1&&walk.free){
+    const here=lastFix&&lastFix.acc<=60?[lastFix.lat,lastFix.lon]:null;
+    if(here)map.setView(here,18);else map.fitBounds(L.latLngBounds(parkLL),pad);
+  }else if(walk&&!walk.t1&&!$('vWalk').hidden){
+    const wi=waitIdx(),i=wi>=0?wi:nextIdx(),s=route.stops[i];if(!s)return;
+    if(wi>=0){map.setView(s.ll,18);return}
     const from=lastFix&&lastFix.acc<=60?[lastFix.lat,lastFix.lon]:route.stops[lastMark()].ll;
     map.fitBounds(L.latLngBounds([from,s.ll]),pad);
-  }else map.fitBounds(routeLine.getBounds(),{...pad,maxZoom:17});
+  }else if(sel==='free'&&$('vDone').hidden)map.fitBounds(L.latLngBounds(parkLL),pad);
+  else map.fitBounds(routeLine.getLatLngs().length?routeLine.getBounds():L.latLngBounds(parkLL),{...pad,maxZoom:17});
 }
 function setMin(on){
   const sh=$('sheet'),was=isMin();sh.classList.toggle('min',on);$('grab').setAttribute('aria-expanded',String(!on));
@@ -478,11 +702,12 @@ let swY=null,swMoved=false;
 $('fold').onclick=()=>setMin(true);
 let watch=null,near={i:-1,c:0};
 function gpsState(cls,t){const g=$('gps');g.className='gps '+cls;$('gpst').textContent=t}
+function hint(t){$(walk&&walk.free?'fHint':'wHint').textContent=t}
 function gpsOn(){
-  if(!('geolocation' in navigator)){gpsState('off','GPS недоступен');$('wHint').textContent='GPS недоступен на этом устройстве — отмечайтесь кнопкой или QR-кодом.';return}
+  if(!('geolocation' in navigator)){gpsState('off','GPS недоступен');hint('GPS недоступен на этом устройстве — отмечайтесь кнопкой или QR-кодом.');return}
   gpsState('weak','ищем GPS…');
   watch=navigator.geolocation.watchPosition(onFix,e=>{gpsState('off',e.code===1?'GPS запрещён':'нет сигнала');
-    $('wHint').textContent=e.code===1?'Разрешите доступ к геопозиции в настройках браузера — или отмечайтесь кнопкой «Я на точке» и QR-кодами.':'Сигнал GPS пропал — точки можно отмечать кнопкой или QR-кодом.'},
+    hint(e.code===1?'Разрешите доступ к геопозиции в настройках браузера — или отмечайтесь QR-кодами на стендах.':'Сигнал GPS пропал — места можно отмечать QR-кодом.')},
     {enableHighAccuracy:true,maximumAge:2000,timeout:20000});
 }
 function gpsOff(){if(watch!=null)navigator.geolocation.clearWatch(watch);watch=null;gpsState('','GPS выключен')}
@@ -490,48 +715,69 @@ function onFix(p){
   const f={lat:p.coords.latitude,lon:p.coords.longitude,acc:p.coords.accuracy||99,t:Date.now()};lastFix=f;
   const ll=[f.lat,f.lon];meMk.setLatLng(ll).addTo(map);accC.setLatLng(ll).setRadius(f.acc).addTo(map);
   gpsState(f.acc<=25?'ok':f.acc>1000?'off':'weak',f.acc>1000?'место примерное':'GPS ±'+(f.acc>999?fmt1(f.acc/1000)+' км':Math.round(f.acc)+' м'));
+  if(!walk||walk.t1)return;
+  if(walk.free){freeFix(f);return}
   const farPark=hav(ll,PC);
-  if(!walk){return}
   walk.track.push([+f.lat.toFixed(6),+f.lon.toFixed(6),f.t]);if(walk.track.length%5===0)store.set('saki.walk',walk);
   track.setLatLngs(walk.track.map(t=>[t[0],t[1]]));
   $('wHint').textContent=f.acc>1000?'Это устройство определяет место по интернету, а не по GPS — точно не видно, где вы. На телефоне в парке включите геолокацию, или отмечайтесь кнопкой «Я на точке» и QR-кодами.':farPark>600?'Вы далеко от парка — карта показывает маршрут, отметки сработают, когда придёте.':(f.acc>40?'GPS неточный (±'+Math.round(f.acc)+' м) — если точка не отметилась сама, нажмите «Я на точке».':'');
-  const n=nextIdx();if(n<0)return;
+  const n=nextIdx();if(n<0||waitIdx()>=0){renderWalk();return}
   if(f.acc<=40){
     const pr=along(ll,route.stops[lastMark()].from_start-30,route.stops[Math.min(n+2,route.stops.length-1)].from_start+30);
     if(pr&&pr.off<=Math.max(30,Math.min(f.acc,40))){
       let hit=-1;for(let i=n;i<Math.min(n+3,route.stops.length);i++)if(pr.s>=route.stops[i].from_start-RADIUS)hit=i;
+      if(isMed()&&hit>n)hit=n;
       if(hit>=0&&hit===near.i){if(++near.c>=2){near={i:-1,c:0};for(let i=n;i<=hit;i++)mark(i,'GPS');return}}else near={i:hit,c:hit>=0?1:0};
     }
   }
   renderWalk();
 }
 let lock=null;async function wake(){try{lock=await navigator.wakeLock.request('screen')}catch(e){}}
-document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&walk&&!walk.demo)wake()});
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&walk&&!walk.t1&&!walk.demo)wake()});
+function shiftTime(ms){
+  walk.t0-=ms;
+  if(walk.free){for(const p of walk.pts)p[2]-=ms;for(const v of walk.visits)v.t-=ms;return}
+  for(const m of walk.marks)if(m){if(m.t)m.t-=ms;if(m.go)m.go-=ms;if(m.restUntil)m.restUntil-=ms;if(m.tries)m.tries.forEach(x=>x.t-=ms)}
+}
+function demoPulse(i){
+  if(!walk||!walk.demo||waitIdx()!==i)return;
+  if($('cp').hidden||cpI!==i)openCard(i,'mark');
+  const m=walk.marks[i],L_=hrLimit(),high=i===F()+3&&!(m.tries&&m.tries.length);
+  const v=high?L_+8:L_-6-Math.floor(Math.random()*12);
+  $('cp-p').value=String(v);$('cp-p').dispatchEvent(new Event('input'));
+  if(!high)setTimeout(()=>{if(walk&&walk.demo&&waitIdx()===i&&!$('cp-ok').disabled)$('cp-ok').click()},1300);
+}
 function runDemo(){
   gpsState('ok','демо-GPS');
-  const c=LINE_M[ROUTES.indexOf(route)],L0=c[c.length-1];let d=0,last=performance.now();
-  const step=now=>{if(!walk||!walk.demo){demo=null;return}
-    const dt=Math.min(.2,Math.max(0,(now-last)/1000));last=now;d+=1.25*12*dt;
-    if(d>=L0)d=L0;
-    const pt=cutLine(d).slice(-1)[0];
-    walk.t0-=dt*11*1000;for(const m of walk.marks)if(m&&m.t)m.t-=dt*11*1000;
+  const r=walk.free?ROUTES[1]:route,c=LINE_M[ROUTES.indexOf(r)],L0=c[c.length-1];let d=0,last=performance.now();
+  const step=now=>{if(!walk||!walk.demo||walk.t1){demo=null;return}
+    const dt=Math.min(.2,Math.max(0,(now-last)/1000));last=now;
+    shiftTime(dt*11*1000);
+    const wi=waitIdx();
+    if(wi>=0){const m=walk.marks[wi];
+      if(!demoT&&(!m.pulse||(m.restUntil&&Date.now()>=m.restUntil&&!m.re)))demoT=setTimeout(()=>{demoT=null;demoPulse(wi)},900);
+      demo=requestAnimationFrame(step);return}
+    d=Math.min(L0,d+1.25*12*dt);
+    const pt=cutLine(d,0,r).slice(-1)[0];
     onFix({coords:{latitude:pt[0]+(Math.random()-.5)*4e-5,longitude:pt[1]+(Math.random()-.5)*5e-5,accuracy:6+Math.random()*5}});
-    if(d<L0||nextIdx()>=0)demo=requestAnimationFrame(step)};
+    if(walk.free&&d>=L0){walk.t1=Date.now();finish();return}
+    if(d<L0||nextIdx()>=0||waitIdx()>=0)demo=requestAnimationFrame(step)};
   demo=requestAnimationFrame(step);
 }
 const hhmm=t=>new Date(t).toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});
 const mOrKm=m=>m>999?fmt1(m/1000)+'<small>км</small>':Math.round(m)+'<small>м</small>';
-let cpI=-1,cpKind='';
+let cpI=-1,cpKind='',cpS=null;
+const cpMed=()=>isMed()&&!walk.t1&&cpI>=0&&walk.marks[cpI]&&(cpKind==='mark'||cpKind==='again')&&cpI<walk.marks.length-1;
 function openCard(i,kind,opt={}){
   cpI=i;cpKind=kind;
   const live=kind==='start'||kind==='mark'||kind==='again'||kind==='finish';
-  const s=opt.s||route.stops[i],N=route.stops.length,f=firstPhoto(s),im=$('cp-img'),cp=$('cp');
+  const s=opt.s||route.stops[i],N=route.stops.length,f=firstPhoto(s),im=$('cp-img'),cp=$('cp');cpS=s;
   if(f){im.src='assets/photos/'+f.id+'.webp';im.alt=f.cap}
-  cp.classList.toggle('nophoto',!f);cp.classList.toggle('warn',!live);
-  $('cp-i').textContent=live?'✓':'!';
+  cp.classList.toggle('nophoto',!f);cp.classList.toggle('warn',!live&&kind!=='visit');
+  $('cp-i').textContent=live||kind==='visit'?'✓':'!';
   $('cp-k').textContent={start:'Старт прогулки · точка '+(i+1)+' из '+N,mark:'Отмечено · точка '+(i+1)+' из '+N,again:'Уже отмечено · точка '+(i+1)+' из '+N,
-    finish:'Финиш маршрута',behind:'Точка уже позади',other:'Не на вашем маршруте'}[kind];
-  $('cp-r').textContent=route.name;
+    finish:'Финиш маршрута',behind:'Точка уже позади',other:'Не на вашем маршруте',visit:'Отмечено в прогулке'}[kind];
+  $('cp-r').textContent=kind==='visit'?'Свободная прогулка':route.name+(isMed()&&live?' · медицинский':'');
   $('cp-t').textContent=s.title;
   const rs=opt.routes||[];$('cp-routes').hidden=!(kind==='start'&&rs.length>1);
   if(kind==='start'&&rs.length>1)$('cp-routes').innerHTML='<small>Эта точка есть на нескольких маршрутах — по какому идёте?</small>'+
@@ -543,39 +789,85 @@ function openCard(i,kind,opt={}){
     k=[['Путь',mOrKm(len)],['Время',fmtT(sec)],['Средняя',fmt1(kmh(len,sec))+'<small>км/ч</small>']]}
   else if(kind==='mark'||kind==='again'){const g=segment(i);
     k=[['Скорость',(g&&g.v!=null?fmt1(g.v):'—')+'<small>км/ч</small>'],['Отрезок',g?fmtT(g.sec):'—'],[i+2===N?'До финиша':'До точки '+(i+2),i<N-1?mOrKm(route.stops[i+1].from_start-s.from_start):'—']]}
+  else if(kind==='visit'){const sec=(Date.now()-walk.t0)/1000;
+    k=[['Пройдено',mOrKm(walk.dist)],['В пути',fmtT(sec)],['Мест',String(walk.visits.length)]]}
   $('cp-kpis').hidden=!k.length;
-  $('cp-kpis').innerHTML=k.map(([t,v],j)=>`<div><dt>${t}</dt><dd class="${j===2&&kind!=='finish'?'go':''}">${v}</dd></div>`).join('');
-  $('cp-pl').hidden=!live;
+  $('cp-kpis').innerHTML=k.map(([t,v],j)=>`<div><dt>${t}</dt><dd class="${j===2&&kind!=='finish'&&kind!=='visit'?'go':''}">${v}</dd></div>`).join('');
+  $('cp-pl').hidden=!live;$('cp-p').disabled=false;
   const pv=live?(walk.marks[i].pulse||(kind==='finish'?walk.pulse1:'')||''):'';
-  $('cp-p').value=pv;$('cp-pl').classList.toggle('saved',/^\d{2,3}$/.test(pv));
+  $('cp-p').value=pv;$('cp-pl').classList.toggle('saved',okP(pv));
   const nx=live&&i<N-1?route.stops[i+1]:null;$('cp-next').hidden=!nx;
   if(nx){const d=nx.from_start-s.from_start;
     $('cp-next').innerHTML=`<span class="n">${i+2===N&&nx.poi===route.stops[0].poi?'⚑':i+2}</span><span>${i+2===N?'Финиш':'Дальше'} · ${Math.round(d)} м · ≈ ${Math.max(1,Math.round(d/WALK))} мин<b>${nx.title}</b></span>`}
   const nn=nextIdx(),nextS=nn>=0?route.stops[nn]:null;
   $('cp-note').hidden=live&&kind!=='start';
-  $('cp-note').textContent=kind==='start'?'Время пошло. Следующие точки отметятся сами по GPS — или наведите камеру на QR-код у стенда.'
+  $('cp-note').textContent=kind==='start'?(isMed()?'Время пошло. На каждой следующей точке приложение попросит измерить пульс.':'Время пошло. Следующие точки отметятся сами по GPS — или наведите камеру на QR-код у стенда.')
     :kind==='behind'?`Эта точка на маршруте уже позади.${nextS?' Следующая — «'+nextS.title+'».':''}`
-    :kind==='other'?`Этой точки нет в маршруте «${route.name}», но о месте можно прочитать.`:'';
+    :kind==='other'?`Этой точки нет в маршруте «${route.name}», но о месте можно прочитать.`
+    :kind==='visit'?'Место добавлено в вашу прогулку и попадёт в отчёт.':'';
   $('cp-a').href=readHref(s);
-  $('cp-ok').textContent=kind==='finish'?'Отчёт':live?'Дальше':'Понятно';
+  $('cp-ok').disabled=false;$('cp-end').hidden=true;
+  $('cp-ok').textContent=kind==='finish'?'Отчёт':live||kind==='visit'?'Дальше':'Понятно';
+  $('cp-med').hidden=!(isMed()&&live&&kind!=='start');
+  if(isMed()&&live&&kind!=='start')renderMed();
   if(s.ll)map.panTo(s.ll);
   $('cpv').hidden=false;cp.hidden=false;cp.scrollTop=0;
   requestAnimationFrame(()=>{$('cpv').classList.add('on');cp.classList.add('on')});
   $('cp-ok').focus({preventScroll:true});
+}
+function renderMed(){
+  const m=walk.marks[cpI];if(!m)return;
+  const L_=hrLimit(),now=Date.now(),fin=cpKind==='finish',box=$('cp-ver'),p=+m.pulse||0;
+  const resting=m.restUntil&&now<m.restUntil,remeasure=m.restUntil&&!resting&&!m.re;
+  $('cp-lim').innerHTML=`Ваша норма на маршруте: <b>до ${L_} уд/мин</b>`;
+  let cls='',html='',btn='Дальше',dis=false,end=false;
+  if(fin){if(okP(m.pulse)){const v=verdict(p);cls=v;html=v==='ok'?`✓ ${p} — в норме. Отличная прогулка!`:`${p} — выше нормы. Посидите, отдохните; запишите давление и пульс через 5 минут.`}
+    else{cls='';html='Измерьте пульс на финише — он попадёт в отчёт.'}btn='Отчёт'}
+  else if(m.go){cls='ok';html='✓ Пульс в норме — следующий отрезок открыт'}
+  else if(resting){const left=(m.restUntil-now)/1000;cls=(m.v==='danger'?'danger':'high')+' tmr';
+    html=`<span class="tm">${fmtT(left)}</span><span>${m.v==='danger'?'Пульс сильно выше нормы. Сядьте, отдохните, дышите спокойно. Если пульс не снижается — завершите прогулку и обратитесь к врачу.':'Пульс выше нормы. Постойте или присядьте, дышите спокойно: 2 шага — вдох, 4 — выдох.'}</span>`;
+    btn='Отдых · '+fmtT(left);dis=true;end=m.v==='danger'}
+  else if(remeasure){cls='wait';html='Отдых закончен. Измерьте пульс ещё раз — если он в норме, можно идти дальше.';btn='Введите пульс';dis=true;end=m.v==='danger'}
+  else if(!okP(m.pulse)){html='Введите пульс — приложение сравнит его с вашей нормой и откроет следующий отрезок.';btn='Введите пульс';dis=true}
+  else{cls='ok';html=`✓ ${p} — в норме. Можно идти дальше.`;btn='Иду дальше'}
+  box.className='ver '+cls;box.innerHTML=html;
+  $('cp-ok').textContent=btn;$('cp-ok').disabled=dis;$('cp-end').hidden=!end;
+  $('cp-p').disabled=!!resting;
+  $('cp-pl').classList.toggle('bad',!m.go&&okP(m.pulse)&&verdict(p)!=='ok'&&!remeasure);
+  if(remeasure&&$('cp-p').value===m.pulse&&document.activeElement!==$('cp-p'))$('cp-p').value='';
 }
 function closeCard(){
   const cp=$('cp');if(cp.hidden)return;cp.classList.remove('on');$('cpv').classList.remove('on');
   setTimeout(()=>{if(!cp.classList.contains('on')){cp.hidden=true;$('cpv').hidden=true}},reduce?0:420);
 }
 $('cp-x').onclick=$('cpv').onclick=closeCard;
-$('cp-ok').onclick=()=>{closeCard();if(cpKind!=='finish'&&walk&&!walk.t1&&!$('vWalk').hidden)setMin(true)};
+$('cp-ok').onclick=()=>{
+  if(cpMed()){const m=walk.marks[cpI];
+    if(!m.go){if(!okP(m.pulse)||verdict(+m.pulse)!=='ok'||(m.restUntil&&Date.now()<m.restUntil))return;
+      m.go=Date.now();store.set('saki.walk',walk);buzz(30);
+      const nx=nextIdx();toast(nx>=0?'Отрезок открыт: дальше — '+route.stops[nx].title:'Отрезок открыт');renderWalk();drawRoute()}}
+  closeCard();if(cpKind!=='finish'&&walk&&!walk.t1&&(!$('vWalk').hidden||!$('vFree').hidden))setMin(true);
+};
+$('cp-end').onclick=()=>{closeCard();if(walk&&!walk.t1){walk.t1=Date.now();finish()}};
 addEventListener('keydown',e=>{if(e.key==='Escape')closeCard()});
 $('cp-p').addEventListener('input',e=>{
   const v=e.target.value.replace(/\D/g,'').slice(0,3);e.target.value=v;
-  if(!walk||cpI<0||!walk.marks[cpI])return;
-  walk.marks[cpI].pulse=v;if(cpI===F())walk.pulse0=v;if(cpKind==='finish'){walk.pulse1=v;$('pulse1').value=v}
-  store.set('saki.walk',walk);$('cp-pl').classList.toggle('saved',/^\d{2,3}$/.test(v));
-  if(cpKind==='finish')renderDone();else renderWalk();
+  if(!walk||cpI<0||!walk.marks||!walk.marks[cpI])return;
+  const m=walk.marks[cpI];
+  if(cpMed()&&!m.go){
+    if(m.restUntil&&Date.now()<m.restUntil)return;
+    m.pulse=v;
+    if(okP(v)){
+      if(m.restUntil)m.re=1;
+      (m.tries=m.tries||[]).push({p:+v,t:Date.now()});
+      const vv=verdict(+v);
+      if(vv!=='ok'){m.v=vv;m.re=0;m.restUntil=Date.now()+(HR[walk.route]||HR[1]).rest*60e3*(vv==='danger'?2:1);buzz([80,60,80])}else m.v='ok';
+    }
+  }else m.pulse=v;
+  if(cpI===F())walk.pulse0=v;if(cpKind==='finish'){walk.pulse1=v;$('pulse1').value=v}
+  store.set('saki.walk',walk);$('cp-pl').classList.toggle('saved',okP(v));
+  if(cpMed()||(isMed()&&cpKind==='finish'))renderMed();
+  if(cpKind==='finish')renderDone(walk);else renderWalk();
 });
 $('cp-routes').addEventListener('click',e=>{const b=e.target.closest('[data-r]');if(!b||!walk||cpKind!=='start')return;
   const r=ROUTES.find(r=>r.id===+b.dataset.r),key=keyOf(route.stops[cpI]),rs=ROUTES.filter(r=>idxIn(r,key)>=0);
@@ -585,7 +877,13 @@ function fromQR(){
   const key=m[1];
   try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}
   stale();
-  if(walk&&walk.demo){walk.t1=Date.now();if(demo){cancelAnimationFrame(demo);demo=null}}
+  if(walk&&walk.demo&&!walk.t1){walk.t1=Date.now();if(demo){cancelAnimationFrame(demo);demo=null}}
+  if(walk&&!walk.t1&&walk.free){
+    const poi=key==='pine'?null:+key,s=poi?PLL.find(p=>p.n===poi):null,st=ROUTES.flatMap(r=>r.stops).find(x=>keyOf(x)===key);
+    const title=s?s.t:st?st.title:'';if(!title)return;
+    if(!walk.visits.some(v=>(v.n||'pine')===(poi||'pine'))){walk.visits.push({n:poi,title,t:Date.now(),how:'QR'});store.set('saki.walk',walk);buzz([40,60,40])}
+    renderFree();drawRoute();openCard(-1,'visit',{s:{poi,title,ll:s?s.ll:st&&st.ll}});return;
+  }
   if(!walk||walk.t1){
     const rs=ROUTES.filter(r=>idxIn(r,key)>=0);
     if(!rs.length){const poi=+key;if(PHOTO[poi])openCard(-1,'other',{s:{poi,title:PHOTO[poi].t}});return}
@@ -595,9 +893,11 @@ function fromQR(){
   }
   const lm=lastMark();
   if(keyOf(route.stops[lm])===key){openCard(lm,lm===F()?'start':lm===route.stops.length-1?'finish':'again',{routes:ROUTES.filter(r=>idxIn(r,key)>=0)});return}
+  const wi=waitIdx();
+  if(wi>=0){toast('Сначала проверьте пульс на точке «'+route.stops[wi].title+'»',3400);openCard(wi,'mark');return}
   const n=nextIdx(),N=route.stops.length;
   for(let i=Math.max(n,1);i<N;i++)if(keyOf(route.stops[i])===key){
-    if(i===N-1&&idxIn(route,key)<F()){const lmk=lastMark(),d=route.stops[i].from_start-route.stops[lmk].from_start,sec=(Date.now()-walk.marks[lmk].t)/1000;
+    if(i===N-1&&idxIn(route,key)<F()){const lmk=lastMark(),d=route.stops[i].from_start-route.stops[lmk].from_start,sec=(Date.now()-dep(walk.marks[lmk]))/1000;
       if(kmh(d,sec)>8){openCard(idxIn(route,key),'behind');return}}
     mark(i,'QR');openCard(i,i===N-1?'finish':'mark');return}
   const i=idxIn(route,key);
@@ -607,69 +907,162 @@ function fromQR(){
 }
 addEventListener('hashchange',fromQR);
 function finish(){
-  gpsOff();if(demo){cancelAnimationFrame(demo);demo=null}
+  gpsOff();if(demo){cancelAnimationFrame(demo);demo=null}if(demoT){clearTimeout(demoT);demoT=null}
   try{lock&&lock.release()}catch(e){}
-  walk.t1=walk.t1||Date.now();store.set('saki.walk',walk);
-  show('vDone');renderDone();
+  walk.t1=walk.t1||Date.now();store.set('saki.walk',walk);saveRecord(walk);
+  viewW=walk;viewHist=false;show('vDone');renderDone(walk);focusDone(walk);
 }
-function rows(){
-  const out=[];let p=F();
-  route.stops.forEach((s,i)=>{if(i<=F())return;const m=walk.marks[i];
-    if(!m||m.skip){out.push({from:route.stops[p].title,to:s.title,m:null,skip:1});return}
-    const len=s.from_start-route.stops[p].from_start,sec=(m.t-walk.marks[p].t)/1000;
-    out.push({from:route.stops[p].title,to:s.title,m:len,sec,v:kmh(len,sec),how:m.how,pulse:m.pulse||''});p=i});
+function rows(w){
+  const r=rOf(w),out=[],lm=lastMark(w);let p=F(w);
+  r.stops.forEach((s,i)=>{if(i<=F(w)||i>lm)return;const m=w.marks[i];
+    if(!m||m.skip){out.push({from:r.stops[p].title,to:s.title,m:null,skip:1});return}
+    const g=segment(i,w);
+    out.push({from:r.stops[p].title,to:s.title,m:g.len,sec:g.sec,v:g.v,how:m.how,pulse:m.pulse||'',rest:m.restUntil?restAt(m):0,stay:stayTxt(m),tries:(m.tries||[]).map(x=>x.p)});p=i});
   return out;
 }
-function totals(){const lm=lastMark(),len=route.stops[lm].from_start-route.stops[F()].from_start,sec=((walk.marks[lm]?.t||walk.t1)-walk.t0)/1000;return {lm,len,sec}}
-function renderDone(){
-  route=ROUTES.find(r=>r.id===walk.route);$('dName').textContent=route.name+(walk.demo?' · демонстрация':'');
-  const {lm,len,sec}=totals();
+const avg=(len,sec)=>sec>=60&&len>=20?fmt1(kmh(len,sec)):'—';
+function totals(w){
+  if(w.legacy)return {len:w.len,sec:w.sec};
+  if(w.free)return {len:Math.round(w.dist||0),sec:((w.t1||Date.now())-w.t0)/1000};
+  const r=rOf(w),lm=lastMark(w);
+  return {lm,len:r.stops[lm].from_start-r.stops[F(w)].from_start,sec:(((w.marks[lm]&&w.marks[lm].t)||w.t1)-w.t0)/1000};
+}
+function renderDone(w,hist=false){
+  const {lm,len,sec}=totals(w);
+  if(!w.free)route=rOf(w);
+  $('dName').textContent=(w.free?'Свободная прогулка':route.name+(isMed(w)?' · медицинский':''))+(w.demo?' · демонстрация':'')+(hist?' · '+dmy(w.t0)+', '+hhmm(w.t0):'');
+  $('dTitle').textContent=w.free?'Прогулка завершена':lm===route.stops.length-1?'Маршрут пройден':'Прогулка завершена';
   $('dLen').innerHTML=(len>999?fmt1(len/1000)+'<small>км</small>':len+'<small>м</small>');
-  $('dTime').textContent=fmtT(sec);$('dSpeed').innerHTML=fmt1(kmh(len,sec))+'<small>км/ч</small>';
-  const rs=rows();
-  const p0=walk.marks[F()].pulse||walk.pulse0||'';
-  $('rep').innerHTML='<thead><tr><th>Отрезок</th><th>М</th><th>Время</th><th>км/ч</th><th>Пульс</th></tr></thead><tbody>'+
-    `<tr><td>Старт: ${route.stops[F()].title}</td><td class="r"></td><td class="r">${hhmm(walk.t0)}</td><td class="r"></td><td class="r">${p0||'—'}</td></tr>`+
-    rs.map(r=>`<tr class="${r.skip?'sk':''}"><td>→ ${r.to}</td><td class="r">${r.m??'—'}</td><td class="r">${r.skip?'пропуск':fmtT(r.sec)}</td><td class="r">${r.skip?'':fmt1(r.v)}</td><td class="r">${r.skip?'':r.pulse||'—'}</td></tr>`).join('')+
-    `</tbody><tfoot><tr><td>Итого</td><td class="r">${len}</td><td class="r">${fmtT(sec)}</td><td class="r">${fmt1(kmh(len,sec))}</td><td></td></tr></tfoot>`;
-  $('pulse1').value=walk.pulse1||'';$('bp1').value=walk.bp1||'';
-  const hist=store.get('saki.history',[]);if(!walk.saved){walk.saved=1;hist.unshift({route:route.id,t0:walk.t0,len,sec,demo:walk.demo});store.set('saki.history',hist.slice(0,30));store.set('saki.walk',walk)}
-  $('dHint').textContent='Отчёт сохранён на этом телефоне. Отправьте его врачу или инструктору.';
-  drawRoute();doneLine.setLatLngs(cutLine(route.stops[lm].from_start,route.stops[F()].from_start));
+  $('dTime').textContent=fmtT(sec);$('dSpeed').innerHTML=avg(len,sec)+'<small>км/ч</small>';
+  $('dMed').hidden=!isMed(w);
+  if(isMed(w)){const rs=rows(w),high=rs.filter(r=>!r.skip&&r.tries.some(p=>verdict(p,w)!=='ok')).length,rest=rs.reduce((a,r)=>a+(r.rest||0),0);
+    $('dMed').innerHTML=`<b>Медицинский режим.</b> Норма пульса — до ${hrLimit(w)} уд/мин${w.age?' (возраст '+w.age+', покой '+(w.pulse0||'—')+')':''}. `+
+      (high?`Пульс выше нормы на ${high} ${high===1?'точке':'точках'}${rest>=1?', отдых всего '+fmtT(rest):''}.`:'На всех точках пульс был в норме.')}
+  $('rep').hidden=!!w.free;$('dPlH').hidden=$('dPlaces').hidden=!w.free;
+  if(w.free)$('dPlaces').innerHTML=placesHtml(w);
+  else{const rs=rows(w),p0=w.marks[F(w)].pulse||w.pulse0||'';
+    const pc=r=>{if(r.skip)return '';if(!r.pulse)return '—';const v=isMed(w)&&okP(r.pulse)?verdict(+r.pulse,w):'';
+      const was=r.tries.length>1?`<small>было ${r.tries.slice(0,-1).join(', ')}</small>`:'';return `<span class="v ${v}">${r.pulse}</span>${was}`};
+    $('rep').innerHTML='<thead><tr><th>Отрезок</th><th>М</th><th>Время</th><th>км/ч</th><th>Пульс</th></tr></thead><tbody>'+
+      `<tr><td>Старт: ${route.stops[F(w)].title}</td><td class="r"></td><td class="r">${hhmm(w.t0)}</td><td class="r"></td><td class="r">${p0||'—'}</td></tr>`+
+      rs.map(r=>`<tr class="${r.skip?'sk':''}"><td>→ ${r.to}</td><td class="r">${r.m??'—'}</td><td class="r">${r.skip?'пропуск':fmtT(r.sec)+(r.stay?`<small>+ ${r.stay}</small>`:'')}</td><td class="r">${r.skip||r.v==null?'—':fmt1(r.v)}</td><td class="r">${pc(r)}</td></tr>`).join('')+
+      `</tbody><tfoot><tr><td>Итого</td><td class="r">${len}</td><td class="r">${fmtT(sec)}</td><td class="r">${avg(len,sec)}</td><td></td></tr></tfoot>`}
+  $('pulse1').value=w.pulse1||'';$('bp1').value=w.bp1||'';
+  $('bAgain').hidden=$('bHistAll').hidden=hist;$('bBackHist').hidden=$('bDel').hidden=!hist;
+  $('bDel').textContent='Удалить';$('bDel').dataset.sure='';
+  $('dHint').textContent=hist?'Прогулка хранится только на этом телефоне.':'Отчёт сохранён в истории на этом телефоне. Отправьте его врачу или инструктору.';
+  drawRoute(w);
+  if(!w.free){doneLine.setLatLngs(cutLine(route.stops[lm].from_start,route.stops[F(w)].from_start));track.setLatLngs((w.track||[]).map(t=>[t[0],t[1]]))}
+  renderMini();
 }
-['pulse1','bp1'].forEach(id=>$(id).addEventListener('input',()=>{walk[id]=$(id).value.trim();store.set('saki.walk',walk)}));
-function reportText(){
-  const rs=rows(),{len,sec}=totals(),p0=walk.marks[F()].pulse||walk.pulse0||'—';
-  const d=new Date(walk.t0).toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
-  return [`Тропы · Саки — ${route.name}${walk.demo?' (демонстрация)':''}`,`Дата: ${d}`,
-    `Старт: ${route.stops[F()].title}${F()?' (по QR-коду)':''}, пульс ${p0}`,
+['pulse1','bp1'].forEach(id=>$(id).addEventListener('input',()=>{const w=viewW;if(!w)return;w[id]=$(id).value.trim();
+  if(w===walk)store.set('saki.walk',walk);saveRecord(w)}));
+function reportText(w){
+  const {len,sec}=totals(w),d=new Date(w.t0).toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
+  if(w.free)return [`Тропы · Саки — свободная прогулка${w.demo?' (демонстрация)':''}`,`Дата: ${d}`,
+    `Путь по GPS: ${len} м · время ${fmtT(sec)} · средняя скорость ${fmt1(kmh(len,sec))} км/ч`,
+    `Пульс до/после: ${w.pulse0||'—'} / ${w.pulse1||'—'} · давление до/после: ${w.bp0||'—'} / ${w.bp1||'—'}`,'',
+    'Места на пути:',...(w.visits.length?w.visits.map((v,i)=>`${i+1}. ${v.title} — ${hhmm(v.t)}`):['—'])].join('\n');
+  const r=rOf(w),rs=rows(w),p0=w.marks[F(w)].pulse||w.pulse0||'—';
+  return [`Тропы · Саки — ${r.name}${isMed(w)?' · медицинский режим':''}${w.demo?' (демонстрация)':''}`,`Дата: ${d}`,
+    `Старт: ${r.stops[F(w)].title}${F(w)?' (по QR-коду)':''}, пульс ${p0}`,
+    ...(isMed(w)?[`Норма пульса: до ${hrLimit(w)} уд/мин${w.age?' (возраст '+w.age+')':''}`]:[]),
     `Путь: ${len} м · время ${fmtT(sec)} · средняя скорость ${fmt1(kmh(len,sec))} км/ч`,
-    `Пульс до/после: ${p0} / ${walk.pulse1||'—'} · давление до/после: ${walk.bp0||'—'} / ${walk.bp1||'—'}`,'',
-    ...rs.map((r,i)=>`${i+1}. ${r.from} → ${r.to}: `+(r.skip?'пропущено':`${r.m} м, ${fmtT(r.sec)}, ${fmt1(r.v)} км/ч${r.pulse?', пульс '+r.pulse:''}`))].join('\n');
+    `Пульс до/после: ${p0} / ${w.pulse1||'—'} · давление до/после: ${w.bp0||'—'} / ${w.bp1||'—'}`,'',
+    ...rs.map((x,i)=>`${i+1}. ${x.from} → ${x.to}: `+(x.skip?'пропущено':`${x.m} м, ${fmtT(x.sec)}${x.v!=null?', '+fmt1(x.v)+' км/ч':''}${x.pulse?', пульс '+x.pulse:''}${x.tries.length>1?' (было '+x.tries.slice(0,-1).join(', ')+')':''}${x.stay?', '+x.stay:''}`))].join('\n');
 }
-$('bShare').onclick=async()=>{const t=reportText();
-  try{if(navigator.share){await navigator.share({title:'Отчёт о терренкуре',text:t});return}}catch(e){if(e&&e.name==='AbortError')return}
+$('bShare').onclick=async()=>{const t=reportText(viewW);
+  try{if(navigator.share){await navigator.share({title:'Отчёт о прогулке',text:t});return}}catch(e){if(e&&e.name==='AbortError')return}
   try{await navigator.clipboard.writeText(t);toast('Отчёт скопирован — вставьте его в сообщение')}catch(e){toast('Не удалось скопировать — выделите таблицу вручную')}};
 $('bCsv').onclick=()=>{
-  const rs=rows(),q=v=>'"'+String(v).replace(/"/g,'""')+'"';
-  const csv='﻿'+['№;Откуда;Куда;Метров;Секунд;км/ч;Пульс;Отметка',...rs.map((r,i)=>[i+1,q(r.from),q(r.to),r.m??'',r.skip?'':Math.round(r.sec),r.skip?'':fmt1(r.v),r.skip?'':r.pulse,r.skip?'пропуск':r.how].join(';'))].join('\r\n');
-  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
-  a.download='терренкур-'+route.id+'-'+new Date(walk.t0).toISOString().slice(0,10)+'.csv';document.body.appendChild(a);a.click();a.remove()};
-$('bAgain').onclick=()=>{walk=null;store.set('saki.walk',null);doneLine.setLatLngs([]);track.setLatLngs([]);show('vChoose');renderChoose();drawRoute()};
+  const w=viewW,q=v=>'"'+String(v).replace(/"/g,'""')+'"';let csv,name;
+  if(w.free){csv=['№;Место;Время;Отметка',...w.visits.map((v,i)=>[i+1,q(v.title),hhmm(v.t),v.how==='QR'?'QR-код':'GPS'].join(';')),'',`Путь по GPS, м;${totals(w).len}`,`Время, с;${Math.round(totals(w).sec)}`].join('\r\n');name='прогулка'}
+  else{const rs=rows(w);csv=['№;Откуда;Куда;Метров;Секунд в пути;км/ч;Пульс;Замеры пульса;Отдых, с;Отметка',...rs.map((r,i)=>[i+1,q(r.from),q(r.to),r.m??'',r.skip?'':Math.round(r.sec),r.skip||r.v==null?'':fmt1(r.v),r.skip?'':r.pulse,r.skip?'':q(r.tries.join(', ')),r.skip?'':Math.round(r.rest||0),r.skip?'пропуск':r.how].join(';'))].join('\r\n');name='терренкур-'+w.route}
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['﻿'+csv],{type:'text/csv'}));
+  a.download=name+'-'+new Date(w.t0).toISOString().slice(0,10)+'.csv';document.body.appendChild(a);a.click();a.remove()};
+$('bAgain').onclick=()=>{walk=null;viewW=null;store.set('saki.walk',null);doneLine.setLatLngs([]);track.setLatLngs([]);show('vChoose');renderChoose();drawRoute(null);fitPark()};
+/* ---------- история: все прогулки на этом телефоне ---------- */
+function pack(w){
+  const o=JSON.parse(JSON.stringify(w));delete o.saved;
+  const thin=a=>{const out=[];let last=null;for(const p of a||[]){const ll=[p[0],p[1]];if(!last||hav(last,ll)>=5){out.push(p);last=ll}}
+    const k=Math.ceil(out.length/1500);return k>1?out.filter((_,j)=>j%k===0):out};
+  if(o.track)o.track=thin(o.track);if(o.pts)o.pts=thin(o.pts);
+  return o;
+}
+function saveRecord(w){
+  const all=store.get('saki.walks',[]),rec=pack(w),i=all.findIndex(x=>x.t0===w.t0);
+  if(i>=0)all[i]=rec;else all.unshift(rec);
+  store.set('saki.walks',all.slice(0,40));
+}
+(()=>{/* прежняя краткая история (до 15.10.2026) переезжает в общий список */
+  const old=store.get('saki.history',null);if(!old)return;const all=store.get('saki.walks',[]);
+  old.forEach(h=>{if(!all.some(w=>w.t0===h.t0))all.push({legacy:1,route:h.route,t0:h.t0,len:h.len,sec:h.sec,demo:h.demo})});
+  all.sort((a,b)=>b.t0-a.t0);store.set('saki.walks',all.slice(0,40));try{localStorage.removeItem('saki.history')}catch(e){}})();
+function renderHist(){
+  const all=store.get('saki.walks',[]);
+  let km=0,s=0;all.forEach(w=>{const t=totals(w);km+=t.len||0;s+=t.sec||0});
+  $('hK').innerHTML=`<div><dt>Прогулок</dt><dd>${all.length}</dd></div><div><dt>Пройдено</dt><dd>${fmt1(km/1000)}<small>км</small></dd></div><div><dt>В пути</dt><dd>${fmtT(s).replace(/:\d\d$/,'')}<small>${s>=3600?'ч':'мин'}</small></dd></div>`;
+  $('hList').innerHTML=all.length?all.map((w,j)=>{const t=totals(w),r=w.free?null:rOf(w),d=new Date(w.t0);
+    const title=w.free?'Свободная прогулка':r.name,tags=(w.free?'<span class="tag free">свободная</span>':isMed(w)?'<span class="tag">медицинский</span>':'')+(w.demo?'<span class="tag demo">демо</span>':'');
+    const extra=w.legacy?'краткая запись':w.free?(w.visits.length+' '+(w.visits.length===1?'место':w.visits.length<5?'места':'мест')):(w.pulse0||w.pulse1)?'♥ '+(w.pulse0||'—')+' → '+(w.pulse1||'—'):hhmm(w.t0);
+    return `<button class="hi ${w.legacy?'old':''}" type="button" data-j="${j}"><span class="d"><b>${d.getDate()}</b>${d.toLocaleDateString('ru-RU',{month:'short'}).replace('.','')}</span>
+      <span><span class="t">${title}</span><span class="s">${tags}${w.legacy?'':hhmm(w.t0)+' · '}${extra}</span></span>
+      <span class="v">${t.len>999?fmt1(t.len/1000)+' км':t.len+' м'}<small>${fmtT(t.sec)}</small></span></button>`}).join('')
+    :'<div class="empty">Здесь появятся ваши прогулки: маршрут, время, скорость и пульс.</div>';
+}
+$('hList').addEventListener('click',e=>{const b=e.target.closest('.hi');if(!b||b.classList.contains('old'))return;
+  const w=store.get('saki.walks',[])[+b.dataset.j];if(!w)return;
+  viewW=w;viewHist=true;if(!w.free)route=rOf(w);show('vDone');renderDone(w,true);focusDone(w)});
+function focusDone(w){
+  const pts=w.free?w.pts.map(p=>[p[0],p[1]]):null,h=Math.min($('sheet').offsetHeight||0,innerHeight*.62);
+  const b=pts&&pts.length>1?L.latLngBounds(pts):w.free?L.latLngBounds(parkLL):routeLine.getBounds();
+  map.fitBounds(b,{paddingTopLeft:[20,76],paddingBottomRight:[20,h+12],maxZoom:18});
+}
+function openHist(){viewHist=false;renderHist();show('vHist');if(!walk||walk.t1){drawRoute(null);fitPark()}}
+$('bHist').onclick=openHist;$('bHistAll').onclick=openHist;$('bBackHist').onclick=openHist;
+$('hBack').onclick=()=>{if(walk&&!walk.t1){show(walk.free?'vFree':'vWalk');return}
+  if(walk&&walk.t1&&!viewHist){viewW=walk;show('vDone');renderDone(walk);return}
+  show('vChoose');renderChoose();drawRoute(null);fitPark()};
+$('bDel').onclick=()=>{const b=$('bDel');
+  if(!b.dataset.sure){b.dataset.sure='1';b.textContent='Точно удалить?';setTimeout(()=>{b.dataset.sure='';b.textContent='Удалить'},3500);return}
+  const all=store.get('saki.walks',[]).filter(x=>x.t0!==viewW.t0);store.set('saki.walks',all);
+  if(walk&&walk.t0===viewW.t0&&walk.t1){walk=null;store.set('saki.walk',null)}
+  toast('Прогулка удалена');openHist()};
 /* ---------- кнопки ---------- */
-$('bStart').onclick=()=>{$('bName').textContent=route.name;
-  $('safety').innerHTML=`<b>Самоконтроль.</b> ${route.id===3?'Пульс не выше 120–130 уд/мин, сатурация не ниже 92 %. ':''}При головокружении, тошноте, усилении боли или одышке остановитесь у ближайшей точки и отдохните.`;show('vBefore')};
+function limPreview(){
+  const on=sel!=='free'&&mode==='med';$('limPrev').hidden=!on;if(!on)return;
+  const L_=hrLimit({route:route.id,pulse0:$('pulse0').value.trim(),age:$('age').value.trim(),marks:[]});
+  $('limPrev').innerHTML=`<b>Ваша норма на маршруте: до ${L_} уд/мин.</b> ${okP($('pulse0').value.trim())&&+$('age').value>=10?'Рассчитана по возрасту и пульсу покоя.':'Укажите пульс покоя и возраст — норма станет точнее.'} Если на точке пульс выше, приложение попросит отдохнуть и измерить ещё раз.`;
+}
+['pulse0','age'].forEach(id=>$(id).addEventListener('input',limPreview));
+$('bStart').onclick=()=>{
+  const free=sel==='free',med=!free&&mode==='med';
+  $('bName').textContent=free?'Свободная прогулка':route.name+(med?' · медицинский':'');
+  $('ageL').hidden=!med;$('age').value=store.get('saki.age','');
+  $('safety').innerHTML=`<b>Самоконтроль.</b> ${!free&&route.id===3?'Пульс не выше 120–130 уд/мин, сатурация не ниже 92 %. ':''}При головокружении, тошноте, усилении боли или одышке остановитесь и отдохните.`;
+  $('bGo').textContent=free?'Старт':med?'Старт медицинского терренкура':'Старт';
+  limPreview();show('vBefore')};
 $('bBack0').onclick=()=>show('vChoose');
-$('bGo').onclick=()=>startWalk(false);
-$('bDemo').onclick=()=>startWalk(true);
-$('bHere').onclick=()=>{const n=nextIdx();if(n>=0){mark(n,'кнопка');openCard(n,n===route.stops.length-1?'finish':'mark')}};
+$('bGo').onclick=()=>{
+  if(sel==='free'){startFree(false);return}
+  if(mode==='med'){if(!okP($('pulse0').value.trim())){toast('Для медицинского режима измерьте пульс покоя');$('pulse0').focus();return}
+    store.set('saki.age',$('age').value.trim())}
+  startWalk(false)};
+$('bDemo').onclick=()=>{
+  if(sel==='free'){startFree(true);return}
+  if(mode==='med'){if(!okP($('pulse0').value.trim()))$('pulse0').value='72';if(!$('age').value)$('age').value='60'}
+  startWalk(true)};
+$('bHere').onclick=()=>{const wi=waitIdx();if(wi>=0){openCard(wi,'mark');return}
+  const n=nextIdx();if(n>=0){mark(n,'кнопка');openCard(n,n===route.stops.length-1?'finish':'mark')}};
 $('bStop').onclick=()=>{if(walk){walk.t1=Date.now();finish()}};
 /* ---------- старт страницы ---------- */
 stale();
-if(walk&&walk.route){route=ROUTES.find(r=>r.id===walk.route)||ROUTES[0];
-  if(walk.t1){show('vDone');renderDone()}else{show('vWalk');renderWalk();if(walk.demo){walk.demo=false;$('demoTag').hidden=true}gpsOn();wake()}}
-else{show('vChoose');renderChoose()}
-drawRoute();map.fitBounds(routeLine.getBounds().pad(.15));
+if(walk&&!walk.t1){
+  if(walk.demo){walk.demo=false;$('demoTag').hidden=true}
+  if(walk.free){sel='free';show('vFree');renderFree();drawRoute();gpsOn();wake();focusMap()}
+  else{route=rOf(walk);show('vWalk');renderWalk();drawRoute();fitPark();gpsOn();wake()}
+}else if(walk&&walk.t1){viewW=walk;if(!walk.free)route=rOf(walk);show('vDone');renderDone(walk);focusDone(walk)}
+else{show('vChoose');renderChoose();drawRoute(null);fitPark()}
 fromQR();
 })();
 </script>
