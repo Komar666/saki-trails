@@ -244,7 +244,12 @@ table.rep{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:10px}
 .hi .s{display:block;margin-top:3px;font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .hi .v{text-align:right;font:600 14px/1.3 var(--f-mono);color:var(--ink);white-space:nowrap}
 .hi .v small{display:block;font-size:11.5px;font-weight:400;color:var(--muted)}
-.hi.old{cursor:default;opacity:.7}
+.hi{grid-template-columns:48px minmax(0,1fr) auto auto!important}
+.hi.old{cursor:default}
+.hi.old>span{opacity:.7}
+.hx{all:unset;box-sizing:border-box;cursor:pointer;min-width:34px;height:34px;padding:0 10px;border-radius:999px;display:grid;place-items:center;background:var(--card);color:var(--muted);font:600 17px/1 var(--f-body);box-shadow:inset 0 0 0 1px #E8DCC2;transition:background .25s,color .25s}
+.hx:hover{color:#963B1B}
+.hx.sure{background:#FBE0D6;color:#963B1B;font-size:12.5px;box-shadow:none}
 .tag{display:inline-block;margin-right:6px;padding:3px 7px;border-radius:999px;font:600 9.5px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;vertical-align:1px;background:#FBE3DA;color:var(--terra)}
 .tag.free{background:#DCEBE8;color:var(--lake)}
 .tag.demo{background:#F1E8D4;color:var(--muted)}
@@ -365,7 +370,12 @@ table.rep{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:10px}
       <h2>История прогулок</h2>
       <dl class="kpis" id="hK"></dl>
       <div class="hlist" id="hList"></div>
-      <div class="btns"><button class="btn ghost" id="hBack" type="button">Назад</button></div>
+      <div class="btns">
+        <button class="btn solid" id="hCsv" type="button"><svg viewBox="0 0 24 24"><path d="M12 4v11m0 0 4.5-4.5M12 15l-4.5-4.5M5 20h14"/></svg>Скачать историю</button>
+        <button class="btn ghost" id="hBack" type="button">Назад</button>
+        <button class="btn warnb" id="hClear" type="button">Очистить историю</button>
+      </div>
+      <p class="hintline">Таблица открывается в Excel: дата, маршрут, режим, путь, время, скорость, пульс и давление. Подробный отчёт по каждой прогулке — внутри неё.</p>
     </div>
 
         <div id="vDone" hidden>
@@ -1005,14 +1015,44 @@ function renderHist(){
   $('hList').innerHTML=all.length?all.map((w,j)=>{const t=totals(w),r=w.free?null:rOf(w),d=new Date(w.t0);
     const title=w.free?'Свободная прогулка':r.name,tags=(w.free?'<span class="tag free">свободная</span>':isMed(w)?'<span class="tag">медицинский</span>':'')+(w.demo?'<span class="tag demo">демо</span>':'');
     const extra=w.legacy?'краткая запись':w.free?(w.visits.length+' '+(w.visits.length===1?'место':w.visits.length<5?'места':'мест')):(w.pulse0||w.pulse1)?'♥ '+(w.pulse0||'—')+' → '+(w.pulse1||'—'):hhmm(w.t0);
-    return `<button class="hi ${w.legacy?'old':''}" type="button" data-j="${j}"><span class="d"><b>${d.getDate()}</b>${d.toLocaleDateString('ru-RU',{month:'short'}).replace('.','')}</span>
+    /* у каждой записи — крестик удаления; краткие записи старой версии не открываются */
+    const x=`<button class="hx" type="button" data-del="${j}" aria-label="Удалить прогулку">×</button>`;
+    return `<div class="hi ${w.legacy?'old':''}" ${w.legacy?'':'role="button" tabindex="0"'} data-j="${j}"><span class="d"><b>${d.getDate()}</b>${d.toLocaleDateString('ru-RU',{month:'short'}).replace('.','')}</span>
       <span><span class="t">${title}</span><span class="s">${tags}${w.legacy?'':hhmm(w.t0)+' · '}${extra}</span></span>
-      <span class="v">${t.len>999?fmt1(t.len/1000)+' км':t.len+' м'}<small>${fmtT(t.sec)}</small></span></button>`}).join('')
+      <span class="v">${t.len>999?fmt1(t.len/1000)+' км':t.len+' м'}<small>${fmtT(t.sec)}</small></span>${x}</div>`}).join('')
     :'<div class="empty">Здесь появятся ваши прогулки: маршрут, время, скорость и пульс.</div>';
+  $('hCsv').hidden=$('hClear').hidden=!all.length;
+  $('hClear').textContent='Очистить историю';$('hClear').dataset.sure='';
 }
-$('hList').addEventListener('click',e=>{const b=e.target.closest('.hi');if(!b||b.classList.contains('old'))return;
+/* двойное нажатие вместо окна подтверждения: первое спрашивает, второе выполняет */
+function sure(b,text,done){
+  if(!b.dataset.sure){const was=b.textContent;b.dataset.sure='1';b.textContent=text;b.classList.add('sure');
+    clearTimeout(b._t);b._t=setTimeout(()=>{b.dataset.sure='';b.textContent=was;b.classList.remove('sure')},3500);return}
+  clearTimeout(b._t);done();
+}
+$('hClear').onclick=()=>sure($('hClear'),'Точно удалить все прогулки?',()=>{
+  store.set('saki.walks',[]);if(walk&&walk.t1){walk=null;store.set('saki.walk',null)}toast('История очищена');renderHist()});
+/* вся история одной таблицей — на устройство */
+$('hCsv').onclick=()=>{
+  const all=store.get('saki.walks',[]),q=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
+  const head='Дата;Начало;Прогулка;Режим;Старт;Путь, м;Время;Средняя, км/ч;Пульс до;Пульс после;Давление до;Давление после;Точек / мест;Демонстрация';
+  const rows=all.map(w=>{const t=totals(w),d=new Date(w.t0),r=w.free?null:rOf(w);
+    const pts=w.legacy?'':w.free?w.visits.length:w.marks.filter(m=>m&&!m.skip).length;
+    return [d.toLocaleDateString('ru-RU'),w.legacy?'':hhmm(w.t0),q(w.free?'Свободная прогулка':r.name),w.legacy?'краткая запись':w.free?'свободная':isMed(w)?'медицинский':'прогулка',
+      q(w.free||w.legacy?'':r.stops[F(w)].title),t.len,fmtT(t.sec),avg(t.len,t.sec),w.pulse0||'',w.pulse1||'',q(w.bp0),q(w.bp1),pts,w.demo?'да':''].join(';')});
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([String.fromCharCode(65279)+[head,...rows].join(String.fromCharCode(13,10))],{type:'text/csv'}));
+  a.download='тропы-саки-история-'+new Date().toISOString().slice(0,10)+'.csv';document.body.appendChild(a);a.click();a.remove();
+  toast('Таблица сохранена в загрузки');
+};
+$('hList').addEventListener('click',e=>{
+  const x=e.target.closest('[data-del]');
+  if(x){sure(x,'Удалить?',()=>{const all=store.get('saki.walks',[]);all.splice(+x.dataset.del,1);store.set('saki.walks',all);renderHist()});return}
+  const b=e.target.closest('.hi');if(!b||b.classList.contains('old'))return;
+  openHistItem(b)});
+$('hList').addEventListener('keydown',e=>{const b=e.target.closest('.hi');if(b&&(e.key==='Enter'||e.key===' ')&&!e.target.closest('[data-del]')){e.preventDefault();if(!b.classList.contains('old'))openHistItem(b)}});
+function openHistItem(b){
   const w=store.get('saki.walks',[])[+b.dataset.j];if(!w)return;
-  viewW=w;viewHist=true;if(!w.free)route=rOf(w);show('vDone');renderDone(w,true);focusDone(w)});
+  viewW=w;viewHist=true;if(!w.free)route=rOf(w);show('vDone');renderDone(w,true);focusDone(w)}
 function focusDone(w){
   const pts=w.free?w.pts.map(p=>[p[0],p[1]]):null,h=Math.min($('sheet').offsetHeight||0,innerHeight*.62);
   const b=pts&&pts.length>1?L.latLngBounds(pts):w.free?L.latLngBounds(parkLL):routeLine.getBounds();
@@ -1028,7 +1068,6 @@ $('bDel').onclick=()=>{const b=$('bDel');
   const all=store.get('saki.walks',[]).filter(x=>x.t0!==viewW.t0);store.set('saki.walks',all);
   if(walk&&walk.t0===viewW.t0&&walk.t1){walk=null;store.set('saki.walk',null)}
   toast('Прогулка удалена');openHist()};
-/* ---------- кнопки ---------- */
 function limPreview(){
   const on=sel!=='free'&&mode==='med';$('limPrev').hidden=!on;if(!on)return;
   const L_=hrLimit({route:route.id,pulse0:$('pulse0').value.trim(),age:$('age').value.trim(),marks:[]});
@@ -1055,7 +1094,6 @@ $('bDemo').onclick=()=>{
 $('bHere').onclick=()=>{const wi=waitIdx();if(wi>=0){openCard(wi,'mark');return}
   const n=nextIdx();if(n>=0){mark(n,'кнопка');openCard(n,n===route.stops.length-1?'finish':'mark')}};
 $('bStop').onclick=()=>{if(walk){walk.t1=Date.now();finish()}};
-/* ---------- старт страницы ---------- */
 stale();
 if(walk&&!walk.t1){
   if(walk.demo){walk.demo=false;$('demoTag').hidden=true}
